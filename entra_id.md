@@ -104,10 +104,8 @@ Microsoft Entra ID simplifies the process of managing users, while establishing 
 ## References and Further Reading
 
 - [Microsoft Entra ID Documentation](https://learn.microsoft.com/en-us/entra/fundamentals/whatis)
-- [Microsoft Entra ID Pricing](https://azure.microsoft.com/en-us/pricing/details/entra/)
-- [Microsoft Entra ID Compliance](https://learn.microsoft.com/en-us/entra/compliance/overview)
 - [Microsoft Entra ID for Developers](https://learn.microsoft.com/en-us/entra/identity-platform/)
 - [How to: Assign or remove Microsoft Entra ID licenses](https://learn.microsoft.com/en-us/entra/fundamentals/license-users-groups)
-- [Microsoft Entra ID Support](https://azure.microsoft.com/en-us/support/plans/)
+
 
 
