@@ -19,6 +19,9 @@ Some key notes:
 - [Create a tenant](#create-a-tenant)
 - [Add Users](#add-users)
 - [Add Groups](#add-groups)
+- [Guest Users](#guest-users)
+- [Conclusion](#conclusion)
+- [References and Further Reading](#references-and-further-reading)
 
 
 ### Create a tenant
@@ -81,7 +84,7 @@ To add a group, follow these steps:
     - Operator: Equals
     - Value: Developer
 The membership of this group now depends on whether the user is a developer. You can also use other properties to define rules for dynamic membership, such as department, location or user type.
-10. Select `Save`. The Dynamic membership rules pane closes, and the Properties pane for your group appears.
+10. Select `Save`. The Dynamic membership rules pane closes, and the `Properties` pane for your group appears.
 
 ### Guest Users
 
@@ -92,3 +95,18 @@ Guest users are external users who have been invited to the organization. They c
 2. In the `Invite External user` pane, fill in the user's details, such as email address, display name, last name, and invite message.
 3. Select `Review + invite`, then select `Invite`. An invitation is sent to the email address you provided for the guest user. The All users pane appears. Notice that the user now appears in the list of users and has Guest as User type. You might need to refresh to see the new user. 
 4. The guest user can now sign in to the Microsoft Entra ID portal using the email address provided. The guest user can access the `resources` you shared with them and can be added to `groups` and `enterprise applications` to collaborate on projects.
+
+
+## Conclusion
+
+Microsoft Entra ID simplifies the process of managing users, while establishing access and roles to these users. By following the steps outlined in this guide, you can create, configure, and manage users, groups, tenants, and guest users in Microsoft Entra ID. This will help you streamline your Azure infrastructure management and ensure consistency across your organization.
+
+## References and Further Reading
+
+- [Microsoft Entra ID Documentation](https://learn.microsoft.com/en-us/entra/fundamentals/whatis)
+- [Microsoft Entra ID Security Best Practices](https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/active-directory-whatis)
+- [Microsoft Entra ID Pricing](https://azure.microsoft.com/en-us/pricing/details/entra/)
+- [Microsoft Entra ID Compliance](https://learn.microsoft.com/en-us/entra/compliance/overview)
+- [Microsoft Entra ID Support](https://azure.microsoft.com/en-us/support/plans/)
+
+
