@@ -1,6 +1,6 @@
 # Azure Resource Manager (ARM) Template Guide
 
-This README guides you through the process of generating an ARM template from an existing Azure resource on the Azure portal. This method allows for the deployment of new resources with similar configurations, streamlining your Azure infrastructure management.
+This guides you through the process of generating an ARM template from an existing Azure resource on the Azure portal. This method allows for the deployment of new resources with similar configurations, streamlining your Azure infrastructure management.
 
 ## Prerequisites
 
