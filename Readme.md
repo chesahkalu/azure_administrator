@@ -11,5 +11,5 @@ This repository is tailored for those seeking practical, project-based experienc
 ![Azure Administration](https://img.shields.io/badge/Azure-Administration-blue)
 | Project | Description | link |
 | ------- | ----------- | ---- |
-| Azure Resource Management | Generate an ARM template from an existing resource on the portal to deploy a new similar resource | [Project](./armtemplate.md) |
-| Manage Azure Active Directory | Create, configure and manage Azure AD Users, Groups, Tenants and Guest users in Azure Active Directory | [Project](./aad.md) |
+| Azure Resource Management | Generate an ARM template from an existing resource on the portal to deploy a new similar resource | [Project](./arm_template.md) |
+| Manage Microsoft Entra ID  | Create, configure and manage Azure Active Directory Access, Users, Groups, Tenants and Guest users in Microsoft Entra ID | [Project](./entra_id.md) |
