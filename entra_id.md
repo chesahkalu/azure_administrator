@@ -1,7 +1,7 @@
 # Manage Microsoft Entra ID
 
 [Microsoft Entra ID](https://learn.microsoft.com/en-us/entra/fundamentals/whatis) an identity and access management service that helps you manage employee access to corporate resources. It simplifies the process of managing users, while establishing access and roles to this users. This guide will walk you through the process of creating, configuring, and managing Microsoft Entra ID.
-Some key notes:
+Some key Terminologies to note are:
 - Member Users: A member user account is a native member of the Microsoft Entra organization that has a set of default permissions like being able to manage their profile information. When someone new joins your organization, they typically have this type of account created for them.
 - Guest Users: A guest user account is an external user who has been invited to the organization. They can be invited to collaborate on projects, share files, or access resources. Guest users are not members of the organization and do not have the same permissions as member users.
 - Tenant: A tenant is a representation of an organization. It's a dedicated instance of the Microsoft Entra service that an organization receives and owns when it signs up for a Microsoft Entra subscription. Each tenant has its own users, groups, resources, and settings.
@@ -104,9 +104,10 @@ Microsoft Entra ID simplifies the process of managing users, while establishing 
 ## References and Further Reading
 
 - [Microsoft Entra ID Documentation](https://learn.microsoft.com/en-us/entra/fundamentals/whatis)
-- [Microsoft Entra ID Security Best Practices](https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/active-directory-whatis)
 - [Microsoft Entra ID Pricing](https://azure.microsoft.com/en-us/pricing/details/entra/)
 - [Microsoft Entra ID Compliance](https://learn.microsoft.com/en-us/entra/compliance/overview)
+- [Microsoft Entra ID for Developers](https://learn.microsoft.com/en-us/entra/identity-platform/)
+- [How to: Assign or remove Microsoft Entra ID licenses](https://learn.microsoft.com/en-us/entra/fundamentals/license-users-groups)
 - [Microsoft Entra ID Support](https://azure.microsoft.com/en-us/support/plans/)
 
 
