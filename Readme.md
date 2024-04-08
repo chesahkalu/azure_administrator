@@ -9,7 +9,8 @@ This repository is tailored for those seeking practical, project-based experienc
 - An Azure account with active subscription (Free tier is enough). Sign up or login to yor Azure account [here](https://azure.microsoft.com/en-us/free/)
 
 ![Azure Administration](https://img.shields.io/badge/Azure-Administration-blue)
-| Project | Description | link |
-| ------- | ----------- | ---- |
+| **Title** | **Description** | **link** |
+| ----------| --------------- | -------- |
 | Azure Resource Management | Generate an ARM template from an existing resource on the portal to deploy a new similar resource | [Project](./arm_template.md) |
 | Manage Microsoft Entra ID  | Create, configure and manage Azure Active Directory Access, Users, Groups, Tenants and Guest users in Microsoft Entra ID | [Project](./entra_id.md) |
+| Azure Compliance and Governance | Learn to navigate and apply Azure's governance tools, focusing on policy creation, compliance management, resource tagging, and the strategic use of management groups. | [Get Started](./policy_compliance_tags_management_groups.md) |
