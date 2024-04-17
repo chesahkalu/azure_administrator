@@ -26,6 +26,9 @@ This comprehensive guide walks you through the nuances of policy creation, compl
 
 Management groups provide a hierarchy for managing access, policies, and compliance across your Azure subscriptions, essential for large-scale governance.
 
+![Azure Administration](https://static/mg-org.png)
+
+
 ## Task 1: Tagging Resources for Clarity and Management
 
 Resource tagging facilitates easier management and billing transparency. Follow these steps to implement tagging effectively.
