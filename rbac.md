@@ -66,7 +66,7 @@ Use the Actions and NotActions permissions together to grant and deny the exact 
 
 ## Assigning Roles to Users
 
-1. Create a JSON file with the role definition that allows a user to create support requests. The role should allow the user to can view resource groups in a specific subscription, but not the resources in the resource groups. The [role_definition.json](/static/role_definition.json) should look like this :
+1. Create a JSON file with the role definition that allows a user to create support requests. The role should allow the user to can view resource groups in a specific subscription, but not the resources in the resource groups. The [role_definition.json](/resources/role_definition.json) should look like this :
 
 ```json
 {
