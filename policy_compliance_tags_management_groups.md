@@ -22,13 +22,6 @@ Welcome to the definitive guide on mastering Azure's governance tools. This tuto
 Azure's governance tools are essential for managing and securing your cloud resources effectively.
 This comprehensive guide walks you through the nuances of policy creation, compliance management, resource tagging, and the strategic implementation of management groups.
 
-## Embracing Management Groups
-
-Management groups provide a hierarchy for managing access, policies, and compliance across your Azure subscriptions, essential for large-scale governance.
-
-![Azure Administration](https://static/mg-org.png)
-
-
 ## Task 1: Tagging Resources for Clarity and Management
 
 Resource tagging facilitates easier management and billing transparency. Follow these steps to implement tagging effectively.
