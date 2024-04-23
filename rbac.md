@@ -47,7 +47,7 @@ A role definition consists of sets of permissions that are defined in a JSON fil
 
 - AssignableScopes permissions list the scopes where a role definition can be assigned. (For example, a role definition can be assigned to a subscription, resource group, or resource.)
 
-![alt text](/static/image.png)
+![alt text](/resources/image.png)
 
 The Actions permissions show the Contributor role has all action privileges. The asterisk "*" wildcard means "all." The NotActions permissions narrow the privileges provided by the Actions set, and deny three actions:
 
