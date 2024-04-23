@@ -1,0 +1,19 @@
+{
+    "properties": {
+        "roleName": "Support Request Contributor (Custom)",
+        "description": "Allows to create support requests",
+        "assignableScopes": [
+            "/providers/Microsoft.Management/managementGroups/MANAGEMENT_GROUP_ID",
+            "/subscriptions/SUBSCRIPTION_ID"
+        ],
+        "permissions": [
+            {
+                "actions": ["Microsoft.Resources/subscriptions/resourceGroups/read",
+                "Microsoft.Support/*"],
+                "notActions": [],
+                "dataActions": [],
+                "notDataActions": []
+            }
+        ]
+    }
+}

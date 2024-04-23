@@ -1,4 +1,4 @@
- # Azure Compliance and Governance: A Comprehensive Guide
+# Azure Compliance and Governance
 
 Welcome to the definitive guide on mastering Azure's governance tools. This tutorial is designed to empower you to navigate and apply Azure's governance framework effectively, ensuring your resources are organized and compliant.
 
