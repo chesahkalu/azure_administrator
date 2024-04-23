@@ -126,4 +126,6 @@ Role-Based Access Control (RBAC) is a powerful tool for managing user permission
 
 - [Azure RBAC Documentation](https://learn.microsoft.com/en-us/azure/role-based-access-control/)
 - [Azure built-in roles](https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles)
+- [Microsoft Entra built-in roles](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/permissions-reference)
+- [Understand Azure role assignments](https://learn.microsoft.com/en-us/training/modules/configure-role-based-access-control/10-summary-resources)
 - [Azure Management Groups Documentation](https://learn.microsoft.com/en-us/azure/governance/management-groups/overview)
