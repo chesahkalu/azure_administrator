@@ -30,14 +30,27 @@
 
 ## Role-Based Access Control (RBAC)
 
+- The following table describes the core concepts of Azure RBAC:
+
+| **Concept** | **Description** | **Example** |
+| ----------- | --------------- | ----------- |
+| Security Principal | Represents a user, group, or service principal that is assigned a role. | User, group, service principal, managed identity |
+| Role | Defines a set of permissions that can be assigned to a security principal. | Some built-in role definitions: Owner, Contributor, Reader, Custom role |
+| Scope | Defines the set of resources that the role applies to. Setting the boundary for the requested level of access, or "how much" access is granted. | Subscription, resource group, resource |
+| Role Assignment | Links a security principal to a role, within a specific scope. | UserA is assigned the Contributor role for ResourceGroup1 |
+
+-Azure includes several built-in roles that you can use. The following lists four fundamental built-in roles:
+
 | **Role Name** | **Description** | **Actions** |
 | ---------| --------------- | ----------- |
 | Owner | Full access to all resources, including the right to delegate access to others. | `Microsoft.Authorization/*` |
-| Contributor | Full access to all resources, but cannot grant access to others. | `Microsoft.Authorization/*/Write` |
+| Contributor | Can create and manage all types of Azure resources, but can’t grant access to others. | `Microsoft.Authorization/*/Write` |
 | Reader | View resources, but cannot make changes. | `Microsoft.Authorization/*/Read` |
 | User Access Administrator | Manage user access to resources. | `Microsoft.Authorization/*/Write` |
 
-A role definition consists of sets of permissions that are defined in a JSON file. Each permission set has a name, such as Actions or NotActions that describe the permissions. Some examples of permission sets include:
+- If the built-in roles don't meet the specific needs of your organization, you can create your own custom roles.
+
+**A role definition consists of sets of permissions that are defined in a JSON file. Each permission set has a name, such as Actions or NotActions that describe the permissions. Some examples of permission sets include:**
 
 - Actions permissions identify what actions are allowed. (For example, read or write.)
 
