@@ -39,7 +39,7 @@
 | Scope | Defines the set of resources that the role applies to. Setting the boundary for the requested level of access, or "how much" access is granted. | Subscription, resource group, resource |
 | Role Assignment | Links a security principal to a role, within a specific scope. | UserA is assigned the Contributor role for ResourceGroup1 |
 
--Azure includes several built-in roles that you can use. The following lists four fundamental built-in roles:
+- Azure includes several built-in roles that you can use. The following lists four fundamental built-in roles:
 
 | **Role Name** | **Description** | **Actions** |
 | ---------| --------------- | ----------- |
@@ -122,15 +122,15 @@ Use the Actions and NotActions permissions together to grant and deny the exact 
 4. Verify the role assignment.
 
 - Log in as the user you assigned the role to.
+- On the top right corner, Click on your profile and select the ellipsis (...) to see more links. Then click on `Permissions`. You'll find the roles that you've been assigned and the scope.
 - Verify that they can view all the resource groups in the specified subscription.
 - Verify that the user can not see any resources within the resource groups.
 - Verify that they can create support requests;
     - Navigate to the Azure portal.
     - Search for `Help` and click on `Create a support request`.
     - Follow the steps to create a support request.
-
----
-
+- On a given scope (subscription, resource group, or resource), Click on `Access control (IAM)` and navigate to the `Role assignments` tab to see the role assignments.
+- Using `activity logs`, you can track various actions performed regarding RBAC.
 ## Conclusion
 
 Role-Based Access Control (RBAC) is a powerful tool for managing user permissions and access on Azure resources. By creating custom role definitions and assigning them to users, you can tailor access to meet specific requirements, ensuring security and compliance in your Azure environment.
