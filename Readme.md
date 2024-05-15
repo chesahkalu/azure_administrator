@@ -15,3 +15,4 @@ This repository is tailored for those seeking practical, project-based experienc
 | Manage Microsoft Entra ID  | Create, configure and manage Azure Active Directory Access, Users, Groups, Tenants and Guest users in Microsoft Entra ID | [Project](./entra_id.md) |
 | Azure Compliance and Governance | Learn to navigate and apply Azure's governance tools, focusing on policy creation and compliance management using resource tagging. | [Project](./policy_compliance_with_tags.md) |
 | RBAC-Subscription-Management Groups | Implement Role-Based Access Control (RBAC) in Azure to manage user permissions and access on reources, Manage subscriptions using Management Groups | [Project](./rbac.md) |
+| Azure Storage Account | Create and manage Azure Storage

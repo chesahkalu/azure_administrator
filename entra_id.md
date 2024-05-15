@@ -9,6 +9,7 @@ Some key Terminologies to note are:
 - Role: A role is a collection of permissions that can be assigned to users or groups. Roles define what users can do within the organization, such as managing users, accessing resources (Role-based access control), or configuring settings.
 - Administrator Role: An administrator role is a special role that grants users full access to the Microsoft Entra organization. Administrators can manage users, groups, resources, and settings, as well as configure security and compliance settings.
 
+---
 
 ## Prerequisites
 
@@ -23,6 +24,7 @@ Some key Terminologies to note are:
 - [Conclusion](#conclusion)
 - [References and Further Reading](#references-and-further-reading)
 
+---
 
 ### Create a tenant
 
@@ -34,6 +36,7 @@ Normally, when you sign up for an Azure subscription, a tenant is created for yo
 5. Review and create.
 6. On the  left menu pane, click `licenses` , on this page click `All products` on the left pane, then click `Try/Buy` to activate a free trial for Microsoft Entra ID P1 or P2. This will enable you to use dynamic assignment to add members to groups automatically based on a rule that you define, as well as other features.
 
+---
 
 ### Add Users
 
@@ -56,6 +59,7 @@ You can add users to your Microsoft Entra ID organization in the following ways:
     - In the `Deleted users` pane, select the user you want to restore.
     - In the top menu bar, select `Restore user`, then select `Restore` in the confirmation pane.
 
+---
 
 ### Add Groups
 
@@ -86,6 +90,8 @@ To add a group, follow these steps:
 The membership of this group now depends on whether the user is a developer. You can also use other properties to define rules for dynamic membership, such as department, location or user type.
 10. Select `Save`. The Dynamic membership rules pane closes, and the `Properties` pane for your group appears.
 
+---
+
 ### Guest Users
 
 Guest users are external users who have been invited to the organization. They can be invited to collaborate on projects, share files, or access resources and applications. With `Microsoft Entra business to business (B2B)`, you can add people from other companies to your Microsoft Entra tenant as `guest users`. You can grant `guest users` access with the appropriate restrictions in place, then remove access when the work is done. Use the Azure portal to invite business-to-business (B2B) collaboration users. You can invite guest users to a Microsoft Entra organization, group, or application. After you invite a user, their account is added to Microsoft Entra ID, with a guest user type. After you add a guest user to the organization, send them a direct link to a shared app. Have the guest user open the redemption URL in the invitation email.
@@ -94,8 +100,39 @@ Guest users are external users who have been invited to the organization. They c
 1. On the Microsoft Entra ID page, click `Users` on the left menu pane under manage, the `All Users` pane comes up. In the top menu bar, select `New user`, then select `Invite External user` in the drop-down. 
 2. In the `Invite External user` pane, fill in the user's details, such as email address, display name, last name, and invite message.
 3. Select `Review + invite`, then select `Invite`. An invitation is sent to the email address you provided for the guest user. The All users pane appears. Notice that the user now appears in the list of users and has Guest as User type. You might need to refresh to see the new user. 
-4. The guest user can now sign in to the Microsoft Entra ID portal using the email address provided. The guest user can access the `resources` you shared with them and can be added to `groups` and `enterprise applications` to collaborate on projects.
+4. The guest user can now sign in to the Microsoft Entra ID portal using the email address provided. The guest user can access the `resources` you shared with them and can be added to `groups` and `enterprise applications` to collaborate on projects
 
+---
+
+## SSPR
+
+- Self-service password reset (SSPR) is a feature that enables users to reset their passwords without the need for administrator intervention. This feature can help reduce the number of help desk calls related to password resets and improve user productivity. 
+
+- In Microsoft Entra ID, any user can change their password if they're already signed in. But if they're not signed in and forgot their password or it's expired, they'll need to reset their password. With SSPR, users can reset their passwords in a web browser or from a Windows sign-in screen to regain access to Azure, Microsoft 365, and any other application that uses Microsoft Entra ID for authentication.
+
+- Some requirements for SSPR include:
+    - a non-administrative user accountUsers with a valid email address in their profile.
+    - a Microsoft Entra organization: This organization must have at least a trial license enabled.
+    - a Microsoft Entra account with Global Administrator privileges: You'll use this account to set up SSPR.
+    - Entra ID Premium P1 or P2 license is required.
+    - SSPR must be enabled for your organization.
+- To enable SSPR for your organization, follow these steps:
+    1. Go to the Azure portal, go to Microsoft Entra ID > Password reset.
+
+    2. Properties:
+        - Enable SSPR.
+        - You can enable it for all users in the Microsoft Entra organization or for selected users.
+        - To enable for selected users, you must specify the security group. Members of this group can use SSPR.
+    3. Authentication methods:
+        - Choose whether to require one or two authentication methods.
+        - Choose the authentication methods that the users can use.
+    4. Registration:
+        - Specify whether users are required to register for SSPR when they next sign in.
+        - Specify how often users are asked to reconfirm their authentication information.
+    5. Notifications: Choose whether to notify users and administrators of password resets.
+    6. Customization: Provide an email address or web page URL where your users can get help.
+
+---
 
 ## Conclusion
 
@@ -106,6 +143,5 @@ Microsoft Entra ID simplifies the process of managing users, while establishing 
 - [Microsoft Entra ID Documentation](https://learn.microsoft.com/en-us/entra/fundamentals/whatis)
 - [Microsoft Entra ID for Developers](https://learn.microsoft.com/en-us/entra/identity-platform/)
 - [How to: Assign or remove Microsoft Entra ID licenses](https://learn.microsoft.com/en-us/entra/fundamentals/license-users-groups)
-
-
+- [SSPR](https://learn.microsoft.com/en-us/entra/identity/authentication/tutorial-enable-sspr)
 
