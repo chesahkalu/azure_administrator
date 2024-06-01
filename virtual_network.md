@@ -17,7 +17,7 @@ Suppose a subnet's address range is 10.0.0.0/16, and addresses 10.0.0.4 through 
 
 - Dynamic IP addresses: Dynamic addresses are assigned after a public IP address is associated to an Azure resource and is started for the first time. Dynamic addresses can change if a resource such as a virtual machine is stopped (deallocated) and then restarted through Azure. The address remains the same if a virtual machine is rebooted or stopped from within the guest OS. When a public IP address resource is removed from a resource, the dynamic address is released. Azure assigns the next available unassigned or unreserved IP address in the subnet's address range. Dynamic assignment is the default allocation method. Suppose addresses 10.0.0.4 through 10.0.0.9 are already assigned to other resources. In this case, Azure assigns the address 10.0.0.10 to a new resource.
 
-## Steps to Create a Virtual Network
+### Steps to Create a Virtual Network
 
 1. Navigate to the Azure portal and search for `Virtual networks`.
 2. Click on `+ Create` to create a new virtual network.
@@ -28,6 +28,28 @@ Suppose a subnet's address range is 10.0.0.0/16, and addresses 10.0.0.4 through 
    - Create subnets to segment the virtual network address space into smaller ranges for use by your applications. 
    - When you deploy resources into a subnet, Azure assigns the resource an IP address from the subnet.
 6. Review and create the virtual network.
+
+## Network Security Groups (NSG)
+
+Network security groups (NSGs) are a simple way to filter network traffic to and from Azure resources in an Azure virtual network. Each network security group contains security rules that allow or deny inbound network traffic to, or outbound network traffic from, several types of Azure resources. You can assign network security groups to a subnet and create a protected screened subnet (also referred to as a demilitarized zone or DMZ). A DMZ acts as a buffer between resources within your virtual network and the internet.
+
+### Steps to Create a Network Security Group
+
+* Azure creates default rules in a Security Group. Which allow `inbound` trafic only from your `Virtual Network and Load Balancer`, and `outbound` traffic to the `Internet and Virtual Network`. You can add more security rules to a network security group by specifying conditions for any of the following settings:
+
+    - Name
+    - Priority
+    - Port
+    - Protocol (Any, TCP, UDP)
+    - Source (Any, IP addresses, Service tag)
+    - Destination (Any, IP addresses, Virtual network)
+    - Action (Allow or Deny)
+
+* Each security rule is assigned a Priority value. All security rules for a network security group are processed in priority order. The lower the number, the higher the priority. The first rule that matches the traffic is applied, regardless of whether it allows or denies the traffic. If no rule matches, the default rule is applied. It's a good practice to leave gaps in your priority numbering, such as 100, 200, 300, and so. The gaps in the numbering allow you to add new rules without having to edit existing rules.
+
+* You can't remove the default security rules. You can override a default security rule by creating another security rule that has a higher Priority setting for your network security group. By default, Azure allows virtual machines in the same subnet to send traffic to each other (referred to as intra-subnet traffic). You can prohibit intra-subnet traffic by defining a rule in the network security group to deny all inbound and outbound traffic. This rule prevents all virtual machines in your subnet from communicating with each other.
+
+* For inbound traffic, Azure first checks the NSG rules associated with the subnet to ensure that the traffic is allowed to enter the subnet, After the traffic passes the subnet rules, Azure then checks the NSG rules associated with the network interface`(point of connection, like an Network card with with an associated IP adress)` of the target VM or resource. This second check ensures that the traffic is specifically allowed to reach the intended resource. The reverse process occurs for outbound traffic. This process ensures layered security for your resources.
 
 
 
