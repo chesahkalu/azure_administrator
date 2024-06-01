@@ -35,21 +35,85 @@ Network security groups (NSGs) are a simple way to filter network traffic to and
 
 ### Steps to Create a Network Security Group
 
-* Azure creates default rules in a Security Group. Which allow `inbound` trafic only from your `Virtual Network and Load Balancer`, and `outbound` traffic to the `Internet and Virtual Network`. You can add more security rules to a network security group by specifying conditions for any of the following settings:
-
-    - Name
-    - Priority
-    - Port
-    - Protocol (Any, TCP, UDP)
-    - Source (Any, IP addresses, Service tag)
-    - Destination (Any, IP addresses, Virtual network)
-    - Action (Allow or Deny)
+* Azure creates default rules in a Security Group. Which allow `inbound` trafic only from your `Virtual Network and Load Balancer`, and `outbound` traffic to the `Internet and Virtual Network`. You can add more security rules to a network security group and select from a large variety of communication services, including HTTPS, RDP, FTP, and DNS, by specifying conditions for any of the following settings:
+    - **Service** : The service specifies the destination protocol and port range for this rule. You can choose a predefined service, like RDP or SSH, or provide a custom port range
+    - **Priority** : The priority of the rule. The lower the number, the higher the priority. The priority must be unique for each rule in the collection.
+    - **Source (Any, IP addresses, Service tag)** : Controls `Inbound` traffic. Can be an IP address, a range of IP addresses, an application security group or a service tag. A service tag represents a group of IP address prefixes from a given Azure service.
+    - **Destination (Any, IP addresses, Virtual network)** : Controls `Outbound` traffic. Properties similar to Source.
+    - **Port** : The port number or range of port numbers for this rule. You can specify a single port number, a range of port numbers, or a combination of both.
+    - **Protocol (Any, TCP, UDP)** : The protocol that this rule applies to. You can specify TCP, UDP, or Any.
+    - **Action (Allow or Deny)** : The action to take when the rule matches. The action can be Allow or Deny. The default action is to deny traffic, and it takes precedence over the allow action.
+    - **Description** : A description for this rule. Restricted to 140 characters.
+    - **Name** : The name of the rule. Restricted to 80 characters.
 
 * Each security rule is assigned a Priority value. All security rules for a network security group are processed in priority order. The lower the number, the higher the priority. The first rule that matches the traffic is applied, regardless of whether it allows or denies the traffic. If no rule matches, the default rule is applied. It's a good practice to leave gaps in your priority numbering, such as 100, 200, 300, and so. The gaps in the numbering allow you to add new rules without having to edit existing rules.
 
 * You can't remove the default security rules. You can override a default security rule by creating another security rule that has a higher Priority setting for your network security group. By default, Azure allows virtual machines in the same subnet to send traffic to each other (referred to as intra-subnet traffic). You can prohibit intra-subnet traffic by defining a rule in the network security group to deny all inbound and outbound traffic. This rule prevents all virtual machines in your subnet from communicating with each other.
 
-* For inbound traffic, Azure first checks the NSG rules associated with the subnet to ensure that the traffic is allowed to enter the subnet, After the traffic passes the subnet rules, Azure then checks the NSG rules associated with the network interface`(point of connection, like an Network card with with an associated IP adress)` of the target VM or resource. This second check ensures that the traffic is specifically allowed to reach the intended resource. The reverse process occurs for outbound traffic. This process ensures layered security for your resources.
+* For inbound traffic, Azure first checks the NSG rules associated with the subnet to ensure that the traffic is allowed to enter the subnet, After the traffic passes the subnet rules, Azure then checks the NSG rules associated with the network interface(NIC)`(point of connection, like an Network card with with an associated IP adress)` of the target VM or resource. This second check ensures that the traffic is specifically allowed to reach the intended resource. The reverse process occurs for outbound traffic. This process ensures layered security for your resources.
 
+### Scenario: 
+- Create and configure network security groups.
+- Associate network security groups to virtual machines.
+- Deny and allow access to the virtual machines by using network security groups.
+
+### Solution:
+1. Create a virtual machine.
+    - Create a Windows Server virtual machine.
+    - Select `Inbound port rules` as none, this excludes the basic rule of Remote Desktop Protocol (RDP)connection port 3389 aswell as any other connection.
+    - On the `Networking` tab, select `none` for the network security group. This action ensures that the virtual machine has no network security group associated with it.
+    - On disable `Boot diagnostics` to allow the virtual machine to boot up without requiring some additional configurations.
+    - Verify the virtual machine is created.
+    - Review the Inbound port rules tab, and note there are no network security groups associated with the virtual machine.
+
+
+2. Create a network security group and associate the group with the virtual machine.
+    - Create a network security group.
+    - Go to `Network Interfaces` and associate the network security group with the virtual machine network interface (NIC). This action applies the network security group rules to the virtual machine through the NIC, not subnet.
+
+3. Create a security rule to allow RDP access to the virtual machine.
+    - Try to connect to the virtual machine using RDP. The connection should fail because the network security group denies the RDP connection.
+    - Add an inbound port rule to allow RDP to the virtual machine on port 3389, TCP protocol, priority 300 and name it `Allow-RDP`.
+    - Verify that the security rule is applied to the network security group associated with the virtual machine and you can now connect to the virtual machine using RDP.
+    - To use RDP download the RDP file from the Azure portal and open it with the Remote Desktop Connection application.
+
+4. Configure an outbound security port rule to deny internet access.
+    - You already have an outbound security rule that allows all traffic to the internet. Remember this is a default rule that cant be reomved. Verify that you can access the internet from the virtual machine.
+    - Add an outbound security rule to deny all traffic to the internet. This rule should then have a higher priority than the default rule to be able to override it.
+    - Verify that you can no longer access the internet from the virtual machine.
+
+
+## Application Security Groups (ASG)
+Application Security Groups (ASGs) let you organize virtual machines into groups based on workload or function, eg. Webservers, Databases. Instead of managing security rules for each VM individually, you can apply security rules to the entire group having same functions. This means you can define a security policy once for an `application group`, and it applies to all VMs within that group. With this You can define fine-grained network security policies based on workloads, rather than explicit IP addresses. ASGs enable you to configure network security as a natural extension of an application's structure, allowing you to group virtual machines with similar security requirements. 
+**Scenario**
+- We have six virtual machines in our configuration with two web servers and two database servers.
+- Customers access the online catalog hosted on our web servers.
+- The web servers must be accessible from the internet over HTTP port 80 and HTTPS port 443.
+- Inventory information is stored on our database servers.
+- The database servers must be accessible over HTTPS port 1433.
+- Only our web servers should have access to our database servers.
+**Solution**:
+1. Create Application Security Groups for the Virtual Machines
+    - Create an application security group named **WebASG** to group our web server machines.
+    - Create an application security group named **DBASG** to group our database server machines.
+
+2. Assign the Network Interfaces for the Virtual Machines
+    - For each virtual machine server, assign its NIC to the appropriate application security group.
+
+3. Create the Network Security Group and Security Rules
+    * Rule 1
+        - **Priority**: 100
+        - **Description**: Allow access from the internet to machines in the WebASG group from HTTP port 80 and HTTPS port 443.
+        - **Note**: Rule 1 has the lowest priority value, so it has precedence over the other rules in the group. Customer access to our online catalog is paramount in our design.
+
+    * Rule 2
+        - **Priority**: 110
+        - **Description**: Allow access from machines in the WebASG group to machines in the DBASG group over HTTPS port 1433.
+
+    * Rule 3
+        - **Priority**: 120
+        - **Description**: Deny access from anywhere to machines in the DBASG group over HTTPS port 1433.
+
+**Note**: The combination of Rule 2 and Rule 3 ensures that only our web servers can access our database servers. This security configuration protects our inventory databases from outside attack.
 
 
