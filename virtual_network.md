@@ -85,35 +85,37 @@ Network security groups (NSGs) are a simple way to filter network traffic to and
 
 ## Application Security Groups (ASG)
 Application Security Groups (ASGs) let you organize virtual machines into groups based on workload or function, eg. Webservers, Databases. Instead of managing security rules for each VM individually, you can apply security rules to the entire group having same functions. This means you can define a security policy once for an `application group`, and it applies to all VMs within that group. With this You can define fine-grained network security policies based on workloads, rather than explicit IP addresses. ASGs enable you to configure network security as a natural extension of an application's structure, allowing you to group virtual machines with similar security requirements. 
+
 **Scenario**
-- We have six virtual machines in our configuration with two web servers and two database servers.
-- Customers access the online catalog hosted on our web servers.
-- The web servers must be accessible from the internet over HTTP port 80 and HTTPS port 443.
-- Inventory information is stored on our database servers.
-- The database servers must be accessible over HTTPS port 1433.
-- Only our web servers should have access to our database servers.
+    - We have six virtual machines in our configuration with two web servers and two database servers.
+    - Customers access the online catalog hosted on our web servers.
+    - The web servers must be accessible from the internet over HTTP port 80 and HTTPS port 443.
+    - Inventory information is stored on our database servers.
+    - The database servers must be accessible over HTTPS port 1433.
+    - Only our web servers should have access to our database servers.
+
 **Solution**:
-1. Create Application Security Groups for the Virtual Machines
-    - Create an application security group named **WebASG** to group our web server machines.
-    - Create an application security group named **DBASG** to group our database server machines.
+    1. Create Application Security Groups for the Virtual Machines
+        - Create an application security group named **WebASG** to group our web server machines.
+        - Create an application security group named **DBASG** to group our database server machines.
 
-2. Assign the Network Interfaces for the Virtual Machines
-    - For each virtual machine server, assign its NIC to the appropriate application security group.
+    2. Assign the Network Interfaces for the Virtual Machines
+        - For each virtual machine server, assign its NIC to the appropriate application security group.
 
-3. Create the Network Security Group and Security Rules
-    * Rule 1
-        - **Priority**: 100
-        - **Description**: Allow access from the internet to machines in the WebASG group from HTTP port 80 and HTTPS port 443.
-        - **Note**: Rule 1 has the lowest priority value, so it has precedence over the other rules in the group. Customer access to our online catalog is paramount in our design.
+    3. Create the Network Security Group and Security Rules
+        * Rule 1
+            - **Priority**: 100
+            - **Description**: Allow access from the internet to machines in the WebASG group from HTTP port 80 and HTTPS port 443.
+            - **Note**: Rule 1 has the lowest priority value, so it has precedence over the other rules in the group. Customer access to our online catalog is paramount in our design.
 
-    * Rule 2
-        - **Priority**: 110
-        - **Description**: Allow access from machines in the WebASG group to machines in the DBASG group over HTTPS port 1433.
+        * Rule 2
+            - **Priority**: 110
+            - **Description**: Allow access from machines in the WebASG group to machines in the DBASG group over HTTPS port 1433.
 
-    * Rule 3
-        - **Priority**: 120
-        - **Description**: Deny access from anywhere to machines in the DBASG group over HTTPS port 1433.
+        * Rule 3
+            - **Priority**: 120
+            - **Description**: Deny access from anywhere to machines in the DBASG group over HTTPS port 1433.
 
-**Note**: The combination of Rule 2 and Rule 3 ensures that only our web servers can access our database servers. This security configuration protects our inventory databases from outside attack.
+    **Note**: The combination of Rule 2 and Rule 3 ensures that only our web servers can access our database servers. This security configuration protects our inventory databases from outside attack.
 
 
