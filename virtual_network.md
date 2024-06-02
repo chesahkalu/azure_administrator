@@ -29,6 +29,8 @@ Suppose a subnet's address range is 10.0.0.0/16, and addresses 10.0.0.4 through 
    - When you deploy resources into a subnet, Azure assigns the resource an IP address from the subnet.
 6. Review and create the virtual network.
 
+---
+
 ## Network Security Groups (NSG)
 
 Network security groups (NSGs) are a simple way to filter network traffic to and from Azure resources in an Azure virtual network. Each network security group contains security rules that allow or deny inbound network traffic to, or outbound network traffic from, several types of Azure resources. You can assign network security groups to a subnet and create a protected screened subnet (also referred to as a demilitarized zone or DMZ). A DMZ acts as a buffer between resources within your virtual network and the internet.
@@ -82,6 +84,7 @@ Network security groups (NSGs) are a simple way to filter network traffic to and
     - Add an outbound security rule to deny all traffic to the internet. This rule should then have a higher priority than the default rule to be able to override it.
     - Verify that you can no longer access the internet from the virtual machine.
 
+---
 
 ## Application Security Groups (ASG)
 Application Security Groups (ASGs) let you organize virtual machines into groups based on workload or function, eg. Webservers, Databases. Instead of managing security rules for each VM individually, you can apply security rules to the entire group having same functions. This means you can define a security policy once for an `application group`, and it applies to all VMs within that group. With this You can define fine-grained network security policies based on workloads, rather than explicit IP addresses. ASGs enable you to configure network security as a natural extension of an application's structure, allowing you to group virtual machines with similar security requirements. 
@@ -118,4 +121,33 @@ Application Security Groups (ASGs) let you organize virtual machines into groups
 
 **Note**: The combination of Rule 2 and Rule 3 ensures that only our web servers can access our database servers. This security configuration protects our inventory databases from outside attack.
 
+---
 
+## Virtual Network Peering
+
+Virtual network peering enables you to seamlessly connect two Azure virtual networks. Once peered, the virtual networks appear as one, for connectivity purposes. The traffic between the virtual machines in the peered virtual networks is routed through the Microsoft backbone infrastructure, much like traffic is routed between virtual machines in the same virtual network, through private IP addresses only. Virtual network peering provides a low-latency, high-bandwidth connection between resources in different virtual networks. 
+- In any networks you connect through virtual network peering, VPN, or ExpressRoute, assign different address spaces that don't overlap.
+- Peering works well across same regions, different regions, subscriptions and even different tenants. (Needs network admin permissions from both tenants)
+- When you create a virtual network peering connection with Azure PowerShell or Azure CLI, only one side of the peering gets created. To complete the virtual network peering configuration, you'll need to configure the peering in reverse direction to establish connectivity. When you create the virtual network peering connection through the Azure portal, the configuration for both side is completed at the same time.
+
+**Gateway transit**: Peering is non-transitive. Suppose, for example, that your three virtual networks (A, B, C) are peered like this: A <-> B <-> C. Resources in A can't communicate with resources in C because that traffic can't transit through virtual network B. You can enable and add gateway transit to the B network. The B network now acts as a hub, and resources in A can communicate with resources in C. Gateway transit allows the peered virtual networks to use the `VPN gateway` in the peering virtual network. This feature is useful when you have a central network that you want to connect to multiple `spoke networks`. The spoke networks can use the VPN gateway in the central network to establish a connection to `on-premises` resources. The central network acts as a `hub`, while other networks act as spokes.
+
+- **Scenario**: 
+    - There are two offices, New York and Boston, in one region.
+    - There's one office, Seattle, in another region.
+    - All the VMs in the offices need to be networked together so they can share information.
+
+- **Solution**:
+    - Create a virtual network in each office.
+    - Create a VM in each virtual network.
+    - Peer New York and Boston virtual networks.
+    - Peer New York and Seattle virtual networks.
+    - Verify that the New York VM can communicate with both the Boston and Seattle VMs.
+    - Verify that Boston and Seattle VMs `can not` communicate with each other.
+    - Peer the Boston and Seattle virtual networks.
+    - Verify that the Boston and Seattle VMs can communicate with each other.
+
+---
+
+
+    
