@@ -10,12 +10,12 @@
 
 A virtual network is like a digital version of a physical network. Azure Virtual Network allow different Azure resources to securely communicate with each other, the internet, and on-premises networks. When you create a virtual network, your services and virtual machines within your virtual network can communicate directly and securely with each other in the cloud. You can still configure endpoint connections for the virtual machines and services that require internet communication, as part of your solution.
 
-- Subnets: After creating a virtual network, you can add one or more subnets in each virtual network. Subnets enable you to segment the virtual network IP address into one or more sub-networks and allocate a portion of the virtual network's address space to each subnet. You can then deploy Azure resources in a specific subnet. Azure reserves five IP addresses, The first four addresses and the last address are reserved.
+- **Subnets**: After creating a virtual network, you can add one or more subnets in each virtual network. Subnets enable you to segment the virtual network IP address into one or more sub-networks and allocate a portion of the virtual network's address space to each subnet. You can then deploy Azure resources in a specific subnet. Azure reserves five IP addresses, The first four addresses and the last address are reserved.
 
-- Static IP addresses: Static addresses are assigned when a public IP address is created. Static addresses aren't released until a public IP address resource is deleted. If the address isn't associated to a resource, you can change the assignment method after the address is created. If the address is associated to a resource, you might not be able to change the assignment method. You select and assign any unassigned or unreserved IP address in the subnet's address range.
+- **Static IP addresses**: Static addresses are assigned when a public IP address is created. Static addresses aren't released until a public IP address resource is deleted. If the address isn't associated to a resource, you can change the assignment method after the address is created. If the address is associated to a resource, you might not be able to change the assignment method. You select and assign any unassigned or unreserved IP address in the subnet's address range.
 Suppose a subnet's address range is 10.0.0.0/16, and addresses 10.0.0.4 through 10.0.0.9 are already assigned to other resources. In this scenario, you can assign any address between 10.0.0.10 and 10.0.255.254.
 
-- Dynamic IP addresses: Dynamic addresses are assigned after a public IP address is associated to an Azure resource and is started for the first time. Dynamic addresses can change if a resource such as a virtual machine is stopped (deallocated) and then restarted through Azure. The address remains the same if a virtual machine is rebooted or stopped from within the guest OS. When a public IP address resource is removed from a resource, the dynamic address is released. Azure assigns the next available unassigned or unreserved IP address in the subnet's address range. Dynamic assignment is the default allocation method. Suppose addresses 10.0.0.4 through 10.0.0.9 are already assigned to other resources. In this case, Azure assigns the address 10.0.0.10 to a new resource.
+- **Dynamic IP addresses**: Dynamic addresses are assigned after a public IP address is associated to an Azure resource and is started for the first time. Dynamic addresses can change if a resource such as a virtual machine is stopped (deallocated) and then restarted through Azure. The address remains the same if a virtual machine is rebooted or stopped from within the guest OS. When a public IP address resource is removed from a resource, the dynamic address is released. Azure assigns the next available unassigned or unreserved IP address in the subnet's address range. Dynamic assignment is the default allocation method. Suppose addresses 10.0.0.4 through 10.0.0.9 are already assigned to other resources. In this case, Azure assigns the address 10.0.0.10 to a new resource.
 
 ### Steps to Create a Virtual Network
 
@@ -130,7 +130,10 @@ Virtual network peering enables you to seamlessly connect two Azure virtual netw
 - Peering works well across same regions, different regions, subscriptions and even different tenants(Needs network admin permissions from both tenants).
 - When you create a virtual network peering connection with Azure PowerShell or Azure CLI, only one side of the peering gets created. To complete the virtual network peering configuration, you'll need to configure the peering in reverse direction to establish connectivity. When you create the virtual network peering connection through the Azure portal, the configuration for both side is completed at the same time.
 
-**Gateway transit**: Peering is `non-transitive`. Suppose, for example, that your three virtual networks (A, B, C) are peered like this: A <-> B <-> C. Resources in A can't communicate with resources in C because that traffic can't transit through virtual network B. You can enable and add gateway transit to the B network. The B network now acts as a hub, and resources in A can communicate with resources in C. Gateway transit allows the peered virtual networks to use the `VPN gateway` in the peering virtual network. This feature is useful when you have a central network that you want to connect to multiple `spoke networks`. The spoke networks can use the VPN gateway in the central network to establish a connection to `on-premises` resources. The central network acts as a `hub`, while other networks act as spokes.
+**Gateway transit**: Peering is `non-transitive`. Suppose, for example, that your three virtual networks (A, B, C) are peered like this: A <-> B <-> C. Resources in A can't communicate with resources in C because that traffic can't transit through virtual network B. You can enable and add gateway transit to the B network. The B network now acts as a hub, and resources in A can communicate with resources in C. Gateway transit allows the peered virtual networks to use the `VPN gateway` in the peering virtual network. This feature is useful when you have a central network that you want to connect to multiple `spoke networks`. The spoke networks can use the VPN gateway or a network virtual appliance (NVA) in the central network to establish a connection to `on-premises` resources. The central network acts as a `hub`, while other networks act as spokes. This mechanism is known as **`hub-and-spoke topology`**.
+- Other ways to extend the capabilities of your peering for resources and virtual networks outside your peering network, You can implement these mechanisms and create a multi-level hub and spoke architecture. These options can help overcome the limit on the number of virtual network peerings per virtual network.: 
+    - **`User-defined routes(UDRs)`** : Virtual network peering enables the next hop in a user-defined route to be the IP address of a virtual machine in the peered virtual network, or a VPN gateway.
+    - **`Service Chaining`** : Service chaining is a method of connecting multiple virtual network appliances to create a chain of services. Service chaining is used to direct traffic from one virtual network to a virtual appliance or gateway. A user-defined route defines the peered networks.
 
 - **Scenario**: 
     - There are two offices, New York and Boston, in one region.
@@ -149,5 +152,49 @@ Virtual network peering enables you to seamlessly connect two Azure virtual netw
 
 ---
 
+## Routing
 
-    
+Azure uses system routes to direct network traffic between virtual machines, on-premises networks, and the internet. Information about the system routes is recorded in a route table.
+
+* Azure uses system routes to control traffic for virtual machines in several scenarios:
+    - Traffic between virtual machines in the same subnet
+    - Traffic between virtual machines in different subnets in the same virtual network
+    - Traffic from virtual machines to the internet
+    - A route table contains a set of rules (called routes) that specifies how packets should be routed in a virtual network.
+
+* Route tables record information about the system routes, where the tables are associated to subnets.
+
+* Each packet leaving a subnet is handled based on the associated route table.
+
+* Packets are matched to routes by using the destination. The destination can be an IP address, a virtual network gateway, a virtual appliance, or the internet.
+
+* When a matching route can't be found, the packet is dropped.
+
+### User-defined routes (UDRs)
+
+User-defined routes (UDRs) enable you to override Azure's default system routes and control the routing behavior of network traffic. UDRs control network traffic by defining routes that specify the next hop of the traffic flow. The next hop can be `Virtual network gateway`, `Virtual network`, `Internet`, or `Network virtual appliance (NVA)`. Similar to system routes, UDRs also access route tables. 
+
+* **Scenario**:
+Suppose you have a virtual machine that performs a network function like routing, firewalling, or WAN optimization. You want to direct certain subnet traffic to the NVA. To accomplish this configuration, you can;
+- place an NVA between subnets or between one subnet and the internet. The subnet can use a UDR to access the NVA and then the internet. 
+- The subnet can use another UDR and NVA to access the back-end subnet.
+
+### Service Endpoints
+- A virtual network service endpoint provides the identity of your virtual network to the Azure service
+- Today, Azure service traffic from a virtual network uses public IP addresses as source IP addresses. With `service endpoints`, service traffic switches to use    `virtual network private addresses` as the source IP addresses when accessing the Azure service from a virtual network. By adding`Virtual network rules` to the resources, This switch from public IP addresses to `private IP addresses` provides the following benefits:
+    - **Security**: By using private IP addresses, you can restrict access to the Azure service to only your virtual network. This restriction is achieved by using network security group rules that allow traffic only from your virtual network.
+    - **Optimized routing**: By using private IP addresses, traffic from your virtual network to the Azure service remains on the Microsoft Azure backbone network. This routing is optimized for performance and lower latency. Through `Force-Tunneling`, Routes in your virtual network that force internet traffic to your on-premises or network virtual appliances also typically force Azure service traffic to take the same route as the internet traffic. You can force all traffic from your virtual network to the Azure service to use the Microsoft Azure backbone network.
+    - **Simplified network configuration**: By using private IP addresses, you can simplify your network configuration by removing the need for public IP addresses in your virtual network.
+
+**Private links**: Azure Private Link provides private connectivity from a virtual network to Azure platform as a service (PaaS), customer-owned, or Microsoft partner services. 
+- Private Link simplifies the network architecture and secures the connection between endpoints in Azure by keeping data on the Microsoft network, no public access. 
+- The service provider and the consumer can be in the same region or in different regions. 
+- The service provider can be in a different Azure subscription or tenant. 
+- Services delivered on Azure can be brought into your private virtual network by mapping your network to a private endpoint. 
+- Private Link provides connectivity between virtual networks, services, and organizations.
+- All traffic to the service can be routed through the private endpoint. No gateways, NAT devices, Azure ExpressRoute or VPN connections, or public IP addresses are required.
+
+**Note**: It's easy to add a service endpoint to the virtual network. In the Azure portal, you select the Azure service for which to create the endpoint. Adding service endpoints can take up to 15 minutes to complete. Each service endpoint integration has its own Azure documentation page.
+
+
+
