@@ -4,7 +4,7 @@
 
 - Understanding of Azure fundamentals
 - An Azure account with an active subscription (Free tier is enough). Sign up or login to your Azure account [here](https://azure.microsoft.com/en-us/free/)
-- Basic knowledge of networking concepts
+- Basic knowledge of networking concepts including subnets and IP(Internet Protocol) addresses.
 
 ## Overview
 
@@ -150,11 +150,13 @@ Virtual network peering enables you to seamlessly connect two Azure virtual netw
     - Peer the Boston and Seattle virtual networks.
     - Verify that the Boston and Seattle VMs can communicate with each other.
 
+![Virtual Network Peering](resources/Screenshot-2024-06-05-at-5.48.19-AM.png)
+
 ---
 
 ## Routing
 
-Azure uses system routes to direct network traffic between virtual machines, on-premises networks, and the internet. Information about the system routes is recorded in a route table.
+Network traffic in Azure is automatically routed across Azure subnets, virtual networks, and on-premises networks. System routes control this routing. Azure uses system routes to direct network traffic between virtual machines, on-premises networks, and the internet. They're assigned by default to each subnet in a virtual network. With these system routes, any Azure virtual machine that is deployed into a virtual network can communicate with any other in the network. These virtual machines are also potentially accessible from on-premises through a hybrid network or the internet. Information about the system routes is recorded in a route table. 
 
 * Azure uses system routes to control traffic for virtual machines in several scenarios:
     - Traffic between virtual machines in the same subnet
@@ -172,7 +174,14 @@ Azure uses system routes to direct network traffic between virtual machines, on-
 
 ### User-defined routes (UDRs)
 
-User-defined routes (UDRs) enable you to override Azure's default system routes and control the routing behavior of network traffic. UDRs control network traffic by defining routes that specify the next hop of the traffic flow. The next hop can be `Virtual network gateway`, `Virtual network`, `Internet`, or `Network virtual appliance (NVA)`. Similar to system routes, UDRs also access route tables. 
+You can't create or delete system routes, but you can override the system routes by adding custom routes to control traffic flow to the next hop. User-defined routes (UDRs) enable you to override Azure's default system routes and control the routing behavior of network traffic. UDRs control network traffic by defining routes that specify the next hop of the traffic flow. The next hop can be;
+- `Virtual network gateway`;Use to indicate when you want routes for a specific address to be routed to a virtual network gateway. The virtual network gateway is specified as a VPN for the next hop type.
+- `Virtual network`;Use to override the default system route within a virtual network.
+- `Internet`;Use to route traffic to a specified address prefix that is routed to the internet.
+- `Network virtual appliance (NVA)`;A virtual appliance is typically a firewall device used to analyze or filter traffic that is entering or leaving your network. You can specify the private IP address of a Network Interface Card (NIC) attached to a virtual machine so that IP forwarding can be enabled. Or you can provide the private IP address of an internal load balancer.
+- `None`;Use to drop traffic sent to a specified address prefix.
+
+Similar to system routes, UDRs also access route tables.
 
 * **Scenario**:
 Suppose you have a virtual machine that performs a network function like routing, firewalling, or WAN optimization. You want to direct certain subnet traffic to the NVA. To accomplish this configuration, you can;
@@ -186,7 +195,7 @@ Suppose you have a virtual machine that performs a network function like routing
     - **Optimized routing**: By using private IP addresses, traffic from your virtual network to the Azure service remains on the Microsoft Azure backbone network. This routing is optimized for performance and lower latency. Through `Force-Tunneling`, Routes in your virtual network that force internet traffic to your on-premises or network virtual appliances also typically force Azure service traffic to take the same route as the internet traffic. You can force all traffic from your virtual network to the Azure service to use the Microsoft Azure backbone network.
     - **Simplified network configuration**: By using private IP addresses, you can simplify your network configuration by removing the need for public IP addresses in your virtual network.
 
-**Private links**: Azure Private Link provides private connectivity from a virtual network to Azure platform as a service (PaaS), customer-owned, or Microsoft partner services. 
+**Private links**: Azure Private Link provides private connectivity from a virtual network to Azure platform as a service (PaaS), customer-owned, or Microsoft partner services. Your Azure virtual machines can access your storage account directly from the private address space and deny access from a public virtual machine. As you enable service endpoints, Azure creates routes in the route table to direct this traffic.
 - Private Link simplifies the network architecture and secures the connection between endpoints in Azure by keeping data on the Microsoft network, no public access. 
 - The service provider and the consumer can be in the same region or in different regions. 
 - The service provider can be in a different Azure subscription or tenant. 
@@ -197,4 +206,10 @@ Suppose you have a virtual machine that performs a network function like routing
 **Note**: It's easy to add a service endpoint to the virtual network. In the Azure portal, you select the Azure service for which to create the endpoint. Adding service endpoints can take up to 15 minutes to complete. Each service endpoint integration has its own Azure documentation page.
 
 
+**Border Gateway Protocol (BGP)**: BGP is a standardized exterior gateway protocol that exchanges routing information between autonomous systems (ASes), such as different host gateways. With `BGP` you can exchange routes between your `on-premise network gateway` and `azure network gateway`. Typically, you use BGP to advertise on-premises routes to Azure when you're connected to an Azure datacenter through Azure ExpressRoute. You can also configure BGP if you connect to an Azure virtual network by using a VPN site-to-site connection.
 
+
+**Routing Priority**: When you have multiple routes that apply to the same traffic, Azure uses the route with the lowest priority value. The priority value is a number between 0 and 4095. The lower the number, the higher the priority. If two routes have the same priority, Azure uses the route with the lowest address prefix length. The address prefix length is the number of bits in the address prefix. For example, a prefix length of 24 means that the first 24 bits of the address are the network address, and the remaining bits are the host address. For example, a message is sent to the IP address 10.0.0.2, but two routes are available with the 10.0.0.0/16 and 10.0.0.0/24 prefixes. Azure selects the route with the 10.0.0.0/24 prefix because it's more specific. If there are multiple routes with the same address prefix, Azure selects the route based on the type in the following order of priority:
+1. User-defined routes
+2. BGP routes
+3. System routes
