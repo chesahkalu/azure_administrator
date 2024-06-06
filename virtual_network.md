@@ -216,12 +216,57 @@ Suppose you have a virtual machine that performs a network function like routing
 2. BGP routes
 3. System routes
 
+## Load Balancer
 
+Azure Load Balancer delivers high availability and network performance to your applications. Administrators use load balancing to efficiently distribute incoming network traffic across back-end servers and resources. A load balancer is implemented by using load-balancing rules and health probes. Load balancers can be configured to support -
+* `external`: Normally used for internet-facing applications, Example: Internet client client send webpage requests to the public IP address of a web application. The load balancer distributes the requests to the virtual machines in the back-end pool.
+
+or 
+
+* `internal`: For internal applications within an Azure network, Example: Need to communicate with a database server. The load balancer distributes the requests to the virtual machines hosting the back-end SQL servers.
+
+* To implement a load balancer, you configure four components:
+
+- Front-end IP configuration: The public IP address that receives the incoming network traffic.
+- Back-end pools: The virtual machines that receive the incoming network traffic, including Azure Virtual Machines or instances in Azure Virtual Machine Scale Sets.
+- Health probes: The health probes that monitor the health of the virtual machines in the back-end pool.
+- Load-balancing rules: The rules that define how the incoming network traffic is distributed to the virtual machines in the back-end pool.
+
+When you create an Azure load balancer in the Azure portal, you select the type of load balancer to create (internal or public) and the Stock Keeping Unit (SKU). The SKU type that you select determines which endpoint configurations are supported for the pool along with the number of pool instances allowed(`The pool is the collection of virtual machines that receive the incoming network traffic at the backend`).Azure Load Balancer supports three SKU options: 
+
+- Basic, can be upgraded to the Standard SKU. Allows up to 300 pools and 1000 rules.
+- Standard, essentially a superset of Basic offering an expanded and more granular feature set than the Basic SKU. Allows up to 1000 pools and 1000 rules.
+- Gateway, supports high performance and high availability scenarios with third-party network virtual appliances (NVAs).
+
+**Health Probes**: Health probes are used to monitor the health of your applications and the virtual machines in the back-end pool. The health probe periodically checks the health of the virtual machines by sending a request to the virtual machine and waiting for a response. If the virtual machine responds to the probe, it's considered healthy. If the virtual machine doesn't respond to the probe, it's considered unhealthy. The load balancer stops sending network traffic to unhealthy virtual machines.
+To configure a probe, you specify values for the following settings:
+- Port: Back-end port number that the health probe monitors
+- URI: URI for requesting the health status from the backend
+- Protocol: Protocol used for the health probe (HTTP, TCP, or HTTPS). For HTTP, a virtual machine instance is considered healthy if it responds with an HTTP 200 message within the specified timeout period (default is 31 seconds). 
+- Interval: Amount of time between probe attempts (default is 15 seconds)
+- Unhealthy threshold: Number of failures that must occur for the instance to be considered unhealthy 
+
+**Load Balancing Rules**: Load-balancing rules define how the incoming network traffic is distributed to the virtual machines in the back-end pool. By default, Azure Load Balancer distributes network traffic equally among multiple virtual machines. The load balancer uses a 5-tuple hash to map traffic to the available servers. The 5-tuple hash includes the:
+
+- source IP address: The IP address of the client that sent the request
+- source port: The port number used by the client
+- destination IP address: The IP address of the load balancer
+- destination port: The port number used by the client to connect to the load balancer
+- protocol type: The protocol used by the client to connect to the load balancer
+
+* To define a rule in the Azure portal, you configure several settings:
+
+- IP version (IPv4 or IPv6)
+- Front-end IP address, *Port, and Protocol (TCP or UDP)
+- Back-end pool and Back-end port
+- Health probe
+- Session persistence: specifies how to handle traffic from a client. By default, successive requests from a client go to any virtual machine in your pool in the `None` default setting. Additionally, you can configure the load balancer to use the `Client IP` setting, which ensures that all requests from a particular client go to the same virtual machine in the pool. Maintaining session persistence information is important for applications that implement a shopping cart.
 
 
 
 
 ## References and Further Reading
 
-- [Interactive Lab Simulations on VN,NSG,DNS](https://learn.microsoft.com/en-us/training/modules/configure-network-routing-endpoints/7-simulation-routing?source=learn)
 - [Official Azure Virtual Network Documentation](https://learn.microsoft.com/en-us/azure/virtual-network/)
+- [Interactive Lab Simulations on VN,NSG,DNS](https://learn.microsoft.com/en-us/training/modules/configure-network-routing-endpoints/7-simulation-routing?source=learn)
+- [Interactive Lab Simulations on Load Balancer](https://learn.microsoft.com/en-us/training/modules/configure-azure-load-balancer/9-simulation-load-balancer)
