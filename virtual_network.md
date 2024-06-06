@@ -168,6 +168,8 @@ Network traffic in Azure is automatically routed across Azure subnets, virtual n
 
 * Each packet leaving a subnet is handled based on the associated route table.
 
+* You can create multiple route tables in Azure. Each route table can be associated with one or more subnets. A subnet can only be associated with one route table.
+
 * Packets are matched to routes by using the destination. The destination can be an IP address, a virtual network gateway, a virtual appliance, or the internet.
 
 * When a matching route can't be found, the packet is dropped.
@@ -178,7 +180,7 @@ You can't create or delete system routes, but you can override the system routes
 - `Virtual network gateway`;Use to indicate when you want routes for a specific address to be routed to a virtual network gateway. The virtual network gateway is specified as a VPN for the next hop type.
 - `Virtual network`;Use to override the default system route within a virtual network.
 - `Internet`;Use to route traffic to a specified address prefix that is routed to the internet.
-- `Network virtual appliance (NVA)`;A virtual appliance is typically a firewall device used to analyze or filter traffic that is entering or leaving your network. You can specify the private IP address of a Network Interface Card (NIC) attached to a virtual machine so that IP forwarding can be enabled. Or you can provide the private IP address of an internal load balancer.
+- **`Network virtual appliance (NVA)`**;A virtual appliance is typically a firewall device used to analyze or filter traffic that is entering or leaving your network. They are virtual machines that control the flow of network traffic by controlling routing. It acts as a router that forwards requests between subnets on the virtual network. You can specify the private IP address of a Network Interface Card (NIC) attached to a virtual machine so that IP forwarding can be enabled, Or you can provide the private IP address of an internal load balancer. With the `microsegmentation approach`, you can create dedicated subnets for the firewall(NVA) and then deploy web applications and other services in other subnets. All traffic is routed through the firewall and inspected by the NVAs. You'll enable forwarding on the virtual-appliance network interfaces to pass traffic that is accepted by the appropriate subnet. Click [here](https://learn.microsoft.com/en-us/training/modules/control-network-traffic-flow-with-routes/4-network-virtual-appliances) to learn more about `NVA`
 - `None`;Use to drop traffic sent to a specified address prefix.
 
 Similar to system routes, UDRs also access route tables.
@@ -213,3 +215,13 @@ Suppose you have a virtual machine that performs a network function like routing
 1. User-defined routes
 2. BGP routes
 3. System routes
+
+
+
+
+
+
+## References and Further Reading
+
+- [Interactive Lab Simulations on VN,NSG,DNS](https://learn.microsoft.com/en-us/training/modules/configure-network-routing-endpoints/7-simulation-routing?source=learn)
+- [Official Azure Virtual Network Documentation](https://learn.microsoft.com/en-us/azure/virtual-network/)
