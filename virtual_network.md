@@ -223,7 +223,7 @@ Azure Load Balancer delivers high availability and network performance to your a
 
 or 
 
-* `internal`: For internal applications within an Azure network, Example: Need to communicate with a database server. The load balancer distributes the requests to the virtual machines hosting the back-end SQL servers.
+* `internal`: For internal applications within an Azure network, Example: VM server receives request from Internet client, VM server Need to communicate with a database server. The load balancer distributes the requests to the virtual machines hosting the back-end SQL servers whcih should all be in the same subnet.
 
 * To implement a load balancer, you configure four components:
 
@@ -252,7 +252,7 @@ To configure a probe, you specify values for the following settings:
 - source port: The port number used by the client
 - destination IP address: The IP address of the load balancer
 - destination port: The port number used by the client to connect to the load balancer
-- protocol type: The protocol used by the client to connect to the load balancer
+- protocol type: The protocol used by the client to connect to the load balancer TCP or UDP
 
 * To define a rule in the Azure portal, you configure several settings:
 
@@ -260,7 +260,7 @@ To configure a probe, you specify values for the following settings:
 - Front-end IP address, *Port, and Protocol (TCP or UDP)
 - Back-end pool and Back-end port
 - Health probe
-- Session persistence: specifies how to handle traffic from a client. By default, successive requests from a client go to any virtual machine in your pool in the `None` default setting. Additionally, you can configure the load balancer to use the `Client IP` setting, which ensures that all requests from a particular client go to the same virtual machine in the pool. Maintaining session persistence information is important for applications that implement a shopping cart.
+- Session persistence: specifies how to handle traffic from a client. By default, successive requests from a client go to any virtual machine in your pool in the `None` default setting. Additionally, you can configure the load balancer to use the `Client IP` setting, which ensures that all requests from a particular client go to the same virtual machine in the pool. This can also be refered to as `Source IP Affinity`. Using 2 or 3 tuple hash, the load balancer can direct traffic to the same virtual machine based on the source `IP address, source port, or destination IP address.`Maintaining session persistence information is important for applications that implement a shopping cart.
 
 
 
