@@ -8,9 +8,19 @@
 
 ## Overview
 
-A virtual network is like a digital version of a physical network. Azure Virtual Network allow different Azure resources to securely communicate with each other, the internet, and on-premises networks. When you create a virtual network, your services and virtual machines within your virtual network can communicate directly and securely with each other in the cloud. You can still configure endpoint connections for the virtual machines and services that require internet communication, as part of your solution.
+A virtual network is like a digital version of a physical network. Azure Virtual Network allow different Azure resources to securely communicate with each other, the internet, and on-premises networks. When you create a virtual network, your services and virtual machines within your virtual network can communicate directly and securely with each other in the cloud. You can still configure endpoint connections for the virtual machines and services that require internet communication, as part of your solution. A typical Azure network design usually has these components:
 
-- **Subnets**: After creating a virtual network, you can add one or more subnets in each virtual network. Subnets enable you to segment the virtual network IP address into one or more sub-networks and allocate a portion of the virtual network's address space to each subnet. You can then deploy Azure resources in a specific subnet. Azure reserves five IP addresses, The first four addresses and the last address are reserved.
+- Virtual networks
+- Subnets
+- Network security groups
+- Firewalls
+- Load balancers
+
+! [Azure Network Design](Screenshot-2024-06-08-at-5.27.34-AM.png)
+
+- **Subnets**: A virtual network is your network in the cloud. After creating a virtual network, You can divide your virtual network into multiple subnets. Each subnet contains a portion of the IP-address space assigned to your virtual network. Subnets enable you to segment the virtual network IP address into one or more sub-networks and allocate a portion of the virtual network's address space to each subnet. You can then deploy Azure resources in a specific subnet. Azure reserves five IP addresses, The first four addresses and the last address are reserved.
+
+By default, all subnets in an Azure virtual network can communicate with each other. However, you can use a network security group to deny communication between subnets. Regarding sizing, the smallest supported subnet uses a /29 subnet mask, and the largest supported subnet uses a /2 subnet mask. The smallest subnet has eight IP addresses, and the largest subnet has 1,073,741,824 IP addresses.
 
 - **Static IP addresses**: Static addresses are assigned when a public IP address is created. Static addresses aren't released until a public IP address resource is deleted. If the address isn't associated to a resource, you can change the assignment method after the address is created. If the address is associated to a resource, you might not be able to change the assignment method. You select and assign any unassigned or unreserved IP address in the subnet's address range.
 Suppose a subnet's address range is 10.0.0.0/16, and addresses 10.0.0.4 through 10.0.0.9 are already assigned to other resources. In this scenario, you can assign any address between 10.0.0.10 and 10.0.255.254.
@@ -126,11 +136,11 @@ Application Security Groups (ASGs) let you organize virtual machines into groups
 ## Virtual Network Peering
 
 Virtual network peering enables you to seamlessly connect two Azure virtual networks. Once peered, the virtual networks appear as one, for connectivity purposes. The traffic between the virtual machines in the peered virtual networks is routed through the Microsoft backbone infrastructure, much like traffic is routed between virtual machines in the same virtual network, through private IP addresses only. Virtual network peering provides a low-latency, high-bandwidth connection between resources in different virtual networks. 
-- In any networks you connect through virtual network peering, VPN, or ExpressRoute, assign different address spaces that don't `overlap`.
+- In any networks you connect through virtual network peering, VPN, or ExpressRoute, assign different address spaces that don't **`overlap`**. This is same with on-premises networks. If the address spaces overlap, the traffic won't be routed correctly. For example, you can't use 192.168.0.0/16 on your on-premises network and use 192.168.10.0/24 on your Azure virtual network. These ranges both contain the same IP addresses so traffic can't be routed between them.
 - Peering works well across same regions, different regions, subscriptions and even different tenants(Needs network admin permissions from both tenants).
 - When you create a virtual network peering connection with Azure PowerShell or Azure CLI, only one side of the peering gets created. To complete the virtual network peering configuration, you'll need to configure the peering in reverse direction to establish connectivity. When you create the virtual network peering connection through the Azure portal, the configuration for both side is completed at the same time.
 
-**Gateway transit**: Peering is `non-transitive`. Suppose, for example, that your three virtual networks (A, B, C) are peered like this: A <-> B <-> C. Resources in A can't communicate with resources in C because that traffic can't transit through virtual network B. You can enable and add gateway transit to the B network. The B network now acts as a hub, and resources in A can communicate with resources in C. Gateway transit allows the peered virtual networks to use the `VPN gateway` in the peering virtual network. This feature is useful when you have a central network that you want to connect to multiple `spoke networks`. The spoke networks can use the VPN gateway or a network virtual appliance (NVA) in the central network to establish a connection to `on-premises` resources. The central network acts as a `hub`, while other networks act as spokes. This mechanism is known as **`hub-and-spoke topology`**.
+**Gateway transit**: Peering is `non-transitive`. Suppose, for example, that your three virtual networks (A, B, C) are peered like this: A <-> B <-> C. Resources in A can't communicate with resources in C because that traffic can't transit through virtual network B. You can enable and add gateway transit to the B network. The B network now acts as a hub, and resources in A can communicate with resources in C. Gateway transit allows the peered virtual networks to use the `VPN gateway` in the peering virtual network. This feature is useful when you have a central network that you want to connect to multiple `spoke networks`. The spoke networks can use the VPN gateway or a network virtual appliance (NVA) in the central network to establish a connection to `on-premises` resources. The central network acts as a `hub`, while other networks act as `spokes`. This mechanism is known as **`hub-and-spoke topology`**.
 - Other ways to extend the capabilities of your peering for resources and virtual networks outside your peering network, You can implement these mechanisms and create a multi-level hub and spoke architecture. These options can help overcome the limit on the number of virtual network peerings per virtual network.: 
     - **`User-defined routes(UDRs)`** : Virtual network peering enables the next hop in a user-defined route to be the IP address of a virtual machine in the peered virtual network, or a VPN gateway.
     - **`Service Chaining`** : Service chaining is a method of connecting multiple virtual network appliances to create a chain of services. Service chaining is used to direct traffic from one virtual network to a virtual appliance or gateway. A user-defined route defines the peered networks.
@@ -225,7 +235,7 @@ or
 
 * `internal`: For internal applications within an Azure network, Example: VM server receives request from Internet client, VM server Need to communicate with a database server. The load balancer distributes the requests to the virtual machines hosting the back-end SQL servers whcih should all be in the same subnet.
 
-* To implement a load balancer, you configure four components:
+* **To implement a load balancer, you configure four components**:
 
 - Front-end IP configuration: The public IP address that receives the incoming network traffic.
 - Back-end pools: The virtual machines that receive the incoming network traffic, including Azure Virtual Machines or instances in Azure Virtual Machine Scale Sets.
@@ -254,7 +264,7 @@ To configure a probe, you specify values for the following settings:
 - destination port: The port number used by the client to connect to the load balancer
 - protocol type: The protocol used by the client to connect to the load balancer TCP or UDP
 
-* To define a rule in the Azure portal, you configure several settings:
+* **To define a rule in the Azure portal, you configure several settings:**
 
 - IP version (IPv4 or IPv6)
 - Front-end IP address, *Port, and Protocol (TCP or UDP)
@@ -262,7 +272,97 @@ To configure a probe, you specify values for the following settings:
 - Health probe
 - Session persistence: specifies how to handle traffic from a client. By default, successive requests from a client go to any virtual machine in your pool in the `None` default setting. Additionally, you can configure the load balancer to use the `Client IP` setting, which ensures that all requests from a particular client go to the same virtual machine in the pool. This can also be refered to as `Source IP Affinity`. Using 2 or 3 tuple hash, the load balancer can direct traffic to the same virtual machine based on the source `IP address, source port, or destination IP address.`Maintaining session persistence information is important for applications that implement a shopping cart.
 
+### Application Gateway
 
+Azure Application Gateway is a load balancer for web traffic. Administrators implement an application gateway to manage traffic to their web apps. Azure Application Gateway offers two primary methods for routing traffic:
+
+- **Path-based routing**: sends requests with different URL paths to different pools of back-end servers. Each pool can contain a different set of servers. For example, you can route requests for `/images` to one set of servers and requests for `/video` to another set of servers.
+
+- **Multi-site routing**: configures more than one web application on the same application gateway instance. Each web application can have its own back-end pool of servers. For example, you can route requests for `www.contoso.com` to one set of servers and requests for `www.fabrikam.com` to another set of servers.
+
+- You can configure your application gateway to redirect traffic. For example, you can redirect traffic from HTTP to HTTPS. You can also configure the application gateway to rewrite URLs. For example, you can rewrite URLs to change the path of a request.
+
+- You can implement Application Gateway to rewrite HTTP headers. For example, you can add, remove, or update HTTP headers. You can also implement Application Gateway to add a custom header to a request. For example, you can add a header that contains the client's IP address.
+
+- Application Gateway allows you to create custom error pages instead of displaying default error pages. You can use your own branding and layout by using a custom error page.
+
+### IP Addressing
+
+IP addressing is a critical component of network design. IP addresses are used to identify devices on a network. An IP address is a unique identifier for a device on a network. IP addresses are used to route traffic between devices on a network. 
+
+**Considerations for IP Addressing**:
+
+- **Public IP addresses**: Public IP addresses are used to communicate with devices on the internet. Public IP addresses are assigned by the Internet Assigned Numbers Authority (IANA). Public IP addresses are unique and can't be duplicated. Public IP addresses are routable on the internet. 
+
+- **Private IP addresses**: Private IP addresses are used to communicate with devices on a private network. Private IP addresses are not routable on the internet. 
+
+- **Dynamic IP addresses**: Dynamic IP addresses are assigned by a DHCP server. Dynamic IP addresses are temporary and can change. 
+
+- **Static IP addresses**: Static IP addresses are manually assigned to a device. Static IP addresses are permanent and don't change.
+
+- **Dynamic Host Configuration Protocol (DHCP)**: The Dynamic Host Configuration Protocol (DHCP) is a network management protocol used to automatically assign IP addresses to devices on a network. DHCP assigns IP addresses to devices when they connect to the network. DHCP assigns IP addresses from a pool of available addresses. DHCP can also assign other network configuration settings, such as the subnet mask and default gateway.
+
+- **Subnets**: A subnet is a range of IP addresses in your network. 
+
+- **CIDR notation**: CIDR notation is a compact representation of an IP address and its associated network mask. CIDR notation is used to specify the number of bits in an IP address that represent the network portion of the address. CIDR notation is used to specify the number of bits in an IP address that represent the network portion of the address. CIDR notation is used to specify the number of bits in an IP address that represent the network portion of the address. CIDR notation is used to specify the number of bits in an IP address that represent the network portion of the address.
+
+* Before planning your network IP address scheme, you must gather the requirements for your infrastructure. These requirements also will help you prepare for future growth by reserving extra IP addresses and subnets.
+
+Here are two of the questions you might ask to discover the requirements:
+
+- How many devices do you have on the network?
+- How many devices are you planning to add to the network in the future?
+
+* When your network expands, you don't want to redesign the IP address scheme. Here are some other questions you could ask:
+
+- ased on the services running on the infrastructure, what devices do you need to separate?
+- How many subnets do you need?
+- How many devices per subnet do you have?
+- How many devices are you planning to add to the subnets in future?
+- Are all subnets going to be the same size?
+- How many subnets do you want or plan to add in future?
+
+### Azure Network Watcher
+
+Azure Network Watcher is a regional service that helps you monitor, diagnose, and gain insights into your network infrastructure in Azure. Below are the key features  Network Watcher:
+
+* **Network Performance Monitoring**
+- **Connection Monitor**: Monitors connectivity status, latency, and network topology changes between Azure virtual machines, endpoints and network interfaces.
+
+* **Network Diagnostics**
+- **IP Flow Verify**: Diagnoses connectivity issues by verifying the communication between a virtual machine and an endpoint.
+- **Next Hop**: Determines the next hop a packet takes to reach its destination.
+- **Security Group View**: Displays all security rules applied to a network interface in a virtual machine.
+- **Effective Security Rules**: Shows all effective security rules for a network interface, including those from associated NSGs.
+- **Packet Capture**: Captures and inspects packets to and from a virtual machine for diagnosing network issues.
+
+* **Topology**
+- **Topology View**: Visualizes the network topology of your Azure resources, providing a graphical representation of your network layout.
+
+* **Network Logs**
+- **NSG Flow Logs**: Captures and reviews network traffic flow through network security groups for traffic analysis and security audits.
+
+* **Diagnostic Tools**
+- **Network Watcher Extension**: Uses diagnostic tools directly from a virtual machine to gather detailed information about network traffic and issues.
+
+
+* **How to Use Network Watcher:**
+
+1. **Enable Network Watcher**: Enable Network Watcher for your Azure region via the Azure portal, PowerShell, or CLI.
+2. **Connection Monitor**: Set up connection monitoring to ensure network performance and connectivity.
+3. **IP Flow Verify**: Diagnose packet flow and NSG rules to resolve connectivity issues.
+4. **Next Hop**: Understand packet routing paths to diagnose routing issues.
+5. **Packet Capture**: Collect and analyze network traffic to diagnose specific issues.
+6. **View Topology**: Visualize your network architecture using the topology tool.
+
+* **Example Use Cases**
+
+- **Diagnosing Connectivity Issues**: Use IP Flow Verify to check if NSG rules are blocking traffic.
+- **Monitoring Network Performance**: Use Connection Monitor to track latency and connectivity.
+- **Analyzing Network Traffic**: Capture packets to identify performance bottlenecks or security issues.
+- **Security Audits**: Review NSG Flow Logs for compliance and security analysis.
+
+Azure Network Watcher is a powerful suite of tools for ensuring network performance, troubleshooting connectivity, and enhancing security within your Azure environment.
 
 
 ## References and Further Reading
