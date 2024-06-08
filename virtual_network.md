@@ -16,7 +16,7 @@ A virtual network is like a digital version of a physical network. Azure Virtual
 - Firewalls
 - Load balancers
 
-![Azure Network Design](resources/Screenshot-2024-06-08-at-5.27.34-AM.png)
+![Azure Network Design](resources/Screenshot-2024-06-08-at-8.25.30-AM.png)
 
 - **Subnets**: A virtual network is your network in the cloud. After creating a virtual network, You can divide your virtual network into multiple subnets. Each subnet contains a portion of the IP-address space assigned to your virtual network. Subnets enable you to segment the virtual network IP address into one or more sub-networks and allocate a portion of the virtual network's address space to each subnet. You can then deploy Azure resources in a specific subnet. Azure reserves five IP addresses, The first four addresses and the last address are reserved.
 
