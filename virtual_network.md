@@ -16,7 +16,7 @@ A virtual network is like a digital version of a physical network. Azure Virtual
 - Firewalls
 - Load balancers
 
-! [Azure Network Design](Screenshot-2024-06-08-at-5.27.34-AM.png)
+! [Azure Network Design](resources/Screenshot-2024-06-08-at-5.27.34-AM.png)
 
 - **Subnets**: A virtual network is your network in the cloud. After creating a virtual network, You can divide your virtual network into multiple subnets. Each subnet contains a portion of the IP-address space assigned to your virtual network. Subnets enable you to segment the virtual network IP address into one or more sub-networks and allocate a portion of the virtual network's address space to each subnet. You can then deploy Azure resources in a specific subnet. Azure reserves five IP addresses, The first four addresses and the last address are reserved.
 
@@ -315,12 +315,23 @@ Here are two of the questions you might ask to discover the requirements:
 
 * When your network expands, you don't want to redesign the IP address scheme. Here are some other questions you could ask:
 
-- ased on the services running on the infrastructure, what devices do you need to separate?
+- Based on the services running on the infrastructure, what devices do you need to separate?
 - How many subnets do you need?
 - How many devices per subnet do you have?
 - How many devices are you planning to add to the subnets in future?
 - Are all subnets going to be the same size?
 - How many subnets do you want or plan to add in future?
+
+**Scenario**:
+Your organization has three virtual networks in Azure: CoreServicesVnet, ManufacturingVnet, and ResearchVnet. Each virtual network has unique requirements for IP address space. You need to plan the IP address space for each virtual network. Here are the requirements for each virtual network:
+
+- The `CoreServicesVnet` virtual network is deployed in the US West region. This virtual network has the largest number of resources. It has connectivity to on-premises networks through a VPN connection. This network has web services, databases, and other systems that are key to business operations. Shared services, such as domain controllers and DNS, are located here as well. A large amount of growth is anticipated, so a large address space is necessary for this virtual network.
+
+- The `ManufacturingVnet` virtual network is deployed in the North Europe region, near the location of your organization's manufacturing facilities. This virtual network contains systems for the manufacturing facilities' operations. The organization is anticipating a large number of internal connected devices from which their systems retrieve data (such as temperature) and need an IP address space for expansion.
+
+- The `ResearchVnet` virtual network is deployed in the West India region, near the location of the organization's research and development team that uses this virtual network. The team has a small, stable set of resources with no expectation of future growth. The team needs a few IP addresses for a few virtual machines for their work.
+
+! [IP Addressing](resources/Screenshot-2024-06-08-at-7.56.09-AM.png)
 
 ### Azure Network Watcher
 
