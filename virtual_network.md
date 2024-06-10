@@ -225,6 +225,8 @@ Suppose you have a virtual machine that performs a network function like routing
 2. BGP routes
 3. System routes
 
+---
+
 ## Load Balancer
 
 Azure Load Balancer delivers high availability and network performance to your applications. Administrators use load balancing to efficiently distribute incoming network traffic across back-end servers and resources. A load balancer is implemented by using load-balancing rules and health probes. Load balancers can be configured to support -
@@ -285,6 +287,8 @@ Azure Application Gateway is a load balancer for web traffic. Administrators imp
 
 - Application Gateway allows you to create custom error pages instead of displaying default error pages. You can use your own branding and layout by using a custom error page.
 
+---
+
 ### IP Addressing
 
 IP addressing is a critical component of network design. IP addresses are used to identify devices on a network. An IP address is a unique identifier for a device on a network. IP addresses are used to route traffic between devices on a network. 
@@ -332,6 +336,48 @@ Your organization has three virtual networks in Azure: CoreServicesVnet, Manufac
 
 ![IP Addressing](resources/Screenshot-2024-06-08-at-7.56.09-AM.png)
 
+---
+
+### Azure DNS
+
+Azure DNS is a hosting service for DNS domains that provides name resolution using the Microsoft Azure infrastructure. By hosting your domains in Azure, you can manage your DNS records using the same credentials, APIs, tools, and billing as your other Azure services. Azure DNS supports both IPv4 and IPv6 addresses. 
+
+After purchasing a domain name, To host the domain name with Azure DNS, you first need to create a DNS zone for that domain. A DNS zone holds all the DNS entries for your domain. You can create a DNS zone in Azure DNS by using the Azure portal, Azure PowerShell, or the Azure CLI. After you create a DNS zone, you can add DNS records to the zone. DNS records are used to map domain names to IP addresses. 
+
+1. DNS Zone: Start by creating a DNS zone, providing the `Domain name`, `subscription`, `resource group and location`. The DNS zone is the container for all the DNS records for a domain. You can create a DNS zone in Azure DNS by using the Azure portal, Azure PowerShell, or the Azure CLI. After you create a DNS zone, you can add DNS records to the zone.
+
+2. Get the Name Servers: After creating a DNS zone, you need to get the name servers for the zone. The name servers are the servers that host the DNS records for your domain. You need to provide these name servers to your domain registrar to delegate the domain to Azure DNS. You can get the name servers for a DNS zone in Azure DNS by using the Azure portal, Azure PowerShell, or the Azure CLI.
+
+3. Update the Domain Registrar: After getting the name servers for a DNS zone, you need to update the domain registrar with the name servers. The domain registrar is the company where you purchased the domain name. You need to provide the name servers to the domain registrar to delegate the domain to Azure DNS. After you update the domain registrar with the name servers, Azure DNS can host the DNS records for your domain.
+
+4. Verify delegation of domain name services: The next step is to verify that the delegated domain now points to the Azure DNS zone you created for the domain. This process can take as few as 10 minutes, but might take longer.
+
+To verify the success of the domain delegation, query the start of authority (SOA) record. The SOA record is automatically created when the Azure DNS zone is set up. You can verify the SOA record using a tool like `nslookup`.
+
+5. Configure DNS settings through DNS Records: After creating a DNS zone, you can add DNS records to the zone. DNS records are used to map domain names to IP addresses. You can add the following types of DNS records to a DNS zone:
+    - **A**: Maps a domain name to an IPv4 address.
+    - **AAAA**: Maps a domain name to an IPv6 address.
+    - **CNAME**: Maps a domain name to another domain name.
+    - **MX**: Maps a domain name to a mail server.
+    - **NS**: Maps a domain name to a name server.
+    - **PTR**: Maps an IP address to a domain name.
+    - **SOA**: Specifies the start of authority for a DNS zone.
+    - **SRV**: Maps a domain name to a service.
+    - **TXT**: Maps a domain name to text information.
+
+**Apex Domain**: An apex domain is a domain that doesn't contain a subdomain. For example, `contoso.com` is an apex domain. An apex domain is also known as a root domain. An apex domain can't be a CNAME record. A CNAME record is a type of DNS record that maps a domain name to another domain name. An apex domain can have other types of DNS records, such as A records and MX records.
+
+**Azure Alias Record**: An Azure alias record is a type of DNS record that is specific to Azure DNS. An Azure alias record is used to map an apex domain to an Azure resource, such as an `Azure Content Delivery Network (CDN) endpoint`, `A public IP resource`, `Azure Traffic Manager profile`, `A front-door profile`. Alias records also provide support for load-balanced applications in the zone apex. The alias record set supports the following DNS zone record types: `A`, `AAAA`, `CNAME`, and `CNAME`. With alias records you can:
+
+- **Prevents dangling DNS records**: A dangling DNS record occurs when the DNS zone records aren't up to date with changes to IP addresses. Alias records prevent dangling references by tightly coupling the lifecycle of a DNS record with an Azure resource.
+- **Updates DNS record set automatically when IP addresses change**: When the underlying IP address of a resource, service, or application is changed, the alias record ensures that any associated DNS records are automatically refreshed.
+- **Hosts load-balanced applications at the zone apex**: Alias records allow for zone apex resource routing to Traffic Manager.
+- **Points zone apex to Azure Content Delivery Network endpoints**: With alias records, you can now directly reference your Azure Content Delivery Network instance.
+
+An alias record allows you to link the zone apex (wideworldimports.com) to a load balancer. It creates a link to the Azure resource rather than a direct IP-based connection. So, if the IP address of your load balancer changes, the zone apex record continues to work.
+
+---
+
 ### Azure Network Watcher
 
 Azure Network Watcher is a regional service that helps you monitor, diagnose, and gain insights into your network infrastructure in Azure. Below are the key features  Network Watcher:
@@ -374,6 +420,7 @@ Azure Network Watcher is a regional service that helps you monitor, diagnose, an
 
 Azure Network Watcher is a powerful suite of tools for ensuring network performance, troubleshooting connectivity, and enhancing security within your Azure environment.
 
+---
 
 ## References and Further Reading
 
