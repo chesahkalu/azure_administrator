@@ -57,6 +57,8 @@ Azure Virtual Machines (VMs) are on-demand, scalable computing resources provide
     - **Advanced**: On the Advanced tab, you can configure agents, scripts, or virtual machine extensions.
     - Other settings are available on the Monitoring and Tags tabs.
 
+- Alternatively, you can browse to the [Azure Quickstart Templates](https://learn.microsoft.com/en-us/samples/browse/?expanded=azure&products=azure-resource-manager) page to find pre-configured templates for virtual machines. You can select a template, customize it, and deploy it directly from the Azure portal.
+
 ### Connecting to a Virtual Machine
 
 Once the virtual machine is created, you can connect to it using various methods:
@@ -65,7 +67,7 @@ Once the virtual machine is created, you can connect to it using various methods
 
 - **RDP (Remote Desktop Protocol)**: For Windows virtual machines, you can use RDP to connect to the VM. You need the public IP address or DNS name of the VM, and the username and password you specified during VM creation. The system provides you with a downloadable RDP file to use for the connection.
 
-- **Azure Bastion**: Azure Bastion is a fully managed PaaS service that provides secure and seamless RDP and SSH access to your virtual machines directly through the Azure portal directly over SSL. It eliminates the need for a public IP address on the virtual machine. Azure Bastion lets you connect to the virtual machine directly from the Azure portal. You aren't a client, agent, or another piece of software.
+- **Azure Bastion**: Azure Bastion is a fully managed PaaS service that provides secure and seamless `RDP and SSH` access to your virtual machines directly through the Azure portal directly over SSL. It eliminates the need for a public IP address on the virtual machine. Azure Bastion lets you connect to the virtual machine directly from the Azure portal. You aren't a client, agent, or another piece of software.
 
 - **Azure Serial Console**: Azure Serial Console provides access to the serial console of your virtual machine. It can be used to troubleshoot boot issues, network configuration problems, and other system-related issues.
 
@@ -87,5 +89,12 @@ Once the virtual machine is created, you can manage it using the Azure portal, A
 
 - **Scaling**: You can scale virtual machines manually or automatically based on demand. You can use Azure Autoscale to automatically adjust the number of VM instances based on predefined rules.
 
-- **High Availability**: You can configure availability sets, availability zones, or virtual machine scale sets for high availability and fault tolerance. You can distribute VM instances across multiple fault domains and update domains to ensure uptime.
+- **High Availability**: You can configure availability sets, availability zones, or virtual machine scale sets for high availability and fault tolerance. You can distribute VM instances across multiple fault domains and update domains to ensure uptime. 
 
+
+## 
+
+
+
+
+- [Interactive Lab: Create a Virtual Machine in Azure](https://mslearn.cloudguides.com/en-us/guides/AZ-900%20Exam%20Guide%20-%20Azure%20Fundamentals%20Exercise%209)
