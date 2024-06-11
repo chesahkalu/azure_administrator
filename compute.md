@@ -33,10 +33,59 @@ Azure Virtual Machines (VMs) are on-demand, scalable computing resources provide
 
 - **Networking**: The virtual network and subnet where the virtual machine will be deployed. You can configure network security groups, public IP addresses, and other networking settings.
 
-- **Storage**: The storage account and disk type for the virtual machine. You can choose between standard HDD, standard SSD, and premium SSD disks based on your performance requirements.
+- **Storage**: The storage account and disk type for the virtual machine. You can choose between standard HDD, standard SSD, and premium SSD disks based on your performance requirements. There are atleast 2 types of disks that can be attached to a VM:
+    * **OS disk**: The disk that contains the operating system and boot files. It is required for the virtual machine to start and run.
+    * **Data disk**: Additional disks that can be attached to the virtual machine for storing data. Data disks can be used for applications, databases, or other storage needs.
 
 - **Operating system**: The operating system image that will be used to create the virtual machine. You can choose from a variety of `Windows` and `Linux images` available in the Azure Marketplace. Other images can include popular software tools such as SQL Server, SharePoint, and more. Optionally, you can bring your own custom image.
 
 - **Pricing**: A subscription is billed two separate costs for every virtual machine: `compute and storage`. By separating these costs, you can scale them independently and only pay for what you need.
     * **Compute expenses**: are priced on a `per-hour` basis but billed on a `per-minute` basis. If the virtual machine is deployed for 55 minutes, you're charged for only 55 minutes of usage. With the `consumption-based` option, you pay for compute capacity by the second. You're able to increase or decrease compute capacity on demand and start or stop at any time. With the `reserved instances` option, you can save money by committing to a one- or three-year term for a discount on the compute resources.
     * **Storage expenses**: are billed separately from compute resources. You pay for the storage capacity you use, and the number of transactions performed on that storage. The storage costs are based on the type of storage you use, such as standard HDD, standard SSD, or premium SSD.
+
+### Steps to Create a Virtual Machine
+
+1. **Navigate to the Azure portal**: [Azure Portal](https://portal.azure.com/).
+2. **Click on `Create a resource`**: In the Azure portal, click on the `Create a resource` button in the upper left corner.
+3. **Search for `Virtual Machine`**: In the search bar, type `Virtual Machine` and press Enter.
+4. **Select `Virtual Machine`**: From the search results, select `Virtual Machine` and click on the `Create` button.
+5. **Configure**:  configuring basic and advanced options, and specifying details about the disks, virtual networks, and machine management:
+    - **Basics**: The Basics tab contains the project details, administrator account, and inbound port rules.
+    - **Disks**: On the Disks tab, you select the OS disk type and specify your data disks.
+    - **Networking**: The Networking tab provides settings to create virtual networks and load balancing.
+    - **Management**: On the Management tab, you can enable auto-shutdown and specify backup details.
+    - **Advanced**: On the Advanced tab, you can configure agents, scripts, or virtual machine extensions.
+    - Other settings are available on the Monitoring and Tags tabs.
+
+### Connecting to a Virtual Machine
+
+Once the virtual machine is created, you can connect to it using various methods:
+
+- **SSH (Secure Shell)**: For Linux virtual machines, you can use SSH to connect to the VM. You need the public IP address or DNS name of the VM, and the SSH private key.
+
+- **RDP (Remote Desktop Protocol)**: For Windows virtual machines, you can use RDP to connect to the VM. You need the public IP address or DNS name of the VM, and the username and password you specified during VM creation. The system provides you with a downloadable RDP file to use for the connection.
+
+- **Azure Bastion**: Azure Bastion is a fully managed PaaS service that provides secure and seamless RDP and SSH access to your virtual machines directly through the Azure portal directly over SSL. It eliminates the need for a public IP address on the virtual machine. Azure Bastion lets you connect to the virtual machine directly from the Azure portal. You aren't a client, agent, or another piece of software.
+
+- **Azure Serial Console**: Azure Serial Console provides access to the serial console of your virtual machine. It can be used to troubleshoot boot issues, network configuration problems, and other system-related issues.
+
+### Managing Virtual Machines
+
+Once the virtual machine is created, you can manage it using the Azure portal, Azure CLI, PowerShell, or other tools. Some common management tasks include:
+
+- **Start/Stop**: You can start, stop, restart, or deallocate a virtual machine based on your requirements. Stopping a VM deallocates the compute resources and stops billing for the VM. Deallocating a VM releases the compute resources and the public IP address.
+
+- **Resize**: You can resize a virtual machine to change the VM size, CPU cores, memory, and disk space. You can scale up or down based on your requirements.
+
+- **Backup**: You can configure backup policies to protect your virtual machine data. Azure Backup provides backup and restore capabilities for virtual machines.
+
+- **Monitoring**: You can monitor the performance and health of your virtual machine using Azure Monitor. You can set up alerts, view metrics, and analyze performance data.
+
+- **Security**: You can configure security settings, network security groups, and encryption for your virtual machine. You can also enable Azure Security Center for advanced threat protection.
+
+- **Automation**: You can automate management tasks using Azure Automation, Azure Functions, or other automation tools. You can create runbooks, scripts, and workflows to streamline operations.
+
+- **Scaling**: You can scale virtual machines manually or automatically based on demand. You can use Azure Autoscale to automatically adjust the number of VM instances based on predefined rules.
+
+- **High Availability**: You can configure availability sets, availability zones, or virtual machine scale sets for high availability and fault tolerance. You can distribute VM instances across multiple fault domains and update domains to ensure uptime.
+
