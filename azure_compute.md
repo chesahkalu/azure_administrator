@@ -20,7 +20,7 @@ Azure Virtual Machines (VMs) are on-demand, scalable computing resources provide
 
 - **VM size**: The size of the virtual machine determines the number of CPU cores, memory, and disk space available. You can choose from a wide range of VM sizes based on your requirements. The size of the VM can be changed later if needed. This table provides a description of different Azure virtual machine (VM) classifications, along with typical scenarios for their use.
 
-* | **Classification**     | **Description**                                                                                       | **Scenarios**                                                                                          |
+| **Classification**     | **Description**                                                                                       | **Scenarios**                                                                                          |
 |-------------------------|-------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------|
 | **General Purpose**     | General-purpose virtual machines are designed to have a balanced CPU-to-memory ratio.                 | - Testing and development<br>- Small to medium databases<br>- Low to medium traffic web servers         |
 | **Compute Optimized**   | Compute optimized virtual machines are designed to have a high CPU-to-memory ratio.                   | - Medium traffic web servers<br>- Network appliances<br>- Batch processes<br>- Application servers       |
