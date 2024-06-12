@@ -81,7 +81,7 @@ Once the virtual machine is created, you can manage it using the Azure portal, A
 
 - **Backup**: You can configure backup policies to protect your virtual machine data. Azure Backup provides backup and restore capabilities for virtual machines.
 
-- **Monitoring**: You can monitor the performance and health of your virtual machine using Azure Monitor. You can set up alerts, view metrics, and analyze performance data.
+- **Monitoring**: You can monitor the performance and health of your virtual machine using Azure Monitor. You can set up alerts, view metrics, and analyze performance data. Azure platform monitors and predicts that the hardware or any platform component associated to a physical machine is about to fail. Azure uses `Live Migration` technology to migrate`(heal)` your virtual machines from the failing hardware to a healthy physical machine. Live Migration is a virtual machine preserving operation that only pauses the virtual machine for a short time, but performance might be reduced before or after the event.
 
 - **Security**: You can configure security settings, network security groups, and encryption for your virtual machine. You can also enable Azure Security Center for advanced threat protection.
 
@@ -92,9 +92,64 @@ Once the virtual machine is created, you can manage it using the Azure portal, A
 - **High Availability**: You can configure availability sets, availability zones, or virtual machine scale sets for high availability and fault tolerance. You can distribute VM instances across multiple fault domains and update domains to ensure uptime. 
 
 
-## 
+## Virtual Machine Scale Sets
+
+Azure Virtual Machine Scale Sets are an Azure compute resource that you can use to deploy and manage a set of identical VMs. With VM scale sets, you can create and manage a group of load-balanced VMs that can automatically scale in and out based on demand or a defined schedule. VM scale sets are designed for high availability and fault tolerance, and they can be used to run large-scale services such as web front ends, containerized workloads, and microservices. Virtual Machine Scale Sets support up to `1,000` virtual machine instances. If you create and upload your own `custom virtual machine images, the limit is 600` virtual machine instances.
+
+
+### Availability Sets vs. Availability Zones
+
+- **Availability Sets**: An availability set is a logical feature you can use to ensure `a group of related virtual machines are deployed together`. The grouping helps to prevent a single point of failure from affecting all of your machines. The grouping ensures that not all of the machines are upgraded at the same time during a host operating system upgrade in the datacenter. Azure ensures that virtual machines in an availability set run across multiple physical servers, compute racks, storage units, and network switches. If a hardware or software failure occurs, only a subset of your VMs are impacted and your overall solution remains available and operational. Availability sets are used for high availability and fault tolerance.
+
+    * **Fault Domain**: A fault domain is a group of virtual machines that share a common power source and network switch. By default, the VMs in an availability set are separated across up to three fault domains for Resource Manager deployments (two fault domains for classic deployments). This configuration ensures that the VMs are isolated from each other when it comes to power and networking.
+
+    * **Update Domain**: An update domain is a group of virtual machines that can be rebooted at the same time. When more than one update domain is configured, the virtual machines in one update domain are rebooted while the virtual machines in the other update domains remain running. This configuration ensures that the VMs are isolated from each other when it comes to planned maintenance events. By default, five update domains are assigned to the VMs in an availability set and can be increased to a maximum of 20.
+
+- **Availability Zones**: Availability Zones are unique physical locations within an Azure region. Each zone is made up of one or more datacenters equipped with independent power, cooling, and networking. Availability Zones allow you to run mission-critical applications with high availability and low-latency replication. If one zone is compromised, the other zones are unaffected. By using Availability Zones, you can protect your applications and data from datacenter failures. Availability Zones are used for high availability and disaster recovery. `Zone-redundant services` replicate your applications and data across availability zones to protect against single-points-of-failure.
+
+- **Auto-Scaling**: Virtual Machine Scale Sets can automatically increase or decrease the number of VM instances based on demand. You can configure autoscale settings to define scaling rules based on metrics such as CPU utilization, memory usage, or network traffic. Autoscaling helps to optimize resource utilization and reduce costs by scaling out during peak demand and scaling in during off-peak hours. You can also define a schedule-based scaling rule to scale the VM instances based on a predefined schedule.
+
+### Vertical vs. Horizontal Scaling
+
+- **Vertical Scaling**: Vertical scaling, also known as `scaling up`, involves increasing the size of a single virtual machine. You can add more CPU cores, memory, or disk space to the VM to handle increased workloads. Vertical scaling is useful when you need to increase the capacity of a single VM to meet performance requirements. However, there is a limit to how much you can scale a single VM vertically.
+
+- **Horizontal Scaling**: Horizontal scaling, also known as `scaling out`, involves adding more virtual machines to distribute the workload. You can create a group of identical VMs using VM scale sets and distribute the load across the VM instances. Horizontal scaling is useful when you need to handle increased traffic or demand by adding more VM instances. Horizontal scaling provides better fault tolerance and high availability compared to vertical scaling.
+
+
+### Steps to Create a Virtual Machine Scale Set
+
+1. **Navigate to the Azure portal**: [Azure Portal](https://portal.azure.com/).
+
+2. **Click on `Create a resource`**: In the Azure portal, click on the `Create a resource` button in the upper left corner.
+
+3. **Search for `Virtual Machine Scale Set`**: In the search bar, type `Virtual Machine Scale Set` and press Enter.
+
+4. **Select `Virtual Machine Scale Set`**: From the search results, select `Virtual Machine Scale Set` and click on the `Create` button.
+
+5. **Configure**:  configuring basic and advanced options, and specifying details about the disks, virtual networks, and machine management:
+    - **Basics**: The Basics tab contains the project details, administrator account, and inbound port rules:
+        - **Ochestration mode**: Choose how virtual machines are managed by the scale set. In `flexible orchestration mode`, you manually create and add a virtual machine of any configuration to the scale set. In `uniform orchestration mode`, you define a virtual machine model and Azure will generate identical instances based on that model.
+        - **Image**: Select the operating system image that will be used to create the virtual machine scale set. You can choose from a variety of Windows and Linux images available in the Azure Marketplace.
+        - **Size**: Choose the size of the virtual machines in the scale set. You can select from a range of VM sizes based on your requirements.
+        - **Run with Azure Spot Discount**: Azure Spot Instances allow you to take advantage of unused Azure capacity at a discounted price. Spot Instances can be evicted if Azure needs the capacity back, but they can be a cost-effective option for certain workloads.
+    - **Disks**: On the Disks tab, you select the OS disk type and specify your data disks.
+    - **Networking**: The Networking tab provides settings to create virtual networks and load balancing.
+    - **Management**: On the Management tab, you can enable auto-shutdown and specify backup details.
+    - **Scaling**: On the Scaling tab, you can configure autoscale settings and define scaling rules.
+        - **Scaling policy**: Choose the scaling policy for the scale set. You can define scaling rules based on metrics such as CPU utilization, memory usage, or network traffic. Define the minimum and maximum number of VM instances.
+        - **Scale out**: Define the conditions under which the scale set should increase the number of VM instances. `CPU Threshold` to trigger scale out, `Duration in minutes` to observe for metrics and sustain the condition before scaling out again, and `Number of instances to increase by`.
+        - **Scale in**: Define the conditions under which the scale set should decrease the number of VM instances. `CPU Threshold` to trigger scale in, `Duration in minutes` to observe for metrics and sustain the condition before scaling in again, and `Number of instances to decrease by`.
+    - **Health probes**: On the Health probes tab, you can configure health probes for load balancing.
+    - **Other settings**: Other settings are available on the Monitoring, Tags, and Advanced tabs.
+    - **Advanced**: On the Advanced tab, you can configure `Enable scaling beyond 100 instances` and `Spreading algorithm`.
+
+
+
+
+
 
 
 
 
 - [Interactive Lab: Create a Virtual Machine in Azure](https://mslearn.cloudguides.com/en-us/guides/AZ-900%20Exam%20Guide%20-%20Azure%20Fundamentals%20Exercise%209)
+- [Interactive Lab: Create a Virtual Machine Scale Set in Azure](https://learn.microsoft.com/en-us/training/modules/configure-virtual-machine-availability/11-simulation-machine-scale)
