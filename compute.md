@@ -148,16 +148,42 @@ Azure Virtual Machine Scale Sets are an Azure compute resource that you can use 
 
 Azure App Service is a fully managed platform for building, deploying, and scaling web apps and APIs. It provides a rich set of features for building and hosting web applications, mobile backends, and RESTful APIs. Azure App Service supports multiple programming languages, frameworks, and tools, including .NET, Java, Node.js, PHP, Python, and Ruby. You can deploy web apps and APIs to Azure App Service using various deployment methods, such as Git, GitHub, Azure DevOps, and Docker containers. Azure App Service provides built-in DevOps capabilities for continuous integration and continuous deployment (CI/CD), automatic scaling, and monitoring.
 
+**App Service Plans**:
+- **Shared**: The Shared plan is a multi-tenant hosting plan that provides basic features for small-scale web apps. It is suitable for development and testing scenarios.
+- **Basic**: The Basic plan provides dedicated virtual machine instances for web apps. It offers more resources and features than the Shared plan and is suitable for production workloads.
+- **Standard**: The Standard plan provides additional features such as custom domains, SSL certificates, and auto-scaling. It is suitable for production workloads that require high availability and scalability.
+- **Premium**: The Premium plan offers advanced features such as virtual network integration, custom domains with SSL, and auto-scaling. It is suitable for mission-critical workloads that require high performance and security.
+- **Isolated**: The Isolated plan provides dedicated virtual machines and network isolation for web apps. It offers advanced features such as virtual network integration, custom domains with SSL, and auto-scaling. It is suitable for workloads that require high performance, security, and compliance.
+
 **App Service scaling options**:
 - **scale up**: Scale up increases the size of the VM instances that run your app, like Vertical Scaling.
 - **scale out**: Increase the number of VM instances that run your app. This is Horizontal Scaling.
 - **metric-based autoscale**: Automatically adjust the number of VM instances based on a specified metric, such as CPU utilization or memory usage.
 - **time-based autoscale**: Automatically adjust the number of VM instances based on a predefined schedule.
 
+**App Service Deployment Options**:
+- **Local Git**: Deploy your app by pushing the code to a Git repository hosted on Azure App Service.
+- **GitHub**: Deploy your app by connecting to a GitHub repository.
+- **Azure DevOps**: Deploy your app using Azure DevOps pipelines.
+- **Visual Studio**: Deploy your app directly from Visual Studio using the Azure App Service extension.
 
+**Deployment Slots**:
+- Deployment slots are live apps with their own hostnames. You can deploy different versions of your app to different slots and swap between them to test changes in production. Deployment slots are useful for staging, testing, and production environments. This can ensure `reductionin downtime`, `restoring to last known good site` and `Auto swap`(to swap between staging and production slots). Deployment slots are available in the `Standard, Premium, and Isolated App Service pricing tiers`.
 
+**App Service and DNS**:
+- Azure App Service provides a default domain name for your app, such as `https://<app-name>.azurewebsites.net`. You can also configure a custom domain name for your app using Azure DNS or a third-party DNS provider. You can map your custom domain to the default domain using a CNAME record or an A record. Azure App Service provides built-in support for SSL certificates and HTTPS. You can configure SSL certificates for your custom domain to secure your app.
 
+**App Service Backup and Restore**:
+- Azure App Service provides built-in backup and restore capabilities for web apps. You can configure backup policies to protect your app data and restore it in case of data loss. To use the Backup and Restore feature, you need the Standard or Premium tier App Service plan for your app or site. 
+- Azure backs up `App configuration settings`, `File content`, `Any database connected to your app (SQL Database, Azure Database for MySQL, Azure Database for PostgreSQL, MySQL in-app)`.
+- In your storage account and container configured for your app, each backup consists of a `Zip` file and `XML file:
+    * The Zip file contains the back-up data for your app or site.
+    * The XML file contains a manifest of the Zip file contents.
+    * Backups can hold up to 10 GB of app and database content.
+    * If your storage account is enabled with a firewall, you can't use the storage account as the destination for your backups.
 
+**App Service Monitoring**:
+- Azure App Service provides built-in monitoring and diagnostics capabilities for web apps. You can view metrics, logs, and alerts to monitor the performance and health of your app. Azure Monitor provides a centralized platform for monitoring and analyzing data from your app. You can set up alerts based on metrics such as CPU utilization, memory usage, and response time. `Azure Application Insights` provides advanced monitoring capabilities for web apps, including performance monitoring, error tracking, and user analytics.
 
 
 ### Types of App Service
@@ -181,3 +207,4 @@ Azure App Service offers several types of services to meet different application
 
 - [Interactive Lab: Create a Virtual Machine in Azure](https://mslearn.cloudguides.com/en-us/guides/AZ-900%20Exam%20Guide%20-%20Azure%20Fundamentals%20Exercise%209)
 - [Interactive Lab: Create a Virtual Machine Scale Set in Azure](https://learn.microsoft.com/en-us/training/modules/configure-virtual-machine-availability/11-simulation-machine-scale)
+- [Interactive Lab: Create an App Service in Azure](https://learn.microsoft.com/en-us/training/modules/configure-azure-app-services/11-simulation-web-apps)
