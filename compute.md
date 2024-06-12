@@ -144,7 +144,35 @@ Azure Virtual Machine Scale Sets are an Azure compute resource that you can use 
     - **Advanced**: On the Advanced tab, you can configure `Enable scaling beyond 100 instances` and `Spreading algorithm`.
 
 
+## App Service
 
+Azure App Service is a fully managed platform for building, deploying, and scaling web apps and APIs. It provides a rich set of features for building and hosting web applications, mobile backends, and RESTful APIs. Azure App Service supports multiple programming languages, frameworks, and tools, including .NET, Java, Node.js, PHP, Python, and Ruby. You can deploy web apps and APIs to Azure App Service using various deployment methods, such as Git, GitHub, Azure DevOps, and Docker containers. Azure App Service provides built-in DevOps capabilities for continuous integration and continuous deployment (CI/CD), automatic scaling, and monitoring.
+
+**App Service scaling options**:
+- **scale up**: Scale up increases the size of the VM instances that run your app, like Vertical Scaling.
+- **scale out**: Increase the number of VM instances that run your app. This is Horizontal Scaling.
+- **metric-based autoscale**: Automatically adjust the number of VM instances based on a specified metric, such as CPU utilization or memory usage.
+- **time-based autoscale**: Automatically adjust the number of VM instances based on a predefined schedule.
+
+
+
+
+
+
+
+### Types of App Service
+
+Azure App Service offers several types of services to meet different application requirements:
+
+- **Web Apps**: Azure Web Apps is a fully managed platform for building and hosting web applications. You can deploy web apps written in various programming languages and frameworks, such as .NET, Java, Node.js, PHP, Python, and Ruby. Azure Web Apps supports both Windows and Linux-based web apps.
+
+- **API Apps**: Azure API Apps is a fully managed platform for building and hosting RESTful APIs. You can create APIs using various programming languages and frameworks, such as .NET, Java, Node.js, PHP, Python, and Ruby. Azure API Apps provide built-in support for API management, versioning, and security.
+
+- **Mobile Apps**: Azure Mobile Apps is a fully managed platform for building and hosting mobile backends. You can create mobile backends for iOS, Android, and Windows apps using various programming languages and frameworks. Azure Mobile Apps provide built-in support for offline sync, push notifications, and authentication.
+
+### Key Features of Azure App Service
+
+- **Web Apps**: Azure App Service provides a fully managed platform for building and hosting web applications. You can deploy web apps written in various programming languages and frameworks, such as .NET, Java, Node.js, PHP, Python, and Ruby. Azure App Service supports both Windows and Linux-based web apps.
 
 
 
