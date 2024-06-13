@@ -214,13 +214,8 @@ Containerization is a lightweight, portable, and scalable way to run application
 | **Integration**| ACA integrates with Azure Logic Apps, Functions, and Event Grid for event-driven architectures.                        | AKS provides features like Azure Policy for Kubernetes, Azure Monitor for containers, and Azure Defender for Kubernetes for comprehensive security and governance. |
 
 
-
-
-
-
-
-
-
-- [Interactive Lab: Create a Virtual Machine in Azure](https://mslearn.cloudguides.com/en-us/guides/AZ-900%20Exam%20Guide%20-%20Azure%20Fundamentals%20Exercise%209)
+- [Azure Virtual Machines](https://learn.microsoft.com/en-us/azure/virtual-machines/)
+- [Interactive Lab: Create a Virtual Machine in Azure](https://learn.microsoft.com/en-us/training/modules/configure-virtual-machines/8-simulation-create-virtual-machines)
 - [Interactive Lab: Create a Virtual Machine Scale Set in Azure](https://learn.microsoft.com/en-us/training/modules/configure-virtual-machine-availability/11-simulation-machine-scale)
 - [Interactive Lab: Create an App Service in Azure](https://learn.microsoft.com/en-us/training/modules/configure-azure-app-services/11-simulation-web-apps)
+- [Interactive Lab: Create a Container Group in Azure](https://learn.microsoft.com/en-us/training/modules/configure-azure-container-instances/6-simulation-containers)
