@@ -169,6 +169,7 @@ Azure App Service is a fully managed platform for building, deploying, and scali
 
 **Deployment Slots**:
 - Deployment slots are live apps with their own hostnames. You can deploy different versions of your app to different slots and swap between them to test changes in production. Deployment slots are useful for staging, testing, and production environments. This can ensure `reductionin downtime`, `restoring to last known good site` and `Auto swap`(to swap between staging and production slots). Deployment slots are available in the `Standard, Premium, and Isolated App Service pricing tiers`.
+- When you clone a configuration from another deployment slot, the cloned configuration is editable. Some configuration elements follow the content across the swap, but some don't. For example, if you clone a configuration from a slot, the `connection strings`, `Hybrid connections`,`Service endpoints`, `Azure Content Delivery Network` and `app settings`, etc are cloned. Other slot-specific configuration elements stay in the source slot after the swap.
 
 **App Service and DNS**:
 - Azure App Service provides a default domain name for your app, such as `https://<app-name>.azurewebsites.net`. You can also configure a custom domain name for your app using Azure DNS or a third-party DNS provider. You can map your custom domain to the default domain using a CNAME record or an A record. Azure App Service provides built-in support for SSL certificates and HTTPS. You can configure SSL certificates for your custom domain to secure your app.
@@ -185,20 +186,35 @@ Azure App Service is a fully managed platform for building, deploying, and scali
 **App Service Monitoring**:
 - Azure App Service provides built-in monitoring and diagnostics capabilities for web apps. You can view metrics, logs, and alerts to monitor the performance and health of your app. Azure Monitor provides a centralized platform for monitoring and analyzing data from your app. You can set up alerts based on metrics such as CPU utilization, memory usage, and response time. `Azure Application Insights` provides advanced monitoring capabilities for web apps, including performance monitoring, error tracking, and user analytics.
 
+### Azure Container Instances
 
-### Types of App Service
+Containerization is a lightweight, portable, and scalable way to run applications. Containers package an application and its dependencies into a single `image` that can be run on any platform. Azure Container Instances (ACI) is a serverless container service that allows you to run containers without managing the underlying infrastructure. ACI provides a fast and easy way to deploy containers in the cloud. You can run containers on-demand, scale containers based on demand, and pay only for the resources you use. ACI supports both Linux and Windows containers and integrates with other Azure services such as Azure Container Registry and Azure Kubernetes Service.
 
-Azure App Service offers several types of services to meet different application requirements:
+**Container Groups**:
+- A container group is a collection of containers that are scheduled to run on the same host machine. A container group is similar to a pod in Kubernetes. You can define a container group with one or more containers that share the same lifecycle, networking, and storage. Container groups are useful for running multi-container applications that need to be deployed together. They are useful when you want to divide a single functional task into a few container images. The images can be delivered by different teams and have separate resource requirements.
+- There are two common ways to deploy a multi-container group: `Azure Resource Manager (ARM) templates`(recommended when deploying withother resources) and `YAML files`(recommended for deploying only container instances).
+- Container groups can be deployed in a virtual network for secure communication between containers.
+- Consider the following scenarios for working with multi-container groups:
+    * **Microservices**: Deploying a set of microservices that work together to provide a complete application.
+    * **front-end and back-end support**: Deploying a front-end web application and a back-end API that communicate with each other.
+    * **log data collection**: Deploying a container that collects log data from other containers in the group.
 
-- **Web Apps**: Azure Web Apps is a fully managed platform for building and hosting web applications. You can deploy web apps written in various programming languages and frameworks, such as .NET, Java, Node.js, PHP, Python, and Ruby. Azure Web Apps supports both Windows and Linux-based web apps.
+**Azure Container Registry**:
+- Azure Container Registry is a managed Docker registry service that allows you to store and manage container images. You can use Azure Container Registry to build, store, and deploy container images to Azure services such as Azure Container Instances and Azure Kubernetes Service. Azure Container Registry provides a secure and private registry for your container images. You can control access to your container images using Azure Active Directory and role-based access control (RBAC). Azure Container Registry integrates with Azure DevOps for continuous integration and continuous deployment (CI/CD) pipelines.
 
-- **API Apps**: Azure API Apps is a fully managed platform for building and hosting RESTful APIs. You can create APIs using various programming languages and frameworks, such as .NET, Java, Node.js, PHP, Python, and Ruby. Azure API Apps provide built-in support for API management, versioning, and security.
+**Container Management Solutions**: The two main container management solutions in Azure are `Azure Kubernetes Service (AKS)` and `Azure Container Apps (ACA)`. Both services provide container orchestration and management capabilities, but they are designed for different use cases.
 
-- **Mobile Apps**: Azure Mobile Apps is a fully managed platform for building and hosting mobile backends. You can create mobile backends for iOS, Android, and Windows apps using various programming languages and frameworks. Azure Mobile Apps provide built-in support for offline sync, push notifications, and authentication.
+| **Feature**    | **Azure Container Apps (ACA)**                                                                                         | **Azure Kubernetes Service (AKS)**                                                                                              |
+|----------------|------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------|
+| **Overview**   | ACA is a serverless container platform that simplifies the deployment and management of microservices-based applications by abstracting away the underlying infrastructure. | AKS simplifies deploying a managed Kubernetes cluster in Azure by offloading the operational overhead to Azure. It’s suitable for complex applications that require orchestration. |
+| **Deployment** | ACA provides a PaaS experience with quick deployment and management capabilities.                                       | AKS offers more control and customization options for Kubernetes environments, making it suitable for complex applications and microservices. |
+| **Management** | ACA builds upon AKS and offers a simplified PaaS experience for running containers, with additional features like Dapr for microservices. | AKS provides a more granular control over the Kubernetes environment, suitable for teams with Kubernetes expertise.            |
+| **Scalability**| ACA supports both HTTP-based autoscaling and event-driven scaling, making it ideal for applications that need to respond quickly to changes in demand. | AKS offers horizontal pod autoscaling and cluster autoscaling, providing robust scalability options for containerized applications. |
+| **Use Cases**  | ACA is designed for microservices and serverless applications that benefit from rapid scaling and simplified management. | AKS is best for complex, long-running applications that require full Kubernetes features and tight integration with other Azure services. |
+| **Integration**| ACA integrates with Azure Logic Apps, Functions, and Event Grid for event-driven architectures.                        | AKS provides features like Azure Policy for Kubernetes, Azure Monitor for containers, and Azure Defender for Kubernetes for comprehensive security and governance. |
 
-### Key Features of Azure App Service
 
-- **Web Apps**: Azure App Service provides a fully managed platform for building and hosting web applications. You can deploy web apps written in various programming languages and frameworks, such as .NET, Java, Node.js, PHP, Python, and Ruby. Azure App Service supports both Windows and Linux-based web apps.
+
 
 
 
