@@ -214,6 +214,35 @@ Containerization is a lightweight, portable, and scalable way to run application
 | **Integration**| ACA integrates with Azure Logic Apps, Functions, and Event Grid for event-driven architectures.                        | AKS provides features like Azure Policy for Kubernetes, Azure Monitor for containers, and Azure Defender for Kubernetes for comprehensive security and governance. |
 
 
+### Azure Backup
+
+* Azure Backup is a cloud-based backup service that allows you to protect your data and applications in the cloud. Azure Backup provides a simple and cost-effective solution for backing up and restoring data in Azure. You can use Azure Backup to protect virtual machines, databases, files, and folders in Azure. Azure Backup provides built-in features for data retention, encryption, and monitoring. You can configure backup policies to protect your data and restore it in case of data loss. Azure Backup integrates with other Azure services such as Azure Virtual Machines, Azure SQL Database, and Azure Blob Storage. Azure backup helps with `Complieance` and `Monitoring`.
+
+* Azure Backup stores backed-up data in vaults: `Recovery Services vaults` and `Backup vaults`. A vault is an online-storage entity in Azure that's used to hold data such as backup copies, recovery points, and backup policies.
+
+* Backups can be :
+    - **Full**: A full backup is a complete copy of the data that you want to protect. Full backups are typically performed periodically to capture all the data. At most once per day.
+    - **Incremental`/`Diiferential**: An incremental backup captures only the changes made since the last backup. Incremental backups are performed more frequently than full backups to reduce the amount of data that needs to be backed up. At most once per day. You can't configure a `full backup` and a `differential backup` on the same day.
+    - **Log backup**: A log backup captures the transaction log changes made to a database since the last log backup. Log backups are used to restore a database to a specific point in time up to a particular second. Log backups are performed frequently to capture all the changes made to the database. At most once per 15 minutes.
+
+* Back Extensions:
+    - This is the first step to every back-up. Integration with the actual workload (such as Azure VM or Azure Blobs) happens at this layer. A backup extension specific to each workload is installed on the source VM or a worker VM. At the time of backup (as defined by the user in the Backup Policy), the backup extension generates the backup, which could be a snapshot, a copy of the data, or a log backup. The backup extension is responsible for ensuring that the backup is consistent and application-aware. The backup extension is also responsible for ensuring that the backup is encrypted and compressed before it is sent to the vault.
+
+* Backup `Access` tier:
+    - **Snapshot**: These are the quickest restores because they eliminate the wait time for snapshots to get copied to from the vault. The snapshot taken is stored along with the disk. The snapshots of the VM/Azure Files/Azure Blobs/and so on are retained in the customer’s subscription itself in a specified resource group, and available locally to the customer.
+    - **Vault-standard tier**: Backup data for all workloads supported by Azure Backup is stored in vaults, which hold backup storage, an autoscaling set of storage accounts managed by Azure Backup. The Vault-Standard tier is an online storage tier that allows you to store an isolated copy of backup data in a Microsoft-managed tenant, thus creating an extra layer of protection. For workloads where snapshot tier is supported, there's a copy of the backup data in both the snapshot tier and the vault-standard tier. The vault-standard tier ensures that backup data is available even if the data source being backed up is deleted or compromised.
+    - **Archive Tier**: The Archive tier is a storage tier that allows you to store backup data in a cost-effective manner. The Archive tier is designed for long-term retention of backup data that is rarely accessed. TCustomers rely on Azure Backup for storing backup data, including their Long-Term Retention (LTR) backup data with retention needs being defined by the organization's compliance rules. In most cases, the older backup data is rarely accessed and is only stored for compliance needs.
+
+* Availability and Security: 
+    - The backup data is replicated across zones or regions (based on the redundancy specified by the user). You can choose from `locally redundant storage (LRS)`, `Geo-redundant storage (GRS)`, or `zone-redundant storage (ZRS)`. These options provide you with highly available data storage capabilities.
+    - The data is kept safe by `encrypting` it and implementing `role-based access control (RBAC)`. You choose who can perform backup and restore operations. Azure Backup also provides protection against malicious deletion of your backup by using `soft-delete operations`. A deleted backup is stored for 14 days, free of charge, which allows you to recover the backup if needed.
+
+* Management:
+    - Azure Backup provides a centralized platform for managing backup policies - **`Backup Center`** on the azure portal, monitoring backup jobs, and restoring data. You can configure backup policies to protect your data and define retention rules for backup data. You can monitor backup jobs, view backup reports, and set up alerts based on backup status. Azure Backup provides built-in support for data encryption, compression, and deduplication to optimize storage usage and reduce costs.
+
+
+
+
 - [Azure Virtual Machines](https://learn.microsoft.com/en-us/azure/virtual-machines/)
 - [Interactive Lab: Create a Virtual Machine in Azure](https://learn.microsoft.com/en-us/training/modules/configure-virtual-machines/8-simulation-create-virtual-machines)
 - [Interactive Lab: Create a Virtual Machine Scale Set in Azure](https://learn.microsoft.com/en-us/training/modules/configure-virtual-machine-availability/11-simulation-machine-scale)

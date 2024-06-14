@@ -16,4 +16,4 @@ This repository is tailored for those seeking practical, project-based experienc
 | **Azure Compliance and Governance** | Learn to navigate and apply Azure's governance tools, focusing on policy creation and compliance management using resource tagging. | [Project](./policy_compliance_with_tags.md) |
 | **RBAC-Subscription-Management Groups** | Implement Role-Based Access Control (RBAC) in Azure to manage user permissions and access on reources, Manage subscriptions using Management Groups | [Project](./rbac.md) |
 | **Azure Virtual Network** | Create and configure Virtual Network in Azure, including Subnets, Network Security Groups, Routing, Peering, VPN Gateways, Application Gateway and Load Balancer | [Project](./virtual_network.md) |
-| **Azure Compute** | Create and manage Virtual Machines, Virtual Machine Scale Sets, Azure Container Instances, Azure Kubernetes Service, Azure App Service, Azure Functions, Azure Batch, Azure Logic Apps | [Project](./compute.md) |
+| **Azure Compute** | Create and manage Virtual Machines, Virtual Machine Scale Sets, Azure App Service, Azure Container Instances and Azure Backups | [Project](./compute.md) |
