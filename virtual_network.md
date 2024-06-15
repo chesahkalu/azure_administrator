@@ -402,7 +402,7 @@ An alias record allows you to link the zone apex (wideworldimports.com) to a loa
 
 Azure Network Watcher is a regional service that helps you monitor, diagnose, and gain insights into your network infrastructure in Azure. Below are the key features  Network Watcher:
 
-* **Network Performance Monitoring**
+**Network Performance Monitoring**
 - **Connection Monitor**: Monitors connectivity status, latency, and network topology changes between Azure virtual machines, endpoints and network interfaces.
 
 * **Network Diagnostics**
@@ -412,17 +412,17 @@ Azure Network Watcher is a regional service that helps you monitor, diagnose, an
 - **Effective Security Rules**: Shows all effective security rules for a network interface, including those from associated NSGs.
 - **Packet Capture**: Captures and inspects packets to and from a virtual machine for diagnosing network issues.
 
-* **Topology**
+**Topology**
 - **Topology View**: Visualizes the network topology of your Azure resources, providing a graphical representation of your network layout.
 
-* **Network Logs**
+**Network Logs**
 - **NSG Flow Logs**: Captures and reviews network traffic flow through network security groups for traffic analysis and security audits.
 
-* **Diagnostic Tools**
+**Diagnostic Tools**
 - **Network Watcher Extension**: Uses diagnostic tools directly from a virtual machine to gather detailed information about network traffic and issues.
 
 
-* **How to Use Network Watcher:**
+**How to Use Network Watcher:**
 
 1. **Enable Network Watcher**: Enable Network Watcher for your Azure region via the Azure portal, PowerShell, or CLI.
 2. **Connection Monitor**: Set up connection monitoring to ensure network performance and connectivity.
@@ -431,7 +431,7 @@ Azure Network Watcher is a regional service that helps you monitor, diagnose, an
 5. **Packet Capture**: Collect and analyze network traffic to diagnose specific issues.
 6. **View Topology**: Visualize your network architecture using the topology tool.
 
-* **Example Use Cases**
+**Example Use Cases**
 
 - **Diagnosing Connectivity Issues**: Use IP Flow Verify to check if NSG rules are blocking traffic.
 - **Monitoring Network Performance**: Use Connection Monitor to track latency and connectivity.
