@@ -1,16 +1,11 @@
 # Configure and manage virtual networks
 
-## Pre-requisites
-
-- Understanding of Azure fundamentals
-- An Azure account with an active subscription (Free tier is enough). Sign up or login to your Azure account [here](https://azure.microsoft.com/en-us/free/)
-- Basic knowledge of networking concepts including subnets and IP(Internet Protocol) addresses.
-
 ---
 
 ## Table of Contents
 
-- [Overview](#overview)
+- [Pre-requisites](#pre-requisites)
+- [Introduction](#introduction)
 - [Network Security Groups (NSG)](#network-security-groups-nsg)
 - [Application Security Groups (ASG)](#application-security-groups-asg)
 - [Virtual Network Peering](#virtual-network-peering)
@@ -23,7 +18,15 @@
 
 ---
 
-## Overview
+## Pre-requisites
+
+- Understanding of Azure fundamentals
+- An Azure account with an active subscription (Free tier is enough). Sign up or login to your Azure account [here](https://azure.microsoft.com/en-us/free/)
+- Basic knowledge of networking concepts including subnets and IP(Internet Protocol) addresses.
+
+---
+
+## Introduction
 
 A virtual network is like a digital version of a physical network. Azure Virtual Network allow different Azure resources to securely communicate with each other, the internet, and on-premises networks. When you create a virtual network, your services and virtual machines within your virtual network can communicate directly and securely with each other in the cloud. You can still configure endpoint connections for the virtual machines and services that require internet communication, as part of your solution. A typical Azure network design usually has these components:
 

@@ -1,14 +1,34 @@
 # Azure Compute
 
+---
+
+## Table of Contents
+
+- [Pre-requisites](#pre-requisites)
+- [Introduction](#introduction)
+- [Virtual Machines](#virtual-machines)
+- [Virtual Machine Scale Sets](#virtual-machine-scale-sets)
+- [App Service](#app-service)
+- [Azure Container Instances](#azure-container-instances)
+- [Azure Backup](#azure-backup)
+- [Azure Virtual Machine Backup](#azure-virtual-machine-backup)
+- [References and Further Reading](#references-and-further-reading)
+
+---
+
 ## Pre-requisites
 
 - Understanding of Azure fundamentals, Familiarity with Infrastructure as a Service (IaaS), virtualization, Azure subscriptions, resource groups, networking, storage.
 - Azure portal. Ability to create and configure resources in the Azure portal.
-- An Azure account with an active subscription (Free tier is enough). Sign up or login to your Azure account [here](https://azure.microsoft.com/en-us/free/)    
+- An Azure account with an active subscription (Free tier is enough). Sign up or login to your Azure account [here](https://azure.microsoft.com/en-us/free/)   
 
-## Overview
+---
+
+## Introduction
 
 Azure Compute is an on-demand computing service for running cloud-based applications. It provides computing resources such as virtual machines (`providing its own operating system, storage, and networking capabilities, and can run a wide range of applications.`), containers, serverless computing, and batch processing. Azure Compute allows you to scale resources up or down based on demand, pay only for the resources you use, and deploy applications across multiple regions for high availability.
+
+---
 
 ## Virtual Machines
 
@@ -89,8 +109,9 @@ Once the virtual machine is created, you can manage it using the Azure portal, A
 
 - **Scaling**: You can scale virtual machines manually or automatically based on demand. You can use Azure Autoscale to automatically adjust the number of VM instances based on predefined rules.
 
-- **High Availability**: You can configure availability sets, availability zones, or virtual machine scale sets for high availability and fault tolerance. You can distribute VM instances across multiple fault domains and update domains to ensure uptime. 
+- **High Availability**: You can configure availability sets, availability zones, or virtual machine scale sets for high availability and fault tolerance. You can distribute VM instances across multiple fault domains and update domains to ensure uptime.
 
+---
 
 ## Virtual Machine Scale Sets
 
@@ -143,6 +164,7 @@ Azure Virtual Machine Scale Sets are an Azure compute resource that you can use 
     - **Other settings**: Other settings are available on the Monitoring, Tags, and Advanced tabs.
     - **Advanced**: On the Advanced tab, you can configure `Enable scaling beyond 100 instances` and `Spreading algorithm`.
 
+---
 
 ## App Service
 
@@ -186,7 +208,9 @@ Azure App Service is a fully managed platform for building, deploying, and scali
 **App Service Monitoring**:
 - Azure App Service provides built-in monitoring and diagnostics capabilities for web apps. You can view metrics, logs, and alerts to monitor the performance and health of your app. Azure Monitor provides a centralized platform for monitoring and analyzing data from your app. You can set up alerts based on metrics such as CPU utilization, memory usage, and response time. `Azure Application Insights` provides advanced monitoring capabilities for web apps, including performance monitoring, error tracking, and user analytics.
 
-### Azure Container Instances
+---
+
+## Azure Container Instances
 
 Containerization is a lightweight, portable, and scalable way to run applications. Containers package an application and its dependencies into a single `image` that can be run on any platform. Azure Container Instances (ACI) is a serverless container service that allows you to run containers without managing the underlying infrastructure. ACI provides a fast and easy way to deploy containers in the cloud. You can run containers on-demand, scale containers based on demand, and pay only for the resources you use. ACI supports both Linux and Windows containers and integrates with other Azure services such as Azure Container Registry and Azure Kubernetes Service.
 
@@ -213,6 +237,7 @@ Containerization is a lightweight, portable, and scalable way to run application
 | **Use Cases**  | ACA is designed for microservices and serverless applications that benefit from rapid scaling and simplified management. | AKS is best for complex, long-running applications that require full Kubernetes features and tight integration with other Azure services. |
 | **Integration**| ACA integrates with Azure Logic Apps, Functions, and Event Grid for event-driven architectures.                        | AKS provides features like Azure Policy for Kubernetes, Azure Monitor for containers, and Azure Defender for Kubernetes for comprehensive security and governance. |
 
+---
 
 ## Azure Backup
 
@@ -240,7 +265,9 @@ Containerization is a lightweight, portable, and scalable way to run application
 * **Management**:
     - Azure Backup provides a centralized platform for managing backup policies - **`Backup Center`** on the azure portal, monitoring backup jobs, and restoring data. You can configure backup policies to protect your data and define retention rules for backup data. You can monitor backup jobs, view backup reports, and set up alerts based on backup status. Azure Backup provides built-in support for data encryption, compression, and deduplication to optimize storage usage and reduce costs.
 
-### Virtual Machine Backup
+---
+
+## Virtual Machine Backup
 
 There are four options for backing up Azure VMs:
 
@@ -254,8 +281,9 @@ There are four options for backing up Azure VMs:
 
 **Steps to Backup a Virtual Machine**:
 1. **Create a Recovery Services vault**: In the Azure portal, create a Recovery Services vault to store backup data. The vault must be created within your Azure subscription, and in the region where you want to store the data. Choose the storage redundancy option; `geo-redundant storage (GRS)` or `locally redundant storage (LRS)`. GRS is the default and best suited if Azure backup is your `primary` backup. 
+        - On the `property tab` of the recovery service is where you enable most required settings like redundancy, encryption, backup policy and security settings`(Soft Delete)`.
 
-2. **Define your backup policy optionsn**: In the Recovery Services vault, create a backup policy that defines the backup schedule, retention rules, and other settings. The policy specifies when to take the data snapshots, and how long to keep the snapshots. In your backup policy, you can specify to trigger a backup from one to five times per day. You can also enable encryption, compression, and other settings.
+2. **Define your backup policy optionsn**: In the Recovery Services vault, `click backup on the overview page`, create a backup policy that defines the backup schedule, retention rules, and other settings. The policy specifies when to take the data snapshots, and how long to keep the snapshots. In your backup policy, you can specify to trigger a backup from one to five times per day. Then `add` your intended VM. 
 
 3. **Enable backup for the virtual machine**: The last step is to run the Azure Backup job process and create your backups. The `backup extension` requires the VM agent to be present, if the VM was migrated from on-premise and not naturally created on Azure , you need to install the agent.
 
@@ -271,8 +299,9 @@ There are four options for backing up Azure VMs:
 
 - When a Recovery Services vault contains any soft-deleted items, the vault can't be deleted. First delete or undelete all soft-deleted items, and then delete the vault.
 
+---
 
-
+## References and Further Reading
 
 - [Azure Virtual Machines Documentation](https://learn.microsoft.com/en-us/azure/virtual-machines/)
 - [Virtual Machine Scale Set Documentation](https://learn.microsoft.com/en-us/azure/virtual-machine-scale-sets/)
@@ -284,3 +313,5 @@ There are four options for backing up Azure VMs:
 - [Interactive Lab: Create an App Service in Azure](https://learn.microsoft.com/en-us/training/modules/configure-azure-app-services/11-simulation-web-apps)
 - [Interactive Lab: Create a Container Group in Azure](https://learn.microsoft.com/en-us/training/modules/configure-azure-container-instances/6-simulation-containers)
 - [Interactive Lab: Backup Virtual Machines](https://learn.microsoft.com/en-us/training/modules/configure-virtual-machine-backups/11-simulation-machine-backups)
+
+---

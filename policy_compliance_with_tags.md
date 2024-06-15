@@ -1,6 +1,6 @@
-# Azure Compliance and Governance
+# Azure Compliance and Governance Using Tags
 
-Welcome to the definitive guide on mastering Azure's governance tools. This tutorial is designed to empower you to navigate and apply Azure's governance framework effectively, ensuring your resources are organized and compliant.
+This tutorial is designed to empower you to navigate and apply Azure's governance framework effectively, ensuring your resources are organized and compliant using tagging and policies.
 
 ---
 
