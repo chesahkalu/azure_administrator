@@ -214,37 +214,73 @@ Containerization is a lightweight, portable, and scalable way to run application
 | **Integration**| ACA integrates with Azure Logic Apps, Functions, and Event Grid for event-driven architectures.                        | AKS provides features like Azure Policy for Kubernetes, Azure Monitor for containers, and Azure Defender for Kubernetes for comprehensive security and governance. |
 
 
-### Azure Backup
+## Azure Backup
 
-* Azure Backup is a cloud-based backup service that allows you to protect your data and applications in the cloud. Azure Backup provides a simple and cost-effective solution for backing up and restoring data in Azure. You can use Azure Backup to protect virtual machines, databases, files, and folders in Azure. Azure Backup provides built-in features for data retention, encryption, and monitoring. You can configure backup policies to protect your data and restore it in case of data loss. Azure Backup integrates with other Azure services such as Azure Virtual Machines, Azure SQL Database, and Azure Blob Storage. Azure backup helps with `Complieance` and `Monitoring`.
+* Azure Backup is a cloud-based backup service that allows you to protect your data and applications in the cloud. Azure Backup provides a simple and cost-effective solution for backing up and restoring data in Azure. You can use Azure Backup to protect virtual machines, databases, files, and folders in Azure. Azure Backup provides built-in features for data retention, encryption, and monitoring. You can configure backup policies to protect your data and restore it in case of data loss. Azure Backup integrates with other Azure services such as Azure Virtual Machines, Azure SQL Database, and Azure Blob Storage. Azure backup helps with `Compliance` and `Monitoring`.
 
 * Azure Backup stores backed-up data in vaults: `Recovery Services vaults` and `Backup vaults`. A vault is an online-storage entity in Azure that's used to hold data such as backup copies, recovery points, and backup policies.
 
-* Backups can be :
+* **Backups can be**:
     - **Full**: A full backup is a complete copy of the data that you want to protect. Full backups are typically performed periodically to capture all the data. At most once per day.
-    - **Incremental`/`Diiferential**: An incremental backup captures only the changes made since the last backup. Incremental backups are performed more frequently than full backups to reduce the amount of data that needs to be backed up. At most once per day. You can't configure a `full backup` and a `differential backup` on the same day.
+    - **Incremental`/`Diferential**: An incremental backup captures only the changes made since the last backup. Incremental backups are performed more frequently than full backups to reduce the amount of data that needs to be backed up. At most once per day. You can't configure a `full backup` and a `differential backup` on the same day.
     - **Log backup**: A log backup captures the transaction log changes made to a database since the last log backup. Log backups are used to restore a database to a specific point in time up to a particular second. Log backups are performed frequently to capture all the changes made to the database. At most once per 15 minutes.
 
-* Back Extensions:
+* **Backup Extensions**:
     - This is the first step to every back-up. Integration with the actual workload (such as Azure VM or Azure Blobs) happens at this layer. A backup extension specific to each workload is installed on the source VM or a worker VM. At the time of backup (as defined by the user in the Backup Policy), the backup extension generates the backup, which could be a snapshot, a copy of the data, or a log backup. The backup extension is responsible for ensuring that the backup is consistent and application-aware. The backup extension is also responsible for ensuring that the backup is encrypted and compressed before it is sent to the vault.
 
-* Backup `Access` tier:
-    - **Snapshot**: These are the quickest restores because they eliminate the wait time for snapshots to get copied to from the vault. The snapshot taken is stored along with the disk. The snapshots of the VM/Azure Files/Azure Blobs/and so on are retained in the customer’s subscription itself in a specified resource group, and available locally to the customer.
+* **Backup `Access` tier**:
+    - **Snapshot**: These are the quickest restores because they eliminate the wait time for snapshots to get copied to from the vault. The snapshot taken is stored along with the disk. The snapshots of the VM/Azure Files/Azure Blobs/and so on, are retained in the customer’s subscription itself in a specified resource group, and available locally to the customer.
     - **Vault-standard tier**: Backup data for all workloads supported by Azure Backup is stored in vaults, which hold backup storage, an autoscaling set of storage accounts managed by Azure Backup. The Vault-Standard tier is an online storage tier that allows you to store an isolated copy of backup data in a Microsoft-managed tenant, thus creating an extra layer of protection. For workloads where snapshot tier is supported, there's a copy of the backup data in both the snapshot tier and the vault-standard tier. The vault-standard tier ensures that backup data is available even if the data source being backed up is deleted or compromised.
     - **Archive Tier**: The Archive tier is a storage tier that allows you to store backup data in a cost-effective manner. The Archive tier is designed for long-term retention of backup data that is rarely accessed. TCustomers rely on Azure Backup for storing backup data, including their Long-Term Retention (LTR) backup data with retention needs being defined by the organization's compliance rules. In most cases, the older backup data is rarely accessed and is only stored for compliance needs.
 
-* Availability and Security: 
+* **Availability and Security**: 
     - The backup data is replicated across zones or regions (based on the redundancy specified by the user). You can choose from `locally redundant storage (LRS)`, `Geo-redundant storage (GRS)`, or `zone-redundant storage (ZRS)`. These options provide you with highly available data storage capabilities.
     - The data is kept safe by `encrypting` it and implementing `role-based access control (RBAC)`. You choose who can perform backup and restore operations. Azure Backup also provides protection against malicious deletion of your backup by using `soft-delete operations`. A deleted backup is stored for 14 days, free of charge, which allows you to recover the backup if needed.
 
-* Management:
+* **Management**:
     - Azure Backup provides a centralized platform for managing backup policies - **`Backup Center`** on the azure portal, monitoring backup jobs, and restoring data. You can configure backup policies to protect your data and define retention rules for backup data. You can monitor backup jobs, view backup reports, and set up alerts based on backup status. Azure Backup provides built-in support for data encryption, compression, and deduplication to optimize storage usage and reduce costs.
 
+### Virtual Machine Backup
+
+There are four options for backing up Azure VMs:
+
+- **Azure Backup**: Azure Backup `(1)` takes a snapshot of your virtual machine and `(2)` sends, then stores the data as recovery points in geo-redundant recovery vaults. You dont have to wait for `(2)` to complete before attempting to restore. When you restore from a recovery point, you can restore your entire virtual machine or specific files only.
+
+- **Azure Site Recovery**: Azure Site Recovery quickly and easily recover specific applications. It protects your virtual machines from a major disaster scenario when a whole region experiences an outage due to a major natural disaster or widespread service interruption. It replicates your virtual machines to a secondary region and orchestrates failover and failback to ensure business continuity. Azure Site Recovery provides disaster recovery as a service (DRaaS) for virtual machines, physical servers, Azure Stack VMs and even `AWS` VMs.
+
+- **Azure managed disks - `snapshot`**: Azure managed disks provide a built-in backup feature that allows you to take snapshots of a particular managed disks. It takes snapshot of just one intended disk. You can use snapshots to create a point-in-time copy of your managed disk and restore it if needed. Snapshots are kept for `2days` by default, and can be extended to `5days`.
+
+- **Azure managed disks - `image`**: This process captures a single image that contains all managed disks associated with a virtual machine, including both the operating system and data disks. You can use images to create new virtual machines with the same configuration as the original virtual machine.
+
+**Steps to Backup a Virtual Machine**:
+1. **Create a Recovery Services vault**: In the Azure portal, create a Recovery Services vault to store backup data. The vault must be created within your Azure subscription, and in the region where you want to store the data. Choose the storage redundancy option; `geo-redundant storage (GRS)` or `locally redundant storage (LRS)`. GRS is the default and best suited if Azure backup is your `primary` backup. 
+
+2. **Define your backup policy optionsn**: In the Recovery Services vault, create a backup policy that defines the backup schedule, retention rules, and other settings. The policy specifies when to take the data snapshots, and how long to keep the snapshots. In your backup policy, you can specify to trigger a backup from one to five times per day. You can also enable encryption, compression, and other settings.
+
+3. **Enable backup for the virtual machine**: The last step is to run the Azure Backup job process and create your backups. The `backup extension` requires the VM agent to be present, if the VM was migrated from on-premise and not naturally created on Azure , you need to install the agent.
+
+4. **Restore data from a backup**: To restore data from a backup, you can use the Azure portal. After you back up your virtual machine, the backup snapshots and recovery points are stored in your Recovery Services vault. You can recover your machine by accessing the snapshot, or restore data to a specific point-in-time by using recovery points.
+
+**Soft Delete**: Azure Backup provides protection against accidental or malicious deletion of your backup data by using soft delete. When you delete a backup item, the data is retained in the vault for 14 days. During this period, you can recover the deleted backup item without any additional cost. After 14 days, the data is permanently deleted and cannot be recovered.
+
+- During the 14 day retention period, the Recovery Services vault shows your soft-deleted virtual machine with a red soft-delete icon.
+
+- During the 14 day retention period, the Recovery Services vault shows your soft-deleted virtual machine with a red soft-delete icon.
+
+- Before you can restore a soft-deleted virtual machine, you must undelete the backup data.
+
+- When a Recovery Services vault contains any soft-deleted items, the vault can't be deleted. First delete or undelete all soft-deleted items, and then delete the vault.
 
 
 
-- [Azure Virtual Machines](https://learn.microsoft.com/en-us/azure/virtual-machines/)
+
+- [Azure Virtual Machines Documentation](https://learn.microsoft.com/en-us/azure/virtual-machines/)
+- [Virtual Machine Scale Set Documentation](https://learn.microsoft.com/en-us/azure/virtual-machine-scale-sets/)
+- [Azure Backup](https://learn.microsoft.com/en-us/azure/backup/)
+- [App Service Documentation](https://learn.microsoft.com/en-us/azure/app-service/)
+- [Containers On Windows Documentation](https://learn.microsoft.com/en-us/virtualization/windowscontainers/)
 - [Interactive Lab: Create a Virtual Machine in Azure](https://learn.microsoft.com/en-us/training/modules/configure-virtual-machines/8-simulation-create-virtual-machines)
 - [Interactive Lab: Create a Virtual Machine Scale Set in Azure](https://learn.microsoft.com/en-us/training/modules/configure-virtual-machine-availability/11-simulation-machine-scale)
 - [Interactive Lab: Create an App Service in Azure](https://learn.microsoft.com/en-us/training/modules/configure-azure-app-services/11-simulation-web-apps)
 - [Interactive Lab: Create a Container Group in Azure](https://learn.microsoft.com/en-us/training/modules/configure-azure-container-instances/6-simulation-containers)
+- [Interactive Lab: Backup Virtual Machines](https://learn.microsoft.com/en-us/training/modules/configure-virtual-machine-backups/11-simulation-machine-backups)

@@ -6,6 +6,8 @@
 - An Azure account with an active subscription (Free tier is enough). Sign up or login to your Azure account [here](https://azure.microsoft.com/en-us/free/)
 - Basic knowledge of networking concepts including subnets and IP(Internet Protocol) addresses.
 
+---
+
 ## Table of Contents
 
 - [Overview](#overview)
@@ -16,11 +18,10 @@
 - [Load Balancer](#load-balancer)
 - [IP Addressing](#ip-addressing)
 - [Azure DNS](#azure-dns)
-- [Network Watcher](#network-watcher)
-- [Azure Firewall](#azure-firewall)
+- [Azure Network Watcher](#azure-network-watcher)
 - [References and further reading](#references-and-further-reading)
 
-
+---
 
 ## Overview
 
@@ -443,3 +444,5 @@ Azure Network Watcher is a powerful suite of tools for ensuring network performa
 - [Official Azure Virtual Network Documentation](https://learn.microsoft.com/en-us/azure/virtual-network/)
 - [Interactive Lab Simulations on VN,NSG,DNS](https://learn.microsoft.com/en-us/training/modules/configure-network-routing-endpoints/7-simulation-routing?source=learn)
 - [Interactive Lab Simulations on Load Balancer](https://learn.microsoft.com/en-us/training/modules/configure-azure-load-balancer/9-simulation-load-balancer)
+
+---
