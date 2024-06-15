@@ -214,7 +214,7 @@ You can't create or delete system routes, but you can override the system routes
 
 Similar to system routes, UDRs also access route tables.
 
-* **Scenario**:
+**Scenario**:
 Suppose you have a virtual machine that performs a network function like routing, firewalling, or WAN optimization. You want to direct certain subnet traffic to the NVA. To accomplish this configuration, you can;
 - place an NVA between subnets or between one subnet and the internet. The subnet can use a UDR to access the NVA and then the internet. 
 - The subnet can use another UDR and NVA to access the back-end subnet.
@@ -256,7 +256,7 @@ or
 
 * `internal`: For internal applications within an Azure network, Example: VM server receives request from Internet client, VM server Need to communicate with a database server. The load balancer distributes the requests to the virtual machines hosting the back-end SQL servers whcih should all be in the same subnet.
 
-* **To implement a load balancer, you configure four components**:
+**To implement a load balancer, you configure four components**:
 
 - Front-end IP configuration: The public IP address that receives the incoming network traffic.
 - Back-end pools: The virtual machines that receive the incoming network traffic, including Azure Virtual Machines or instances in Azure Virtual Machine Scale Sets.
@@ -285,7 +285,7 @@ To configure a probe, you specify values for the following settings:
 - destination port: The port number used by the client to connect to the load balancer
 - protocol type: The protocol used by the client to connect to the load balancer TCP or UDP
 
-* **To define a rule in the Azure portal, you configure several settings:**
+**To define a rule in the Azure portal, you configure several settings:**
 
 - IP version (IPv4 or IPv6)
 - Front-end IP address, *Port, and Protocol (TCP or UDP)
@@ -329,14 +329,14 @@ IP addressing is a critical component of network design. IP addresses are used t
 
 - **CIDR notation**: CIDR notation is a compact representation of an IP address and its associated network mask. CIDR notation is used to specify the number of bits in an IP address that represent the network portion of the address. CIDR notation is used to specify the number of bits in an IP address that represent the network portion of the address. CIDR notation is used to specify the number of bits in an IP address that represent the network portion of the address. CIDR notation is used to specify the number of bits in an IP address that represent the network portion of the address.
 
-* Before planning your network IP address scheme, you must gather the requirements for your infrastructure. These requirements also will help you prepare for future growth by reserving extra IP addresses and subnets.
+Before planning your network IP address scheme, you must gather the requirements for your infrastructure. These requirements also will help you prepare for future growth by reserving extra IP addresses and subnets.
 
 Here are two of the questions you might ask to discover the requirements:
 
 - How many devices do you have on the network?
 - How many devices are you planning to add to the network in the future?
 
-* When your network expands, you don't want to redesign the IP address scheme. Here are some other questions you could ask:
+When your network expands, you don't want to redesign the IP address scheme. Here are some other questions you could ask:
 
 - Based on the services running on the infrastructure, what devices do you need to separate?
 - How many subnets do you need?
