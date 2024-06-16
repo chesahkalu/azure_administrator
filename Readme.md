@@ -5,14 +5,36 @@ This repository is designed for those seeking practical, project-based experienc
 ![Azure Administration](resources/azure-administrator-associate-600x600.png)
 
 ## Table of Contents
-1. [Azure Exam Study Guide](#azure-exam-study-guide)
+1. [Requirements](#requirements)
+2. [Project Links](#project-links)
+3. [Azure Skills Required for an Azure Administrator:](#azure-skills-required-for-an-azure-administrator)
     - [Manage Azure identities and governance](#manage-azure-identities-and-governance)
     - [Implement and manage storage](#implement-and-manage-storage)
     - [Deploy and manage Azure compute resources](#deploy-and-manage-azure-compute-resources)
     - [Implement and manage virtual networking](#implement-and-manage-virtual-networking)
     - [Monitor and maintain Azure resources](#monitor-and-maintain-azure-resources)
-2. [Requirements](#requirements)
-3. [Project Links](#project-links)
+
+![Azure Administration](https://img.shields.io/badge/Azure-Administration-blue)
+
+## Requirements
+- Understanding of Azure fundamentals
+- An Azure account with an active subscription (Free tier is enough). Sign up or log in to your Azure account [here](https://azure.microsoft.com/en-us/free/)
+
+![Azure Administration](https://img.shields.io/badge/Azure-Administration-blue)
+
+## Project Links
+
+| **Title** | **Description** | **Link** |
+| --------- | --------------- | -------- |
+| **Azure Resource Management** | Generate an ARM template from an existing resource on the portal to deploy a new similar resource | [Project](./arm_template.md) |
+| **Manage Microsoft Entra ID**  | Create, configure, and manage Azure Active Directory Access, Users, Groups, Tenants, and Guest users in Microsoft Entra ID | [Project](./entra_id.md) |
+| **Azure Compliance and Governance** | Learn to navigate and apply Azure's governance tools, focusing on policy creation and compliance management using resource tagging | [Project](./policy_compliance_with_tags.md) |
+| **RBAC-Subscription-Management Groups** | Implement Role-Based Access Control (RBAC) in Azure to manage user permissions and access to resources, Manage subscriptions using Management Groups | [Project](./rbac.md) |
+| **Azure Virtual Network** | Create and configure Virtual Network in Azure, including Subnets, Network Security Groups, Routing, Peering, VPN Gateways, Application Gateway, and Load Balancer | [Project](./virtual_network.md) |
+| **Azure Compute** | Create and manage Virtual Machines, Virtual Machine Scale Sets, Azure App Service, Azure Container Instances, and Azure Backups | [Project](./compute.md) |
+| **Azure Monitoring and Diagnostics** | Monitor and diagnose Azure resources using Azure Monitor, Log Analytics, Application Insights, and Azure Service Health | [Project](./monitoring_diagnostics.md) |
+
+![Azure Administration](https://img.shields.io/badge/Azure-Administration-blue)
 
 ## Azure Skills Required for an Azure Administrator:
 
@@ -137,20 +159,3 @@ This repository is designed for those seeking practical, project-based experienc
 - Perform a failover to a secondary region by using Site Recovery
 - Configure and interpret reports and alerts for backups
 
-## Requirements
-- Understanding of Azure fundamentals
-- An Azure account with an active subscription (Free tier is enough). Sign up or log in to your Azure account [here](https://azure.microsoft.com/en-us/free/)
-
-![Azure Administration](https://img.shields.io/badge/Azure-Administration-blue)
-
-## Project Links
-
-| **Title** | **Description** | **Link** |
-| --------- | --------------- | -------- |
-| **Azure Resource Management** | Generate an ARM template from an existing resource on the portal to deploy a new similar resource | [Project](./arm_template.md) |
-| **Manage Microsoft Entra ID**  | Create, configure, and manage Azure Active Directory Access, Users, Groups, Tenants, and Guest users in Microsoft Entra ID | [Project](./entra_id.md) |
-| **Azure Compliance and Governance** | Learn to navigate and apply Azure's governance tools, focusing on policy creation and compliance management using resource tagging | [Project](./policy_compliance_with_tags.md) |
-| **RBAC-Subscription-Management Groups** | Implement Role-Based Access Control (RBAC) in Azure to manage user permissions and access to resources, Manage subscriptions using Management Groups | [Project](./rbac.md) |
-| **Azure Virtual Network** | Create and configure Virtual Network in Azure, including Subnets, Network Security Groups, Routing, Peering, VPN Gateways, Application Gateway, and Load Balancer | [Project](./virtual_network.md) |
-| **Azure Compute** | Create and manage Virtual Machines, Virtual Machine Scale Sets, Azure App Service, Azure Container Instances, and Azure Backups | [Project](./compute.md) |
-| **Azure Monitoring and Diagnostics** | Monitor and diagnose Azure resources using Azure Monitor, Log Analytics, Application Insights, and Azure Service Health | [Project](./monitoring_diagnostics.md) |
