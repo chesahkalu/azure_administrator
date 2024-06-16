@@ -2,7 +2,11 @@
 
 This repository is designed for those seeking practical, project-based experience in Azure Administration. It includes a variety of projects that reflect the daily tasks of an Azure administrator, making it an invaluable resource for gaining hands-on experience and preparing for the Azure Administrator certification exam. Additionally, it serves as my personal project portfolio and documentation.
 
+---
+
 ![Azure Administration](resources/azure-administrator-associate-600x600.png)
+
+---
 
 ## Table of Contents
 1. [Requirements](#requirements)
@@ -14,11 +18,15 @@ This repository is designed for those seeking practical, project-based experienc
     - [Implement and manage virtual networking](#implement-and-manage-virtual-networking)
     - [Monitor and maintain Azure resources](#monitor-and-maintain-azure-resources)
 
+---
+
 ![Azure Administration](https://img.shields.io/badge/Azure-Administration-blue)
 
 ## Requirements
 - Understanding of Azure fundamentals
 - An Azure account with an active subscription (Free tier is enough). Sign up or log in to your Azure account [here](https://azure.microsoft.com/en-us/free/)
+
+---
 
 ![Azure Administration](https://img.shields.io/badge/Azure-Administration-blue)
 
@@ -33,6 +41,8 @@ This repository is designed for those seeking practical, project-based experienc
 | **Azure Virtual Network** | Create and configure Virtual Network in Azure, including Subnets, Network Security Groups, Routing, Peering, VPN Gateways, Application Gateway, and Load Balancer | [Project](./virtual_network.md) |
 | **Azure Compute** | Create and manage Virtual Machines, Virtual Machine Scale Sets, Azure App Service, Azure Container Instances, and Azure Backups | [Project](./compute.md) |
 | **Azure Monitoring and Diagnostics** | Monitor and diagnose Azure resources using Azure Monitor, Log Analytics, Application Insights, and Azure Service Health | [Project](./monitoring_diagnostics.md) |
+
+---
 
 ![Azure Administration](https://img.shields.io/badge/Azure-Administration-blue)
 
@@ -61,6 +71,8 @@ This repository is designed for those seeking practical, project-based experienc
 - Manage costs by using alerts, budgets, and Azure Advisor recommendations
 - Configure management groups
 
+---
+
 ### Implement and manage storage
 
 #### Configure access to storage
@@ -84,6 +96,8 @@ This repository is designed for those seeking practical, project-based experienc
 - Configure snapshots and soft delete for Azure Files
 - Configure blob lifecycle management
 - Configure blob versioning
+
+---
 
 ### Deploy and manage Azure compute resources
 
@@ -119,6 +133,8 @@ This repository is designed for those seeking practical, project-based experienc
 - Configure networking settings for an App Service
 - Configure deployment slots for an App Service
 
+---
+
 ### Implement and manage virtual networking
 
 #### Configure and manage virtual networks in Azure
@@ -139,6 +155,8 @@ This repository is designed for those seeking practical, project-based experienc
 - Configure Azure DNS
 - Configure an internal or public load balancer
 - Troubleshoot load balancing
+
+---
 
 ### Monitor and maintain Azure resources
 
