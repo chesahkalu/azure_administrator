@@ -88,6 +88,8 @@ Azure Monitor is a platform service that provides a single source that can monit
     - Join data from multiple tables
     - Aggregate large sets of data
     - Perform intricate operations with minimal code
+    - Configure your saved log searches to run automatically.
+    - Add visualizations for your saved log searches to see graphical views of your environment health.
 - **Log Analytics Workspace** is a unique environment for storing and analyzing data. It is a container where you can collect data from multiple sources, query that data, and create visualizations. You can have multiple workspaces in a single Azure subscription. 
     - You can use the Azure portal to create and manage your Log Analytics workspace.
     - After you create your workspace, you configure your data sources and solutions to store their data in your workspace.
