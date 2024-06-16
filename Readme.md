@@ -48,12 +48,14 @@ This repository is designed for those seeking practical, project-based experienc
 
 ## Azure Skills Required for an Azure Administrator:
 
+---
+
 ### Manage Azure identities and governance
 
-#### Manage Azure AD users and groups
+#### Manage Microsoft Entra ID users and groups
 - Create users and groups
 - Manage user and group properties
-- Manage licenses in Azure AD
+- Manage licenses in Microsoft Entra ID
 - Manage external users
 - Configure self-service password reset (SSPR)
 
@@ -102,11 +104,11 @@ This repository is designed for those seeking practical, project-based experienc
 ### Deploy and manage Azure compute resources
 
 #### Automate deployment of resources by using Azure Resource Manager (ARM) templates or Bicep files
-- Interpret an ARM template or a Bicep file
-- Modify an existing ARM template
+- Interpret an Azure Resource Manager template or a Bicep file
+- Modify an existing Azure Resource Manager template
 - Modify an existing Bicep file
-- Deploy resources by using an ARM template or a Bicep file
-- Export a deployment as an ARM template or compile a deployment as a Bicep file
+- Deploy resources by using an Azure Resource Manager template or a Bicep file
+- Export a deployment as an Azure Resource Manager template or convert an Azure Resource Manager template to a Bicep file
 
 #### Create and configure virtual machines
 - Create a virtual machine
@@ -127,7 +129,7 @@ This repository is designed for those seeking practical, project-based experienc
 - Provision an App Service plan
 - Configure scaling for an App Service plan
 - Create an App Service
-- Configure certificates and TLS for an App Service
+- Configure certificates and Transport Layer Security (TLS) for an App Service
 - Map an existing custom DNS name to an App Service
 - Configure backup for an App Service
 - Configure networking settings for an App Service
@@ -136,6 +138,7 @@ This repository is designed for those seeking practical, project-based experienc
 ---
 
 ### Implement and manage virtual networking
+
 
 #### Configure and manage virtual networks in Azure
 - Create and configure virtual networks and subnets
@@ -177,3 +180,4 @@ This repository is designed for those seeking practical, project-based experienc
 - Perform a failover to a secondary region by using Site Recovery
 - Configure and interpret reports and alerts for backups
 
+---
