@@ -400,21 +400,41 @@ An alias record allows you to link the zone apex (wideworldimports.com) to a loa
 
 ## Azure Network Watcher
 
-Azure Network Watcher is a regional service that helps you monitor, diagnose, and gain insights into your network infrastructure in Azure. Below are the key features  Network Watcher:
+Azure Network Watcher is a regional service that helps you monitor, diagnose, and gain insights into your network infrastructure in Azure. By using features such as IP flow verification, next hop analysis, and connection troubleshooting, you can ensure that your virtual network is functioning optimally. Some of the key features of Azure Network Watcher include:
 
 **Network Performance Monitoring**
 - **Connection Monitor**: Monitors connectivity status, latency, and network topology changes between Azure virtual machines, endpoints and network interfaces.
 
 * **Network Diagnostics**
-- **IP Flow Verify**: Diagnoses connectivity issues by verifying the communication between a virtual machine and an endpoint.
-- **Next Hop**: Determines the next hop a packet takes to reach its destination.
-- **Security Group View**: Displays all security rules applied to a network interface in a virtual machine.
-- **Effective Security Rules**: Shows all effective security rules for a network interface, including those from associated NSGs.
-- **Packet Capture**: Captures and inspects packets to and from a virtual machine for diagnosing network issues.
+    - **IP Flow Verify**: Quickly diagnose connectivity issues from or to the internet, and from or to your on-premises environment. 
+        - This feature helps you identify if a security rule is blocking traffic to or from your virtual machine or the internet.
+        - At some point, your virtual machine might be unable to communicate with other resources because of a security rule. You can use the IP flow verify feature to troubleshoot your NSG rules.If test runs fail, but the IP flow verify feature doesn't indicate the issue is related to your NSG rules, you need to explore other areas, such as firewall restrictions.
+        - You configure the IP flow verify feature with the following properties in the Azure portal:
+            - Virtual machine and network interface
+            - Local (source) port number
+            - Remote (destination) IP address, and remote port number
+            - Communication protocol (TCP or UDP)
+            - Traffic direction (Inbound or Outbound)
+    - **Next Hop**: The next hop feature in Azure Network Watcher checks if traffic is being directed to the intended destination. This feature lets you view the next connection point (or next hop) in your network route, and helps you verify a correct network configuration.
+        - The next hop feature helps you diagnose routing problems. For example, if a virtual machine can't communicate with another virtual machine, you can use the next hop feature to determine if the traffic is being directed to the correct destination.
+        - The next hop feature provides the following information:
+            - The next hop type (Internet, Virtual appliance, Virtual network, None)
+            - The next hop IP address
+            - The next hop MAC address
+            - The next hop type (User-defined route, System route)
+            - The next hop name.
+    - **VPN Troubleshoot**: Diagnose and troubleshoot the health of your virtual network gateway or connection with gathered data. View connection statistics, CPU and memory information, IKE security errors, packet drops, and buffers and events.
+    - **Security Group View**: Displays all security rules applied to a network interface in a virtual machine.
+    - **Effective Security Rules**: Shows all effective security rules for a network interface, including those from associated NSGs.
+    - **Packet Capture**: Captures and inspects packets to and from a virtual machine for diagnosing network issues.
 
 **Topology**
-- **Topology View**: Visualizes the network topology of your Azure resources, providing a graphical representation of your network layout.
-
+- **Topology View**: Visualizes the network topology of your Azure resources, providing a `graphical` representation of your network layout. This can be done remotely with out logging into you Virtual Machine.
+    - The graphical display shows the resources in the network, their interconnections, and their relationships with each other.
+    - The topology view feature helps you understand the layout of your network. For example, you can use the topology view feature to see how your virtual machines are connected to each other and to other resources in your network. You can view subnets, virtual machines, network interfaces, public IP addresses, network security groups, route tables, and more.
+    - To generate a topology, you need an Azure Network Watcher instance in the same region as the virtual network.
+    ! [Topology View](resources/Screenshot-2024-06-16-at-4.10.28-PM.png)
+    
 **Network Logs**
 - **NSG Flow Logs**: Captures and reviews network traffic flow through network security groups for traffic analysis and security audits.
 

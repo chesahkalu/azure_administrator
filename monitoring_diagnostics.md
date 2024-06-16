@@ -10,18 +10,15 @@
   - [Pre-Requisites](#pre-requisites)
   - [Introduction](#introduction)
   - [Azure Monitor](#azure-monitor)
+  - [Azure Log Analytics](#azure-log-analytics)
   - [Azure Application Insights](#azure-application-insights)
     - [Azure Application Insights Overview](#azure-application-insights-overview)
     - [Azure Application Insights Metrics](#azure-application-insights-metrics)
     - [Azure Application Insights Logs](#azure-application-insights-logs)
     - [Azure Application Insights Alerts](#azure-application-insights-alerts)
     - [Azure Application Insights Workbooks](#azure-application-insights-workbooks)
-  - [Azure Log Analytics](#azure-log-analytics)
-    - [Azure Log Analytics Overview](#azure-log-analytics-overview)
-    - [Azure Log Analytics Metrics](#azure-log-analytics-metrics)
-    - [Azure Log Analytics Logs](#azure-log-analytics-logs)
-    - [Azure Log Analytics Alerts](#azure-log-analytics-alerts)
-    - [Azure Log Analytics Workbooks](#azure-log-analytics-workbooks)
+
+
   - [Azure Diagnostic Logs](#azure-diagnostic-logs)
     - [Azure Diagnostic Logs Overview](#azure-diagnostic-logs-overview)
     - [Azure Diagnostic Logs Metrics](#azure-diagnostic-logs-metrics)
@@ -90,13 +87,48 @@ Azure Monitor is a platform service that provides a single source that can monit
     - Perform intricate operations with minimal code
     - Configure your saved log searches to run automatically.
     - Add visualizations for your saved log searches to see graphical views of your environment health.
+
 - **Log Analytics Workspace** is a unique environment for storing and analyzing data. It is a container where you can collect data from multiple sources, query that data, and create visualizations. You can have multiple workspaces in a single Azure subscription. 
     - You can use the Azure portal to create and manage your Log Analytics workspace.
     - After you create your workspace, you configure your data sources and solutions to store their data in your workspace.
     - Note that not all `regions` support all features of Log Analytics. If you are unable to create a workspace in your desired region, you may need to search and choose a different region that supports the features you need.
     - The default `pricing` tier for a new workspace is pay-as-you-go. Charges incur only after you start collecting data.
 
+- **Query Editor** is a tool in the Azure portal that allows you to interactively query your log data. You can use the query editor to write and run queries, visualize results, and save queries for later use. 
+    - Administrators build Log Analytics queries from data stored in dedicated `tables` in the Log Analytics workspace. Some common dedicated tables include `Event`, `Syslog`, `Heartbeat`, and `Alert`. When you build a Kusto Query Language (KQL) query, you begin by determining which tables in the Azure Monitor Logs repository have the data you're looking for.
+    - Documentation for each data source and solution includes the name of the data type that it creates and a description of each of its properties.
+    - The basic structure of a query is a source table followed by a series of commands (referred to as `operators`).
+    - A query can have a chain of multiple operators to refine your data and perform advanced functions.
+    - Each operator in a query chain begins with a pipe character `|`.
+    - Many queries require data from a single table only, but other queries can use various options and include data from multiple tables.
+
+- **Tables** are the primary data structures in Log Analytics. Each table contains a set of records with fields that describe the data. You can query tables to retrieve data and perform operations on the data. 
+    - Each table has a schema that defines the fields and data types for the records in the table.
+    - You can use the `schema` to understand the data in the table and to write queries that retrieve the data you need.
+    - The schema for a table is defined by the data source that writes data to the table. The schema is fixed and cannot be changed by users.
+    - The schema for a table is documented in the Azure Monitor Logs data reference. 
+    - The columns in a table are called `fields`. Each field has a name and a data type. The data type defines the kind of data that can be stored in the field.
+    eg, type, event, duration, start, time, etc.
+
+- **Examples of Log Analytics Queries**:
+    - Query to retrieve all records from the `Heartbeat` table:
+        ```sql
+        Heartbeat
+        ```
+    - Query to retrieve all records from the `Heartbeat` table where the `Computer` field is equal to `Server01`:
+        ```sql
+        Heartbeat | where Computer == "Server01"
+        ```
+    - Query to retrieve all records from the `Heartbeat` table where the `Computer` field is equal to `Server01` and the `TimeGenerated` field is greater than `2022-01-01T00:00:00Z`:
+        ```sql
+        Heartbeat | where Computer == "Server01" and TimeGenerated > datetime(2022-01-01T00:00:00Z)
+        ```
+    - Query to return the first three data records from the `Stormevent` table, ordered by the `event severity duration`:
+        ```sql
+       StormEvent | top 3 by event severity duration
+        ```
 
 
 - [Azure Monitor Documentation](https://learn.microsoft.com/en-us/azure/azure-monitor/)
 - [Interactive Labs on Implementing Azure Monitor](https://learn.microsoft.com/en-us/training/modules/configure-azure-monitor/8-simulation-monitor)
+- [Analyze monitoring data with Kusto Query Language](https://learn.microsoft.com/en-us/training/paths/analyze-monitoring-data-with-kql/)
