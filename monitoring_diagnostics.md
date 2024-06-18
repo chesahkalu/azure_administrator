@@ -11,23 +11,15 @@
   - [Introduction](#introduction)
   - [Azure Monitor](#azure-monitor)
   - [Azure Log Analytics](#azure-log-analytics)
-  - [Azure Application Insights](#azure-application-insights)
-    - [Azure Application Insights Overview](#azure-application-insights-overview)
-    - [Azure Application Insights Metrics](#azure-application-insights-metrics)
-    - [Azure Application Insights Logs](#azure-application-insights-logs)
-    - [Azure Application Insights Alerts](#azure-application-insights-alerts)
-    - [Azure Application Insights Workbooks](#azure-application-insights-workbooks)
-
-
-  - [Azure Diagnostic Logs](#azure-diagnostic-logs)
-    - [Azure Diagnostic Logs Overview](#azure-diagnostic-logs-overview)
-    - [Azure Diagnostic Logs Metrics](#azure-diagnostic-logs-metrics)
-    - [Azure Diagnostic Logs Logs](#azure-diagnostic-logs-logs)
-    - [Azure Diagnostic Logs Alerts](#azure-diagnostic-logs-alerts)
-    - [Azure Diagnostic Logs Workbooks](#azure-diagnostic-logs-workbooks)
-  - [Azure Monitor vs Azure Application Insights vs Azure Log Analytics vs Azure Diagnostic Logs](#azure-monitor-vs-azure-application-insights-vs-azure-log-analytics-vs-azure-diagnostic-logs)
-  - [Azure Monitor vs Azure Application Insights vs Azure Log Analytics vs Azure Diagnostic Logs](#azure-monitor-vs-azure-application-insights-vs-azure-log-analytics-vs-azure-diagnostic-logs-1)
-  - [Azure Monitor vs Azure Application Insights vs Azure Log Analytics vs Azure Diagnostic Logs](#azure-monitor)
+  - [Monitor Alerts](#monitor-alerts)
+    - [Alert Rule](#alert-rule)
+    - [Alert Condition](#alert-condition)
+    - [Metric Alerts](#metric-alerts)
+    - [Log Alerts](#log-alerts)
+    - [Activity Log Alerts](#activity-log-alerts)
+    - [Service Health Alerts](#service-health-alerts)
+    - [Action Group](#action-group)
+    - [Alert Processing Rule](#alert-processing-rule)
 
 ---
 
@@ -127,6 +119,74 @@ Azure Monitor is a platform service that provides a single source that can monit
         ```sql
        StormEvent | top 3 by event severity duration
         ```
+
+### Monitor Alerts
+
+Azure Monitor Alerts provide a way to get notified when issues occur. You can create alerts programmatically or through the Azure portal. Alerts can be based on metrics, logs, or activity log events. You can configure alerts to notify you by email, SMS, or webhook. You can also configure alerts to trigger an action group, which can run a logic app, a function, or an automation runbook.
+
+- `Metric alerts` provide an alert trigger when a specified `threshold` is exceeded. For example, a metric alert can notify you when CPU usage is greater than 95 percent.
+- `Activity log alerts` notify you when Azure resources change state. For example, an activity log alert can notify you when a resource is deleted.
+- `Log alerts` are based on things written to log files. For example, a log alert can notify you when a web server has returned a number of 404 or 500 responses.
+ 
+**Alert Rule** is a configuration that defines the conditions under which an alert is created. The rule specifies the target resource, the condition, and the action to take when the condition is met. The composition of an alert rule includes:
+- **Resource**: The resource to monitor. Various resources can be assigned a single alert rule.
+- **Condition**: The condition that triggers the alert. The signal type can be a metric, an activity log, or logs
+- **Action**: The action to take when the alert is triggered, like sending an email, sending an SMS message, or using a webhook.
+- **Alert Details**: The details of the alert, such as the severity and the alert rule name. `5` severity levels are available:
+    - `Sev 0`: Critical
+    - `Sev 1`: Error
+    - `Sev 2`: Warning
+    - `Sev 3`: Informational
+    - `Sev 4`: Verbose
+
+**Alert Condition** is the condition that triggers the alert. The condition can be a metric, an activity log, or logs. The condition can be a single condition or a combination of conditions. The condition can be a simple comparison, a complex comparison, or a combination of comparisons.
+
+- `Metric Alerts`: You must define the type of statistical analysis to be used with either `static` or `dynamic` metric alerts. Example types are minimum, maximum, average, and total. In an example, you define the `period` of data to be assessed: the last 10 minutes. Finally, you set the `frequency` by which the alert conditions are checked: every two minutes.
+    - `Static` : static alert with a threshold of 85 percent CPU utilization checks the rule every two minutes. It evaluates the last 10 minutes of CPU utilization data to assess if it rises above the threshold. If the evaluation is true, the alert triggers the actions associated with the action group.
+    - `Dynamic` : Uses a machine learning algorithm to determine the threshold. Using a `look-back` period of example 3, will be `10 minutes * 3 = 30 minutes`. Then `number 0f violation` set to `2`expresses how many times the logic condition has to deviate from the expected behavior before the alert rule fires a notification.
+
+    - Wth `Dimension` you can supply multiple data from different instances of the same resource. For example, you can monitor the CPU utilization of all virtual machines in a resource group.
+
+- `Log Alerts`: You can create an alert rule for a specific condition or for a set of conditions. Log alerts use log data to assess the rule logic and, if necessary, trigger an alert. This data can come from any Azure resource: server logs, application server logs, or application logs. `By its nature, log data is historical, so usage is focused on analytics and trends`. The first part of a log alert defines the log search rule. The rule defines how often it should run, the time period under evaluation, and the query to be run. When a log search evaluates as positive, it creates an alert record and triggers any associated actions. The composition of a log alert includes:
+    - `Log Query`: Query that runs every time the alert rule fires.
+    - `Time Period`: The time period over which the log query runs.
+    - `Frequency`: How often the log query runs.
+    - `Threshold`: The threshold that triggers the alert.
+
+- `Activity Log Alerts`: Activity log alerts allow you to be notified when a specific event happens on some Azure resource. For example, you can be notified when someone creates a new VM in a subscription. The first part of an activity log alert defines the activity log rule. The rule defines the event type, the resource group, and the subscription to monitor. When the rule evaluates as positive, it creates an alert record and triggers any associated actions. Two types of activity log alerts are available:
+    - **Service Health**: Alerts you when there is a service health event.  Include notice of incidents and maintenance of target resources.
+    - **Specific Operations**: Alerts you when a specific operation is performed on a target resource. For example, you can be alerted when a VM is created or deleted.
+The composition of an activity log alert includes:
+    `Category`: Administrative, service health, autoscale, policy, or recommendation
+    `Scope`: Resource level, resource group level, or subscription level
+    `Resource group`: Where the alert rule is saved
+    `Resource type`: Namespace for the target of the alert
+    `Operation name`: Operation name
+    `Level`: Verbose, informational, warning, error, or critical
+    `Status`: Started, failed, or succeeded
+    `Event initiated by`: Email address or Microsoft Entra identifier (known as the "caller") for the user
+
+- `Service Health Alerts`: 
+    - Service health alerts aren't like all the other alert types you've seen so far in this module.
+    - The only difference is that you no longer need to select a resource, because the alert is for a whole region in Azure. 
+    - What you can select is the kind of health event on which you want to be alerted. 
+    - You can select service issues, planned maintenance, health advisories, or choose all of the events. 
+    - The remaining steps of performing actions and naming the alerts are the same.
+
+- `Action Group`: An action group is a collection of notification preferences defined by the user. The action group can be used across multiple alert rules. The action group defines the actions to take when an alert is triggered. You can run one or more actions for each triggered alert. Azure Monitor can perform any of the following actions:
+    - Send an email to a group of people
+    - Send a text message to a mobile phone
+    - Call or send a notification to a webhook
+    - Create an Azure app push notification
+    - Make a voice call to a number
+    - Call an Azure function
+    - Trigger a logic app
+    - Create an ITSM ticket
+    - Use a runbook (to restart a VM or scale a VM up or down)
+
+**Alert Processing Rule** is a rule that defines how alerts are processed. The rule specifies the target resource, the condition, and the action to take when the condition is met. Use alert processing rules to override the normal behavior of a fired alert by adding or suppressing an action group. You can use alert processing rules to add action groups or remove (suppress) action groups from your fired alerts. Alert processing rules are different from `alert rules`. Alert rules trigger alerts when a condition is met in your monitored resources. Alert processing rules modify the alerts as they're being fired.
+
+
 
 
 - [Azure Monitor Documentation](https://learn.microsoft.com/en-us/azure/azure-monitor/)
