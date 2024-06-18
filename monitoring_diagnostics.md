@@ -312,7 +312,7 @@ To create a Metrics Explorer graph that shows host VM maximum percentage CPU and
 
 - Besides monitoring your VM host's health, utilization, and performance, you need to monitor the `software` and `processes` running on your VM, which are called the VM `guest` or `client`. Azure Monitor provides a solution called `VM Insights` that helps you monitor the guest OS and applications running on your VM. VM Insights collects and analyzes guest OS and application performance data, and provides insights into the performance and health of your VM.
 
-- To monitor the software running on your VM, you install the Azure Monitor Agent, which collects data from inside the VM. VM insights:
+- To monitor the software running on your VM, you install the **`Azure Monitor Agent`**, which collects data from inside the VM. VM insights:
 
 
 
