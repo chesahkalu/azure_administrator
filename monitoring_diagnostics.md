@@ -313,10 +313,48 @@ To create a Metrics Explorer graph that shows host VM maximum percentage CPU and
 - Besides monitoring your VM host's health, utilization, and performance, you need to monitor the `software` and `processes` running on your VM, which are called the VM `guest` or `client`. Azure Monitor provides a solution called `VM Insights` that helps you monitor the guest OS and applications running on your VM. VM Insights collects and analyzes guest OS and application performance data, and provides insights into the performance and health of your VM.
 
 - To monitor the software running on your VM, you install the **`Azure Monitor Agent`**, which collects data from inside the VM. VM insights:
+    - Installs Azure Monitor Agent on your VM.
+    - Creates a data collection rule (DCR) that collects and sends a predefined set of client performance data to a Log Analytics workspace.
+    - Presents the data in curated workbooks.
+
+**Enabling VM Insights**:
+
+1. In the Azure portal, navigate to the VM you want to monitor.
+
+2. In the left navigation pane, select `Insights`.
+
+3. On the `VM Insights` page, select `Enable`.
+
+4. On the `Monitoring configuration` page, select `Azure Monitor Agent (Recommended)`.
+
+4. Under `Data collection rule`, note the properties of the DCR that VM insights creates. In the DCR description, `Processes and dependencies (Map)` is set to `Enabled`, and a default `Log Analytics workspace` is created or assigned.
+
+5. Select `Configure`. Configuration of the workspace and the agent installation typically takes 5 to 10 minutes. It can take another 5 to 10 minutes for data to become available to view in the portal.
+
+6. After the configuration is complete, confirm that the Azure Monitor Agent and the Dependency Agent are installed by looking on the `Properties` tab of the VM's `Overview` page under `Extensions + applications`. 
+
+7. Select `View insights` to see the VM insights dashboard.
+    - `Performance tab`. The prebuilt VM insights Performance workbook shows charts and graphs with performance-related data for the current VM.
+    - `Map tab`. The prebuilt VM insights Map workbook shows a map of the processes and dependencies running on the VM.
 
 
+### VM Log 
 
+- To analyze the root causes of issues you detect, you need to analyze log data to see which system events caused or contributed to the issues. You set up a `data collection rule (DCR)` to collect log, and view the log data in Azure Monitor Log Analytics by using a simple Kusto Query Language (KQL) query.
 
+- VM insights installs the Azure Monitor Agent and creates a DCR that collects predefined performance counters, maps process dependencies, and presents the data in prebuilt workbooks. You can create your own DCRs to collect VM performance counters that the VM insights DCR doesn't collect, or `to collect log data`.
+
+**Data Collection Endpoint**: The data collection endpoint is the destination where the data collected by the Azure Monitor Agent is sent. The data collection endpoint can be an Azure Monitor Logs workspace or Azure Monitor Metrics. You must have a data collection endpoint to send log data to. To create an endpoint:
+
+1. In the Azure Monitor left navigation menu under `Settings`, select `Data Collection Endpoints`.
+2. On the `Data Collection Endpoints` page, select `Create`.
+3. On the `Create data collection endpoint` page, for `Name`, enter *linux-logs-endpoint*.
+4. Select the same `Subscription`, `Resource group`, and `Region` as your VM uses.
+5. Select `Review + create`, and when validation passes, select `Create`.
+
+**Create a data collection rule**: In the Monitor left navigation menu under Settings, select Data Collection Rules and creat your DCR
+
+**Viewing log data in Log Analytics**: You can view and analyze the log data collected by your DCR by using KQL log queries. A set of sample KQL queries is available for VMs, but you can write a simple query to look at the events your DCR is collecting.
 
 ---
 
