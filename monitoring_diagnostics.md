@@ -12,7 +12,7 @@
   - [Azure Monitor](#azure-monitor)
   - [Azure Log Analytics](#azure-log-analytics)
   - [Monitor Alerts](#monitor-alerts)
-  
+
 ---
 
 ## Pre-Requisites
@@ -40,7 +40,7 @@ Azure Monitor is a platform service that provides a single source that can monit
         - You can use Azure Monitor metrics explorer to view the metrics for your Azure services and resources.
         - In the Azure portal, select any `graph` for a resource to open the associated metrics data in metrics explorer. The tool lets you `chart` the `values` of multiple metrics over `time`. You can work with the charts interactively or pin them to a dashboard to view them with other visualizations.
 
-    - **`Logs`** contain different kinds of data organized into records with different sets of properties for each type. Data like events and traces are stored as logs along with performance data so all the data can be combined for analysis.
+    - **`Logs`** contain different kinds of data organized into records with different sets of properties for each type. Data like events and traces are stored as logs along with performance data so all the data can be combined for analysis. Azure Monitor doesn't collect logs by default, but you can configure Azure Monitor Logs to collect from any Azure resource.
         - In the Azure portal, log data collected by Azure Monitor is stored in `Log Analytics`.
         - Log Analytics includes a rich `query language` to help you quickly retrieve, consolidate, and analyze your collected data.
         - You can use the `Log Analytics query editor` in the Azure portal to interactively query your log data. 
@@ -59,6 +59,7 @@ Azure Monitor is a platform service that provides a single source that can monit
     - Activity logs are kept for 90 days.
     - In the Azure portal, you can filter your Azure Monitor activity logs so you can view specific information. The filters enable you to review only the activity log data that meets your criteria.
 
+---
 
 ### Log Analytics
 
@@ -111,6 +112,25 @@ Azure Monitor is a platform service that provides a single source that can monit
         ```sql
        StormEvent | top 3 by event severity duration
         ```
+    -  The following example retrieves the most recent heartbeat record for each computer. The computer is identified by its `IP address`. In this example, the summarize aggregation with the `arg_max` function returns the record with the most recent value for each IP address.
+        ```sql
+        Heartbeat
+        | summarize arg_max(TimeGenerated, *) by ComputerIP
+        ```
+    - The following example retrieves the average `CPU `usage for each computer in the `Heartbeat` table. The summarize aggregation with the `avg` function calculates the average CPU usage for each computer.
+        ```sql
+        Heartbeat
+        | summarize avg(CPU_s) by Computer
+        ```
+    - The data for an event table, stored in rows, is filtered by the value of the `StartTime` column. The data is filtered further by the value of the `State` column. The query then returns the `count` of the resulting rows.
+        ```sql
+        Events
+        | where StartTime >= datetime(2018-11-01) and StartTime < datetime(2018-12-01)
+        | where State == "FLORIDA"  
+        | count
+        ```
+
+---
 
 ### Monitor Alerts
 
@@ -178,8 +198,129 @@ The composition of an activity log alert includes:
 
 **Alert Processing Rule** is a rule that defines how alerts are processed. The rule specifies the target resource, the condition, and the action to take when the condition is met. Use alert processing rules to override the normal behavior of a fired alert by adding or suppressing an action group. You can use alert processing rules to add action groups or remove (suppress) action groups from your fired alerts. Alert processing rules are different from `alert rules`. Alert rules trigger alerts when a condition is met in your monitored resources. Alert processing rules modify the alerts as they're being fired.
 
+---
+
+## VM Monitoring and Diagnostics
+
+- Azure Monitor `Metrics` automatically monitors a predefined set of metrics for every Azure VM, and retains the data for 93 days with some exceptions.
+- You can use Azure Monitor `Logs` to collect data from the VMs and analyze it.
+
+**Monitoring Layers**: Azure VMs have several layers that require monitoring. Each of the following layers has a distinct set of telemetry and monitoring requirements.
+- **Host VM**: The physical or virtual machine that hosts the VM. Monitoring the host layer is essential for understanding the health and performance of the VM. It includes monitoring the CPU, memory, disk, and network usage of the host VM.
+- **Guest Operating System**
+- **Client Workload**
+- **Application**
+
+VM client monitoring can include monitoring the operating system (OS), workloads, and applications that run on the VM. To collect metrics and logs from guest OS and client workloads and applications, you need to install Azure Monitor Agent and set up a `data collection rule (DCR)`.
+
+DCRs define what data to collect and where to send that data. You can use a DCR to send Azure Monitor metrics data, or performance counters, to Azure Monitor Logs or Azure Monitor Metrics. Or, you can send event log data to Azure Monitor Logs. `In other words, Azure Monitor Metrics can store only metrics data, but Azure Monitor Logs can store both metrics and event logs`.
+
+### Create a VM and enable recommended alerts
+
+1. Sign in to the Azure portal, and in the Search field, enter `virtual machines`.
+
+2. On the Virtual machines page, select `Create`, and then select Azure virtual machine.
+
+3. On the Basics tab of the `Create a virtual machine` page:
+
+    - In the `Subscription` field, select the correct subscription if not already selected.
+    - Under `Resource group`:
+        1. Select `Create new`.
+        2. Under `Name`, enter `learn-monitor-vm-rg`.
+        3. Select `OK`.
+    - For Virtual machine name, enter monitored-linux-vm.
+    - For Image, select Ubuntu Server 20.04 LTS - x64 Gen2.
+
+4. Leave the other settings at their current values, and select the `Monitoring tab`.
+
+5. On the Monitoring tab, select the checkbox next to `Enable recommended alert rules`.
+
+6. On the `Set up recommended alert rules` screen:
+
+    - Select all the listed alert rules if not already selected, and adjust the values if desired.
+    - Under `Notify me by`, select the checkbox next to `Email`, and enter an email address to receive alert notifications.
+    - Select `Save`.
+7. Under `Diagnostics`, for `Boot diagnostics`, ensure that `Enable with managed storage account (recommended)` is selected.
+
+8. Select `Review + create`, and then select `Create`.
+
+9. On the `Generate new key pair` popup dialog box, select `Download private key and create resource`.
+
+It can take a few minutes to create the VM. When you get the notification that the VM is created, select `Go to resource` to see basic metrics data.
+
+### View built-in metrics graphs
+
+Once your VM is created, Azure starts collecting basic metrics data automatically. Built-in metrics graphs, along with the recommended alerts you enabled, can help you monitor whether and when your VM encounters health or performance issues. You can then use more advanced monitoring and analytics capabilities to investigate issue causes and remediation.
+
+1. To view basic metrics graphs, on the VM's `Overview` page, select the `Monitoring tab`.
+
+2. Under `Performance and utilization` > `Platform metrics`, review the following metrics graphs related to the VM's performance and utilization. Select `Show more` metrics if all the graphs don't appear immediately.
+
+    - VM Availability
+    - CPU (average)
+    - Disk bytes (total)
+    - Network (total)
+    - Disk operations/sec (average)
+
+3. Under Guest OS metrics, notice that guest OS metrics aren't being collected yet. This is because you haven't set up a data collection rule to collect guest OS metrics.
+
+4. **You can view the VM's activity log by selecting `Activity log` from the VM's left `navigation` menu. You can also retrieve entries by using PowerShell or the Azure CLI.**
+
+5. **You can view boot diagnostics by selecting `Boot diagnostics` from the VM's left navigation menu under `Help`.**
 
 
+### Metric Explorer
+
+- **Metric Explorer** is a tool in the Azure portal that allows you to view and analyze metrics data collected by Azure Monitor. If the built-in metrics charts for a VM don't already show the data you need, You can use Metric Explorer to create and customize charts that show metrics data for your Azure resources. You can also use Metric Explorer to pin charts to dashboards for easy access. To open Metrics Explorer, you can:
+
+    - Select `Metrics` from the VM's left navigation menu under `Monitoring`.
+    - Select the `See all Metrics` link next to `Platform metrics` on the `Monitoring` tab of the VM's `Overview` page.
+    - Select `Metrics` from the left navigation menu on the Azure Monitor `Overview` page.
+
+In Metrics Explorer, you can select the following values from the dropdown fields:
+    - `Scope`: If you open Metrics Explorer from a VM, this field is prepopulated with the VM name. You can add more items with the same resource type (VMs) and location.
+    - `Metric Namespace`: Most resource types have only one namespace, but for some types, you must pick a namespace. For example, storage accounts have separate namespaces for files, tables, blobs, and queues.
+    - `Metric`: Each metrics namespace has many metrics available to choose from.
+    - `Aggregation`: For each metric, Metrics Explorer applies a default aggregation. You can use a different aggregation to get different information about the metric.
+
+You can apply the following aggregation functions to metrics:
+    - `Count`: Counts the number of data points.
+    - `Average (Avg)`: Calculates the arithmetic mean of values.
+    - `Maximum (Max)`: Identifies the highest value.
+    - `Minimum (Min)`: Identifies the lowest value.
+    - `Sum`: Adds up all the values.
+
+You can select flexible time ranges for graphs from the past 30 minutes to the last 30 days, or custom ranges. You can specify time interval granularity from one minute to one month.
+
+**Creating a custom chart in Metric Explorer**:
+
+To create a Metrics Explorer graph that shows host VM maximum percentage CPU and inbound flows together for the past 30 minutes:
+
+1. Open `Metrics Explorer` by selecting `See all Metrics` on the VM's `Monitoring` tab or selecting `Metrics` from the VM's left navigation menu.
+
+2. `Scope` and `Metric Namespace` are already **populated** for the host VM. Select `Percentage CPU` from the `Metrics` dropdown list.
+
+3. `Aggregation` is automatically **populated** with Avg, but change it to `Max`.
+
+4. Select `Add` metric at upper left.
+
+5. Under `Metric`, select `Inbound Flows`. Leave `Aggregation` at `Avg`.
+
+6. At upper right, select `Local Time: Last 24 hours (Automatic - 15 minutes)`, change it to `Last 30 minutes`, and select `Apply`.
+
+### VM Insights
+
+- Besides monitoring your VM host's health, utilization, and performance, you need to monitor the `software` and `processes` running on your VM, which are called the VM `guest` or `client`. Azure Monitor provides a solution called `VM Insights` that helps you monitor the guest OS and applications running on your VM. VM Insights collects and analyzes guest OS and application performance data, and provides insights into the performance and health of your VM.
+
+- To monitor the software running on your VM, you install the Azure Monitor Agent, which collects data from inside the VM. VM insights:
+
+
+
+
+
+---
+
+## References and Further Reading
 
 - [Azure Monitor Documentation](https://learn.microsoft.com/en-us/azure/azure-monitor/)
 - [Interactive Labs on Implementing Azure Monitor](https://learn.microsoft.com/en-us/training/modules/configure-azure-monitor/8-simulation-monitor)
