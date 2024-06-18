@@ -4,6 +4,15 @@
 
 ## Table of Contents
 
+- [Pre-requisites](#pre-requisites)
+- [Introduction](#introduction)
+- [Azure Storage services](#azure-storage-services)
+- [Storage Replication](#storage-replication)
+- [URL Structure](#url-structure)
+- [Secure Access](#secure-access)
+- [Azure Storage Explorer](#azure-storage-explorer)
+- [References and further reading](#references-and-further-reading)
+
 
 ---
 
@@ -25,7 +34,7 @@
 
 ---
 
-### Azure Storage services
+## Azure Storage services
 
 - **Azure Blob Storage**: Store and manage unstructured data as `Objects` or `Blobs`(Binary Large Objects). Blobs can be text or binary files, such as documents, media files, and application installers. They can also store data for backup, restore, disaster recovery, and archiving. Objects in Blob Storage can be accessed from anywhere in the world via `HTTP or HTTPS`. Users or client applications can access blobs via `URLs`, the Azure Storage REST API, Azure PowerShell, the Azure CLI, or an Azure Storage client library. The storage client libraries are available for multiple languages, including .NET, Java, Node.js, Python, PHP, and Ruby.
     - Blob storage stores in this hierarchy: `Storage Account -> Container -> Blob`. All accounts can have an ulimited number of containers and all containers can have an unlimited number of blobs.
@@ -57,6 +66,15 @@
         - `Blob Versioning`: Blob versioning is a feature of Azure Blob Storage that allows you to keep older versions of blobs when they are updated or deleted. You can use blob versioning to recover an earlier version of a blob if it is accidentally modified or deleted.
 
 - **Azure Files**: Managed file shares in the cloud that are accessible via the `Server Message Block (SMB) protocol` and the `Network File System (NFS) protocol`. Azure file shares can be mounted concurrently by cloud or on-premises deployments of Windows, macOS, and Linux. Azure file shares can also be cached on Windows Servers with Azure File Sync for fast access near where the data is being used.
+    - `Azure file shares`: Azure Files provides shared access to files across multiple VMs. Any number of Azure virtual machines or roles can mount and access an Azure file share simultaneously. When configuring `SMB` Azure file share:
+        1. `Open port 445`. Azure Files uses the SMB protocol. SMB communicates over TCP port 445. Be sure port 445 is open. Also, make sure your firewall isn't blocking TCP port 445 from the client machine.
+        2. `Enable secure transfer`. The Secure transfer required setting enhances the security of your storage account by limiting requests to your storage account from secure connections only
+        3. `File share snapshot`. You can create a snapshot of a file share to capture its state at that moment in time. Snapshots are read-only versions of the file share that can be accessed by users and applications.
+    
+    - `Azure file soft delete`: Azure Files supports soft delete for file shares. When you enable soft delete, you can recover your file share and its contents if they are accidentally deleted. Soft delete is a data protection feature that allows you to recover your data when it is erroneously deleted. When you delete a file share, the file share is moved to a soft-deleted state. You can then recover the file share and its contents within a retention period.
+
+    - `Azure File Sync`: Azure File Sync enables you to cache several Azure Files shares on an `on-premises Windows Server` or `cloud virtual machine`. Azure File Sync is a service that enables you to centralize your organization's file shares in Azure Files, while keeping the flexibility, performance, and compatibility of an on-premises file server. Azure File Sync transforms Windows Server into a quick cache of your Azure file share. You can use any protocol available on Windows Server to access your data locally, including SMB, NFS, and FTPS. Azure File Sync is useful for scenarios in which data needs to be accessed and modified quickly at a branch office, or where you need to keep an on-premises copy of your data for regulatory or compliance reasons.
+        * `Cloud Tiering`: Azure File Sync cloud tiering enables you to store only the `newest` or `most recently accessed` files on your local server. Older or less frequently accessed files are tiered to Azure Files in the cloud. This feature helps you save on storage costs by keeping only the most frequently accessed data on-premises.
 
 - **Azure Queue Storage**: A service for storing large numbers of `messages` that can be accessed from anywhere in the world via authenticated calls using `HTTP or HTTPS`. A single message can be up to `64 KB` in size, and a queue can contain millions of messages, up to the total capacity limit of a storage account.
 
@@ -64,7 +82,7 @@
 
 ---
 
-### Storage Replication
+## Storage Replication
 
 Azure Storage offers several types of replication, to ensure durability and high availability.  Azure Storage replication copies your data to protect from planned and unplanned events. These events range from transient hardware failures, network or power outages, massive natural disasters, and so on. The following are the types of replication available in Azure Storage:
 
@@ -80,7 +98,7 @@ Azure Storage offers several types of replication, to ensure durability and high
 
 ---
 
-### URL Structure
+## URL Structure
 
 - The URL structure for accessing the resources in Azure Storage is as follows:
 
@@ -110,13 +128,87 @@ https://<storage-account-name>.table.core.windows.net/<table-name>
 
 ---
 
-### Secure Access
+## Secure Access
 
-In the Azure portal, each Azure service requires certain steps to configure the service endpoints and restrict network access. To access these settings for your storage account, you use the Firewalls and virtual networks settings.
+With encryption, authentication, authorization, and user access control with credentials, file permissions, and private signatures, Azure Storage helps you secure your data for compliance needs. Azure Storage provides several security features to help you protect your data:
 
-- The `Firewalls` and `virtual` networks settings restrict access to your storage account from specific subnets on virtual networks or public IPs.
+- **Shared Access Signature (SAS)**: A shared access signature (SAS) provides secure delegated access to resources in your storage account. With a SAS, you can grant limited permissions to clients who should not have the account key but should be able to perform certain operations. A SAS is a token that encapsulates a set of permissions for a resource and specifies how the resource may be accessed. 
+    - You can provide a SAS to clients who should not have the account key but who should be able to access a resource. By distributing a SAS URI to clients, you can grant them access to a resource for a specified period of time. 
+    - You can also revoke access by changing the SAS. 
+    - A SAS can be scoped to a container, a blob, a table, a queue, or a file share. 
+    - You can also specify the permissions that are granted to the client, such as read, write, or delete. 
+    - You can also specify the IP addresses from which the SAS can be used. 
+    - You can also specify the protocol that the client must use to access the resource. 
+    - You can also specify the start and expiry times for the SAS. 
+    - Configuring a SAS is a two-step process. First, you create a stored access policy on a resource. Then, you generate a SAS that references that stored access policy:
+        - `Signing method`: Choose the signing method: Account key or User delegation key.
+        - `Signing key`: Select the signing key from your list of keys.
+        - `Permissions`: Select the permissions granted by the SAS, such as read or write.
+        - `Start and Expiry date/time`: Specify the time interval for which the SAS is valid. Set the start time and the expiry time.
+        - `Allowed IP addresses`: (Optional) Identify an IP address or range of IP addresses from which Azure Storage accepts the SAS.
+        - `Allowed protocols`: (Optional) Select the protocol over which Azure Storage accepts the SAS.
+    - `SAS Types`: 
+        1. `Service SAS`: Grants access to a resource in one of the storage services: Blob, Queue, Table, or File. Use a service SAS when you want to give access to a resource in one of the storage services, but not the account itself.
+        2. `Account SAS`: Grants access to resources in one or more of the storage services. Use an account SAS when you want to give access to resources in one or more of the storage services, but not the account itself.
+    - `SAS URI`: A SAS URI is a URI that includes a SAS token. You can use a SAS URI to grant access to a resource for a specified period of time. You can also revoke access by changing the SAS. The URI can contains the SAS token, which includes the permissions granted by the SAS, the start and expiry times for the SAS, and the signature that was used to create the SAS. Sample SAS URI:
+        ```
+        https://<storage-account-name>.blob.core.windows.net/<container-name>/<blob-name>?<SAS-token>
+        ```
 
-- You can configure the service to allow access to one or more `public IP` ranges.
+- **Encryption**: Azure Storage encrypts your data at rest by default when you use Azure Storage encryption. 
+    - Azure Storage encryption is enabled for all storage accounts, including Blob Storage, File Storage, Queue Storage, and Table Storage. 
+    - Azure Storage encryption is transparent to you, the developer. 
+    - Azure Storage handles all encryption, decryption, and key management in a fully transparent fashion.
+    - In the Azure portal, you configure Azure Storage encryption by specifying the encryption type. 
+    - You can manage the keys yourself, or you can have the keys managed by Microsoft.
+    - `Customer-managed keys`: You can use your own keys to encrypt and decrypt your data. You can also use Azure Key Vault to manage your keys.
+  
+- **Configure service endpoints**: In the Azure portal, each Azure service requires certain steps to configure the service endpoints and restrict network access. To access these settings for your storage account, you use the Firewalls and virtual networks settings.
 
-- `Subnets` and `virtual networks` must exist in the same Azure region or region pair as your storage account.
+    - The `Firewalls` and `virtual` networks settings restrict access to your storage account from specific subnets on virtual networks or public IPs.
 
+    - You can configure the service to allow access to one or more `public IP` ranges.
+
+    - `Subnets` and `virtual networks` must exist in the same Azure region or region pair as your storage account.
+
+---
+
+## Azure Storage Explorer
+
+Azure Storage Explorer is a standalone application that makes it easy to work with Azure Storage data on Windows, macOS, and Linux. With Azure Storage Explorer, you can access multiple accounts and subscriptions, and manage all your storage content.
+
+#### Things to Know About Azure Storage Explorer
+- Azure Storage Explorer requires both management (Azure Resource Manager) and data layer permissions to allow full access to your resources. You need Azure Active Directory (Azure AD) permissions to access your storage account, the containers in your account, and the data in the containers.
+- Azure Storage Explorer lets you connect to different storage accounts.
+    - Connect to storage accounts associated with your Azure subscriptions.
+    - Connect to storage accounts and services that are shared from other Azure subscriptions.
+    - Connect to and manage local storage by using the Azure Storage Emulator.
+
+#### Scenarios Supported by Azure Storage Explorer
+Azure Storage Explorer supports various scenarios for working with storage accounts in global and national Azure. Here are some common scenarios:
+
+| **Scenario** | **Description** |
+| ------------ | ---------------- |
+| Connect to an Azure subscription | Manage storage resources that belong to your Azure subscription. |
+| Work with local development storage | Manage local storage by using the Azure Storage Emulator. |
+| Attach to external storage | Manage storage resources that belong to another Azure subscription or that are under national Azure clouds by using the storage account name, key, and endpoints. |
+| Attach a storage account with a SAS | Manage storage resources that belong to another Azure subscription by using a shared access signature (SAS). |
+| Attach a service with a SAS | Manage a specific Azure Storage service (blob container, queue, or table) that belongs to another Azure subscription by using a SAS. |
+
+#### Attach to External Storage Account
+Azure Storage Explorer allows you to attach to external storage accounts for easy sharing of storage resources. To create the connection, you need the external storage account name and account key. In the Azure portal, the account key is called key1.
+
+**Access Keys:**
+- Access keys provide access to the entire storage account. You're provided two access keys so you can maintain connections by using one key while regenerating the other.
+- **Important:** Store your access keys securely. We recommend regenerating your access keys regularly. When you regenerate your access keys, you must update any Azure resources and applications that access this storage account to use the new keys. This action doesn't interrupt access to disks from your virtual machines.
+
+---
+
+
+
+
+
+# References and further reading
+
+- [Azure Storage Documentation](https://docs.microsoft.com/en-us/azure/storage/)
+- [Azure Storage Explorer](https://azure.microsoft.com/en-us/features/storage-explorer/)
