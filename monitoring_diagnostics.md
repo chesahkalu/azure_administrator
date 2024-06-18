@@ -12,15 +12,7 @@
   - [Azure Monitor](#azure-monitor)
   - [Azure Log Analytics](#azure-log-analytics)
   - [Monitor Alerts](#monitor-alerts)
-    - [Alert Rule](#alert-rule)
-    - [Alert Condition](#alert-condition)
-    - [Metric Alerts](#metric-alerts)
-    - [Log Alerts](#log-alerts)
-    - [Activity Log Alerts](#activity-log-alerts)
-    - [Service Health Alerts](#service-health-alerts)
-    - [Action Group](#action-group)
-    - [Alert Processing Rule](#alert-processing-rule)
-
+  
 ---
 
 ## Pre-Requisites
