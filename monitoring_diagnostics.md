@@ -12,7 +12,12 @@
   - [Azure Monitor](#azure-monitor)
   - [Azure Log Analytics](#azure-log-analytics)
   - [Monitor Alerts](#monitor-alerts)
-
+  - [VM Monitoring and Diagnostics](#vm-monitoring-and-diagnostics)
+    - [Create a VM and enable recommended alerts](#create-a-vm-and-enable-recommended-alerts)
+    - [View built-in metrics graphs](#view-built-in-metrics-graphs)
+    - [Metric Explorer](#metric-explorer)
+    - [VM Insights](#vm-insights)
+    - [VM Log](#vm-log)
 ---
 
 ## Pre-Requisites
