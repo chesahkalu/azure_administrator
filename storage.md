@@ -27,13 +27,42 @@
 
 ### Azure Storage services
 
-**Azure Blob Storage**: Store and manage unstructured data. Blobs can be text or binary files, such as documents, media files, and application installers. They can also store data for backup, restore, disaster recovery, and archiving. Objects in Blob Storage can be accessed from anywhere in the world via `HTTP or HTTPS`. Users or client applications can access blobs via `URLs`, the Azure Storage REST API, Azure PowerShell, the Azure CLI, or an Azure Storage client library. The storage client libraries are available for multiple languages, including .NET, Java, Node.js, Python, PHP, and Ruby.
+- **Azure Blob Storage**: Store and manage unstructured data as `Objects` or `Blobs`(Binary Large Objects). Blobs can be text or binary files, such as documents, media files, and application installers. They can also store data for backup, restore, disaster recovery, and archiving. Objects in Blob Storage can be accessed from anywhere in the world via `HTTP or HTTPS`. Users or client applications can access blobs via `URLs`, the Azure Storage REST API, Azure PowerShell, the Azure CLI, or an Azure Storage client library. The storage client libraries are available for multiple languages, including .NET, Java, Node.js, Python, PHP, and Ruby.
+    - Blob storage stores in this hierarchy: `Storage Account -> Container -> Blob`. All accounts can have an ulimited number of containers and all containers can have an unlimited number of blobs.
+    - `Configure a container` :
+        1. Name: Must be unique within the storage account.
+        2. The name can contain only lowercase letters, numbers, and hyphens.
+        3. The name must begin with a letter or a number.
+        4. The minimum length for the name is three characters.
+        5. The maximum length for the name is 63 characters.
+        6. Configure the access level for the container: `Private`(default), `Blob`(public read access for blobs only), `Container`(public read access for container and blobs).
+    - `Blob access tiers`:
+        1. `Hot`: Optimized for storing data that is accessed frequently.
+        2. `Cool`: Optimized for storing data that is infrequently accessed and stored for at least `30` days.
+        3. `Cold`: Optimized for storing data that is rarely accessed and stored for at least `90` days with flexible latency requirements.
+        3. `Archive`: Optimized for storing data that is rarely accessed and stored for at least `180` days with flexible latency requirements.
+    - `Blob lifecycle management`: In the Azure portal, you create lifecycle management policy rules for your Azure storage account by specifying several settings. For each rule, you create `If - Then` block conditions to transition or expire data based on your specifications
+        1. Define rules to automatically transition blobs to a cooler storage tier `if` they have not been accessed for a specified number of days.
+        2. Define rules to automatically delete blobs at the end of their lifecycle.
+        3. Define rules to automatically delete previous versions of blobs.
+        4. Define rules to automatically set the access tier of blobs.
+    - `Blob Types`: 
+        1. `Block Blobs`: Optimized for streaming and storing cloud objects, and are a good choice for storing documents, media files, backups, and other large binary objects.
+        2. `Append Blobs`: Optimized for append operations, making them ideal for scenarios such as `logging` data from virtual machines.
+        3. `Page Blobs`: Optimized for random read-write operations, making them ideal for scenarios such as VHDs.
+    - `Uploading Blob`:
+        
 
-**Azure Files**: Managed file shares in the cloud that are accessible via the `Server Message Block (SMB) protocol` and the `Network File System (NFS) protocol`. Azure file shares can be mounted concurrently by cloud or on-premises deployments of Windows, macOS, and Linux. Azure file shares can also be cached on Windows Servers with Azure File Sync for fast access near where the data is being used.
 
-**Azure Queue Storage**: A service for storing large numbers of `messages` that can be accessed from anywhere in the world via authenticated calls using `HTTP or HTTPS`. A single message can be up to `64 KB` in size, and a queue can contain millions of messages, up to the total capacity limit of a storage account.
+    
 
-**Azure Table Storage**: A service that stores `structured NoSQL data` in the cloud, providing a key/attribute store with a schema-less design. Because Table Storage is schema-less `(non-relational)` it's easy to adapt your data as the needs of your application evolve. Access to Table Storage data is fast and cost-effective for many types of applications, and is typically lower in cost than traditional SQL for similar volumes of data.
+
+
+- **Azure Files**: Managed file shares in the cloud that are accessible via the `Server Message Block (SMB) protocol` and the `Network File System (NFS) protocol`. Azure file shares can be mounted concurrently by cloud or on-premises deployments of Windows, macOS, and Linux. Azure file shares can also be cached on Windows Servers with Azure File Sync for fast access near where the data is being used.
+
+- **Azure Queue Storage**: A service for storing large numbers of `messages` that can be accessed from anywhere in the world via authenticated calls using `HTTP or HTTPS`. A single message can be up to `64 KB` in size, and a queue can contain millions of messages, up to the total capacity limit of a storage account.
+
+- **Azure Table Storage**: A service that stores `structured NoSQL data` in the cloud, providing a key/attribute store with a schema-less design. Because Table Storage is schema-less `(non-relational)` it's easy to adapt your data as the needs of your application evolve. Access to Table Storage data is fast and cost-effective for many types of applications, and is typically lower in cost than traditional SQL for similar volumes of data.
 
 ---
 
@@ -52,3 +81,44 @@ Azure Storage offers several types of replication, to ensure durability and high
 **Geo-zone-redundant storage (GZRS)**: Geo-zone-redundant storage maintains `six` copies of your data, Combining Geo and Zone redundancy. `Three` copies are in the primary region in 3 different `AZ` like ZRS and `three` copies are in a secondary region hundreds of miles away from the primary region, replicating the data 3 times in same data center like LRS. This provides the highest level of durability. GZRS is designed to provide at least `99.99999999999999% (16 9's) durability of objects over a given year`.
 
 ---
+
+### URL Structure
+
+- The URL structure for accessing the resources in Azure Storage is as follows:
+
+```
+https://<storage-account-name>.blob.core.windows.net/<container-name>/<blob-name>
+```
+
+- The URL structure for accessing the resources in Azure Files is as follows:
+
+```
+https://<storage-account-name>.file.core.windows.net/<share-name>/<directory-name>/<file-name>
+```
+
+- The URL structure for accessing the resources in Azure Queue Storage is as follows:
+
+```
+https://<storage-account-name>.queue.core.windows.net/<queue-name>
+```
+
+- The URL structure for accessing the resources in Azure Table Storage is as follows:
+
+```
+https://<storage-account-name>.table.core.windows.net/<table-name>
+```
+
+- You can also configure a custom domain name for your storage account. For more information, see [here](https://learn.microsoft.com/en-us/azure/api-management/configure-custom-domain?tabs=custom)
+
+---
+
+### Secure Access
+
+In the Azure portal, each Azure service requires certain steps to configure the service endpoints and restrict network access. To access these settings for your storage account, you use the Firewalls and virtual networks settings.
+
+- The `Firewalls` and `virtual` networks settings restrict access to your storage account from specific subnets on virtual networks or public IPs.
+
+- You can configure the service to allow access to one or more `public IP` ranges.
+
+- `Subnets` and `virtual networks` must exist in the same Azure region or region pair as your storage account.
+
