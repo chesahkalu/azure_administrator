@@ -38,6 +38,7 @@ This repository is designed for those seeking practical, project-based experienc
 | **Manage Microsoft Entra ID**  | Create, configure, and manage Azure Active Directory Access, Users, Groups, Tenants, and Guest users in Microsoft Entra ID | [Project](./entra_id.md) |
 | **Azure Compliance and Governance** | Learn to navigate and apply Azure's governance tools, focusing on policy creation and compliance management using resource tagging | [Project](./policy_compliance_with_tags.md) |
 | **RBAC-Subscription-Management Groups** | Implement Role-Based Access Control (RBAC) in Azure to manage user permissions and access to resources, Manage subscriptions using Management Groups | [Project](./rbac.md) |
+| **Azure Storage** | Create and manage Azure Storage accounts, Azure Files, Azure Blob Storage, and Azure Storage Explorer | [Project](./storage.md) |
 | **Azure Virtual Network** | Create and configure Virtual Network in Azure, including Subnets, Network Security Groups, Routing, Peering, VPN Gateways, Application Gateway, and Load Balancer | [Project](./virtual_network.md) |
 | **Azure Compute** | Create and manage Virtual Machines, Virtual Machine Scale Sets, Azure App Service, Azure Container Instances, and Azure Backups | [Project](./compute.md) |
 | **Azure Monitoring and Diagnostics** | Monitor and diagnose Azure resources using Azure Monitor, Log Analytics, Application Insights, and Azure Service Health | [Project](./monitoring_diagnostics.md) |
