@@ -1,10 +1,26 @@
 # Managing Azure Role-Based Access Control and Subscriptions with Management Groups
 
+---
+
+## Table of Contents
+
+1. [Introduction](#introduction)
+2. [Prerequisites](#prerequisites)
+3. [Create a Management Group](#create-a-management-group)
+4. [Role-Based Access Control (RBAC)](#role-based-access-control-rbac)
+5. [Assigning Roles to Users](#assigning-roles-to-users)
+6. [Conclusion](#conclusion)
+7. [References and Further Reading](#references-and-further-reading)
+
+---
+
 ## Introduction
 
 - `Role-Based Access Control (RBAC)` is a fundamental aspect of Azure administration, allowing you to manage user permissions and access on resources.
 - `Subscriptions` are the fundamental unit of billing in Azure, grouping resources and services for billing and access control.
 - `Management groups` provide a hierarchy for managing access, policies, and compliance across your Azure subscriptions, essential for large-scale governance. It starts with the `root management group`, which represents the top-level of the hierarchy.
+
+---
 
 ## Prerequisites
 
@@ -142,9 +158,16 @@ Use the Actions and NotActions permissions together to grant and deny the exact 
     - Follow the steps to create a support request.
 - On a given scope (subscription, resource group, or resource), Click on `Access control (IAM)` and navigate to the `Role assignments` tab to see the role assignments.
 - Using `activity logs`, you can track various actions performed regarding RBAC.
+
+---
+
 ## Conclusion
 
 Role-Based Access Control (RBAC) is a powerful tool for managing user permissions and access on Azure resources. By creating custom role definitions and assigning them to users, you can tailor access to meet specific requirements, ensuring security and compliance in your Azure environment.
+
+Management groups provide a hierarchical structure for managing access, policies, and compliance across multiple subscriptions. By organizing your resources into management groups, you can apply access controls, policies, and budgets at different levels of the hierarchy, ensuring consistent governance across your Azure environment.
+
+---
 
 ## References and Further Reading
 
