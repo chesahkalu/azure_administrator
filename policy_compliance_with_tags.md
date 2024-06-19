@@ -8,25 +8,36 @@ This tutorial is designed to empower you to navigate and apply Azure's governanc
 
 - [Introduction](#introduction)
 - [Embracing Management Groups](#embracing-management-groups)
+- [Azure Tags](#azure-tags)
 - [Task 1: Tagging Resources for Clarity and Management](#task-1-tagging-resources-for-clarity-and-management)
-  - [Step-by-Step Instructions](#step-by-step-instructions)
+- [Azure Policy](#azure-policy)
 - [Task 2: Automating Compliance with Azure Policy](#task-2-automating-compliance-with-azure-policy)
-  - [Enforcement Steps](#enforcement-steps)
 - [Task 3: Streamlining Tag Application with Policy](#task-3-streamlining-tag-application-with-policy)
-  - [Implementation Steps](#implementation-steps)
 - [Wrapping Up](#wrapping-up)
 - [Further Reading](#further-reading)
+
+---
 
 ## Introduction
 
 Azure's governance tools are essential for managing and securing your cloud resources effectively.
 This comprehensive guide walks you through the nuances of policy creation, compliance management, resource tagging, and the strategic implementation of management groups.
 
-## Task 1: Tagging Resources for Clarity and Management
+---
 
-Resource tagging facilitates easier management and billing transparency. Follow these steps to implement tagging effectively.
+## Azure Tags
 
-### Step-by-Step Instructions
+- Azure tags are `key-value` pairs that help you organize resources and manage billing. Tags can be applied to resources, resource groups, and subscriptions. They are useful for tracking costs, managing access, enforcing compliance or simply specifying the purpose of a resource.
+
+- They do this by providing metadata that can be used to categorize resources, track costs, and enforce policies. Tags can be used to group resources together, track costs, and enforce policies, by implementing Azure policies to resources based on their tags.
+
+- Tags are `not inherited` by default, but you can use Azure Policy to enforce and inherit tagging requirements(from `resource groups`, `subscriptions`) and automate tag application. This ensures that all resources are tagged consistently and accurately if they are missing tags, and need to inherit tags from their parent resource group.
+
+
+
+### Task 1: Tagging Resources for Clarity and Management
+
+Resource tagging facilitates easier management and billing transparency. Follow these steps to implement tagging effectively:
 
 #### 1. **Identify Your Target Resource Group:**
 - Access the Azure Portal.
@@ -39,11 +50,29 @@ Resource tagging facilitates easier management and billing transparency. Follow 
 #### 3. **Confirm Tag Application:**
 - Ensure the tag hasn’t been applied to non-designated resources within the group.
 
-## Task 2: Automating Compliance with Azure Policy
+---
 
-Enforce tagging consistently across your resources using Azure policies.
+## Azure Policy
 
-### Enforcement Steps
+- `Azure Policy` is a service in Azure that you use to create, assign, and manage policies. These policies enforce different rules and effects over your resources, so those resources stay compliant with your corporate standards and service level agreements.
+
+- Enable `built-in policies`, or build `custom policies` for all resource types. Support real-time policy evaluation and enforcement, and periodic or on-demand compliance evaluation.
+
+- `A policy definition` expresses what to evaluate and what action to take. It describes the `compliance` conditions for a resource, and the actions to complete when the conditions are met. One or more policy definitions are grouped into an `initiative definition`, to control the scope of your policies and evaluate the compliance of your resources. For example, you can ensure all resources in your subscription are tagged, or that virtual machines are encrypted.
+There are four basic steps to create and work with policy definitions in Azure Policy: 
+  1. `Create a policy definition`: Define what to evaluate and what action to take when the conditions are met, either `custom` or `built-in` policy definitions. `Eg 1`. Require a tag and its value on resources. `Eg 2`. You can create a policy definition to prevent VMs in your organization from being deployed, if they're exposed to a public IP address.
+
+  2. `Create an initiative definition`: Group multiple policy definitions to simplify management and assignment, either `custom` or `built-in` policy definitions. `Eg 1`. You can group policy definitions that enforce tagging, naming conventions, and resource location into a single initiative. `Eg 2`. You can group policy definitions that enforce security settings for a specific service into a single initiative.
+
+  3. `Scope the initiative definition`: Define the scope of the initiative definition to either limit or specify where it's enforced. `Eg 1`. You can scope an initiative definition to a management group, subscription, or resource group. `Eg 2`. You can scope an initiative definition to a specific resource type, location, or tag.
+
+  4. `Determine compliance`: After you've assigned the initiative definition, you can view the compliance state of your resources. `Eg 1`. You can view the compliance state of all resources in a subscription. `Eg 2`. You can view the compliance state of all resources in a resource group.
+
+---
+
+### Task 2: Automating Compliance with Azure Policy
+
+Enforce tagging consistently across your resources using Azure policies to ensure compliance and governance. Follow these steps to automate compliance:
 
 #### 1. **Explore Policy Options:**
 - In the Azure Portal, go to the `Policies` section.
@@ -55,11 +84,12 @@ Enforce tagging consistently across your resources using Azure policies.
 #### 3. **Verify Policy Effectiveness:**
 - Test the policy by trying to create a resource without the required tag. The creation should be blocked.
 
-## Task 3: Streamlining Tag Application with Policy
+---
+
+### Task 3: Streamlining Tag Application with Policy
 
 Automate the tag application process to ensure compliance and minimize manual efforts.
 
-### Implementation Steps
 
 #### 1. **Policy Assignment for Tag Inheritance:**
 - Use the "Inherit a tag from the resource group if missing" policy to automate tag application to new resources.
@@ -69,6 +99,8 @@ Automate the tag application process to ensure compliance and minimize manual ef
 
 #### 3. **Confirming Automated Tagging:**
 - Verify that a new resource automatically inherits the `Project:Compliance` tag.
+
+---
 
 ## Wrapping Up
 
@@ -83,5 +115,6 @@ ___
 - [Azure Resource Tagging Best Practices](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/tag-resources)
 - [Azure Compliance Documentation](https://learn.microsoft.com/en-us/training/modules/describe-features-tools-azure-for-governance-compliance/)
 - [Azure Governance Best Practices](https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/resources/tools-templates)
+- [Interactive Lab: Manage Governance via Azure Polic ](https://learn.microsoft.com/en-us/training/modules/configure-azure-policy/9-simulation-policy)
 
 ---
