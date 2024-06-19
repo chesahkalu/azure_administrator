@@ -1,13 +1,19 @@
 # Manage Microsoft Entra ID
 
-[Microsoft Entra ID](https://learn.microsoft.com/en-us/entra/fundamentals/whatis) an identity and access management service that helps you manage employee access to corporate resources. It simplifies the process of managing users, while establishing access and roles to this users. This guide will walk you through the process of creating, configuring, and managing Microsoft Entra ID.
-Some key Terminologies to note are:
-- Member Users: A member user account is a native member of the Microsoft Entra organization that has a set of default permissions like being able to manage their profile information. When someone new joins your organization, they typically have this type of account created for them.
-- Guest Users: A guest user account is an external user who has been invited to the organization. They can be invited to collaborate on projects, share files, or access resources. Guest users are not members of the organization and do not have the same permissions as member users.
-- Tenant: A tenant is a representation of an organization. It's a dedicated instance of the Microsoft Entra service that an organization receives and owns when it signs up for a Microsoft Entra subscription. Each tenant has its own users, groups, resources, and settings.
-- Group: A group is a collection of users who have the same access permissions and roles to resources. Groups can be used to manage access to resources, share information, and collaborate on projects.
-- Role: A role is a collection of permissions that can be assigned to users or groups. Roles define what users can do within the organization, such as managing users, accessing resources (Role-based access control), or configuring settings.
-- Administrator Role: An administrator role is a special role that grants users full access to the Microsoft Entra organization. Administrators can manage users, groups, resources, and settings, as well as configure security and compliance settings.
+---
+
+## Table of Contents
+
+- [Prerequisites](#prerequisites)
+- [Introduction](#introduction) 
+- [Create a tenant](#create-a-tenant)
+- [Add Users](#add-users)
+- [Add Groups](#add-groups)
+- [Guest Users](#guest-users)
+- [Devices](#devices)
+- [Licenses](#licenses)
+- [Conclusion](#conclusion)
+- [References and Further Reading](#references-and-further-reading)
 
 ---
 
@@ -15,14 +21,22 @@ Some key Terminologies to note are:
 
 - An active Azure subscription. [Sign up for a free tier here](https://azure.microsoft.com/en-us/free/).
 
-## Table of Contents
+---
 
-- [Create a tenant](#create-a-tenant)
-- [Add Users](#add-users)
-- [Add Groups](#add-groups)
-- [Guest Users](#guest-users)
-- [Conclusion](#conclusion)
-- [References and Further Reading](#references-and-further-reading)
+## Introduction
+
+
+[Microsoft Entra ID](https://learn.microsoft.com/en-us/entra/fundamentals/whatis) an identity and access management service that helps you manage employee access to corporate resources. It simplifies the process of managing users, while establishing access and roles to this users. This guide will walk you through the process of creating, configuring, and managing Microsoft Entra ID.
+
+Entra ID is a standalone service that can be used with other Microsoft services like Azure, Microsoft 365, and Dynamics 365. It provides a single sign-on experience for users, allowing them to access multiple applications and services with a single set of credentials. Entra ID also provides security features like multi-factor authentication, conditional access, and identity protection to help protect your organization's data.
+
+Some key Terminologies to note are:
+- Member Users: A member user account is a native member of the Microsoft Entra organization that has a set of default permissions like being able to manage their profile information. When someone new joins your organization, they typically have this type of account created for them.
+- Guest Users: A guest user account is an external user who has been invited to the organization. They can be invited to collaborate on projects, share files, or access resources. Guest users are not members of the organization and do not have the same permissions as member users.
+- Tenant: A tenant is a representation of an organization. It's a dedicated instance of the Microsoft Entra service that an organization receives and owns when it signs up for a Microsoft Entra subscription. Each tenant has its own users, groups, resources, and settings.
+- Group: A group is a collection of users who have the same access permissions and roles to resources. Groups can be used to manage access to resources, share information, and collaborate on projects.
+- Role: A role is a collection of permissions that can be assigned to users or groups. Roles define what users can do within the organization, such as managing users, accessing resources (Role-based access control), or configuring settings.
+- Administrator Role: An administrator role is a special role that grants users full access to the Microsoft Entra organization. Administrators can manage users, groups, resources, and settings, as well as configure security and compliance settings.
 
 ---
 
@@ -55,7 +69,7 @@ You can add users to your Microsoft Entra ID organization in the following ways:
 
 3. **Restore a deleted user**: To restore a deleted user, follow these steps:
     - On the Microsoft Entra ID page, click `Users` on the left menu pane under manage, the `All Users` pane comes up
-    - In the `All Users` pane, click `Deleted users` to view the list of deleted users that were deleted within the last 30 days.
+    - In the `All Users` pane, click `Deleted users` to view the list of deleted users that were deleted within the last `30` days.
     - In the `Deleted users` pane, select the user you want to restore.
     - In the top menu bar, select `Restore user`, then select `Restore` in the confirmation pane.
 
@@ -64,7 +78,7 @@ You can add users to your Microsoft Entra ID organization in the following ways:
 ### Add Groups
 
 - You want to be able to give a group of users (like developers) the same access permissions and roles to resources.
-- There two types of groups in Microsoft Entra ID: Security groups(used for assigning permissions to resources) and Microsoft 365 groups(used for collaboration and sharing resources).
+- There two types of groups in Microsoft Entra ID: `Security groups`(used for assigning permissions to resources) and `Microsoft 365 groups`(used for collaboration and sharing resources).
 - Adding members to a group to give access are of two types: 
     - **Dynamic User**: Members are added to a group automatically based on a rule that you define. If a user meets the criteria of the rule, they are added to the group. If they no longer meet the criteria, they are removed from the group.
     - **Assigned User**: Members are added manually.
@@ -104,7 +118,32 @@ Guest users are external users who have been invited to the organization. They c
 
 ---
 
-## SSPR
+---
+
+### Devices
+
+- Devices are objects in Microsoft Entra ID that represent physical devices, such as computers, tablets, and smartphones. Devices can be registered with Microsoft Entra ID to enable features like conditional access, device-based authentication, and device management. You can manage devices in Microsoft Entra ID by performing tasks like registering devices, viewing device details, and removing devices from the organization.
+
+- There are three ways to get a device identity:
+
+    1. `Microsoft Entra registration`: This is the most secure way to register a device with Microsoft Entra ID. When a device is registered with Microsoft Entra ID, it gets a unique identity that can be used to enforce conditional access policies and manage device settings. `In these scenarios, a user can access your organization's resources using a personal device`. To register a device with Microsoft Entra ID, you need to sign in to the device using your Microsoft Entra ID credentials.
+    2.  `Microsoft Entra join`: This is a way to join a device to an on-premises Active Directory domain and register it with Microsoft Entra ID at the same time. When a device is Microsoft Entra joined, it gets a unique identity in Microsoft Entra ID that can be used to enforce conditional access policies and manage device settings. Microsoft Entra join is typically used for devices that are managed by an organization and need to access Microsoft Entra ID resources.
+    3. `Microsoft Entra hybrid join`
+
+---
+
+### Licenses
+
+- Licenses in Microsoft Entra ID are used to assign specific features and services to users. Licenses can be assigned to individual users or groups of users to enable or disable specific features and services. Licenses can be assigned manually or automatically based on user properties or group membership. You can view and manage licenses in Microsoft Entra ID by performing tasks like assigning licenses, removing licenses, and viewing license details.
+
+- Types of licenses in Microsoft Entra ID include:
+    - `Microsoft Entra ID Free`: This license provides basic features like user management, group management, and single sign-on. It is free and available to all Microsoft Entra ID users.
+    - `Microsoft Entra ID Premium P1`: This license provides advanced features like self-service password reset, multi-factor authentication, and conditional access. It is available as a standalone license or as part of the Microsoft 365 Business Premium plan.
+    - `Microsoft Entra ID Premium P2`: This license provides additional features like identity protection, privileged identity management, and access reviews. It is available as a standalone license or as part of the Microsoft 365 E5 plan.
+
+---
+
+### SSPR
 
 - Self-service password reset (SSPR) is a feature that enables users to reset their passwords without the need for administrator intervention. This feature can help reduce the number of help desk calls related to password resets and improve user productivity. 
 
