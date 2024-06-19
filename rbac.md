@@ -4,13 +4,14 @@
 
 ## Table of Contents
 
-1. [Introduction](#introduction)
-2. [Prerequisites](#prerequisites)
-3. [Create a Management Group](#create-a-management-group)
-4. [Role-Based Access Control (RBAC)](#role-based-access-control-rbac)
-5. [Assigning Roles to Users](#assigning-roles-to-users)
-6. [Conclusion](#conclusion)
-7. [References and Further Reading](#references-and-further-reading)
+- [Introduction](#introduction)
+- [Prerequisites](#prerequisites)
+- [Create a Management Group](#create-a-management-group)
+- [Role-Based Access Control (RBAC)](#role-based-access-control-rbac)
+- [Assigning Roles to Users](#assigning-roles-to-users)
+- [Locking Resources](#locking-resources)
+- [Conclusion](#conclusion)
+- [References and Further Reading](#references-and-further-reading)
 
 ---
 
@@ -160,6 +161,14 @@ Use the Actions and NotActions permissions together to grant and deny the exact 
 - Using `activity logs`, you can track various actions performed regarding RBAC.
 
 ---
+
+## Locking Resources
+
+- Azure provides two types of locks to prevent accidental deletion or modification of resources: `Delete Lock` and `Read-only Lock`.
+
+- A `Delete Lock` prevents the deletion of a resource. It can be removed only by a user with the appropriate permissions. This lock is useful when you want to prevent accidental deletion of a resource. It is applied at the resource level, but the object can still be modified.
+
+- A `Read-only Lock` prevents all modifications to a resource. This includes deleting the resource, but also any modifications to the resource's properties.
 
 ## Conclusion
 
