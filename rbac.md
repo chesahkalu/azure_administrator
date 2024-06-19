@@ -4,7 +4,7 @@
 
 - `Role-Based Access Control (RBAC)` is a fundamental aspect of Azure administration, allowing you to manage user permissions and access on resources.
 - `Subscriptions` are the fundamental unit of billing in Azure, grouping resources and services for billing and access control.
-- `Management groups` provide a hierarchy for managing access, policies, and compliance across your Azure subscriptions, essential for large-scale governance.
+- `Management groups` provide a hierarchy for managing access, policies, and compliance across your Azure subscriptions, essential for large-scale governance. It starts with the `root management group`, which represents the top-level of the hierarchy.
 
 ## Prerequisites
 
@@ -15,6 +15,17 @@
 ---
 
 ## Create a Management Group
+The core concept of `Management Groups` is to provide a level of organization above subscriptions. This allows you to manage access, policies, and compliance across multiple subscriptions. The `root management group` is the top-level of the hierarchy, and all other `management groups` and `subscriptions` are nested within it.
+
+The core 3 things you can assign to a `Management Group` that will apply to all subscriptions and management groups within it are:
+
+- **Access Control**: Apply access controls to multiple subscriptions and management groups. This allows you to manage who can access and manage resources at different levels of the hierarchy.
+
+- **Policy Assignment**: Assign policies to multiple subscriptions and management groups. Policies are used to enforce rules and effects on resources, so they stay compliant with corporate standards.
+
+- **Budgets**: Apply budgets to multiple subscriptions and management groups. Budgets allow you to track costs and alert you when costs exceed a certain threshold.
+
+**To create a management group:**
 
 1. Navigate to the Azure portal and search for `Management groups`.
 2. Click on `+ Create` to create a new management group. If the option is disabled, you may need appropriate permissions. To set up a management group, you need to be a `User Access Administrator` or `Owner` at the root management group level. For a simple azure account created for learning purposes, you may have the necessary permissions, if not:
