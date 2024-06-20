@@ -28,7 +28,14 @@
 
 ## Introduction
 
-A virtual network is like a digital version of a physical network. Azure Virtual Network allow different Azure resources to securely communicate with each other, the internet, and on-premises networks. When you create a virtual network, your services and virtual machines within your virtual network can communicate directly and securely with each other in the cloud. You can still configure endpoint connections for the virtual machines and services that require internet communication, as part of your solution. A typical Azure network design usually has these components:
+- A virtual network is like a digital version of a physical network. Azure Virtual Network allow different Azure resources to securely communicate with each other, the internet, and on-premises networks. 
+
+- When you create a virtual network, your services and virtual machines within your virtual network can communicate directly and securely with each other in the cloud. You can still configure endpoint connections for the virtual machines and services that require internet communication, as part of your solution. 
+
+- VNs must live within subscription and region, but can span multiple availability zones within that region. You can also connect virtual networks to each other, enabling resources in either virtual network to communicate with each other. This connection is called `virtual network peering`. You can also connect virtual networks to on-premises networks, using a `VPN Gateway` or `ExpressRoute`.
+
+
+ A typical Azure network design usually has these components:
 
 - Virtual networks
 - Subnets
@@ -38,10 +45,10 @@ A virtual network is like a digital version of a physical network. Azure Virtual
 
 ![Azure Network Design](resources/Screenshot-2024-06-08-at-8.25.30-AM.png)
 
-- **Subnets**: A virtual network is your network in the cloud. After creating a virtual network, You can divide your virtual network into multiple subnets. Each subnet contains a portion of the IP-address space assigned to your virtual network. Subnets enable you to segment the virtual network IP address into one or more sub-networks and allocate a portion of the virtual network's address space to each subnet. You can then deploy Azure resources in a specific subnet. Azure reserves five IP addresses, The first four addresses and the last address are reserved.
+- **Subnets**: A virtual network is your network in the cloud. After creating a virtual network, You can `divide` your virtual network into multiple `subnets`. Each subnet contains a portion of the `private` IP-address space assigned to your virtual network. Subnets enable you to segment the virtual network IP address into one or more sub-networks and allocate a portion of the virtual network's address space to each subnet. You can then deploy Azure resources in a specific subnet and IP-Address assigned to them through `DHCP`. Azure reserves `five` IP addresses, The first four addresses(.0, .1, .2, .3) and the last address(.255) are reserved.
 By default, all subnets in an Azure virtual network can communicate with each other. However, you can use a network security group to deny communication between subnets. Regarding sizing, the smallest supported subnet uses a /29 subnet mask, and the largest supported subnet uses a /2 subnet mask. The smallest subnet has eight IP addresses, and the largest subnet has 1,073,741,824 IP addresses.
 
-- **Static IP addresses**: Static addresses are assigned when a public IP address is created. Static addresses aren't released until a public IP address resource is deleted. If the address isn't associated to a resource, you can change the assignment method after the address is created. If the address is associated to a resource, you might not be able to change the assignment method. You select and assign any unassigned or unreserved IP address in the subnet's address range.
+- **Static IP addresses**: Static addresses are assigned when a `public IP address` is created. Static addresses aren't released until a public IP address resource is deleted. If the address isn't associated to a resource, you can change the assignment method after the address is created. If the address is associated to a resource, you might not be able to change the assignment method. You select and assign any unassigned or unreserved IP address in the subnet's address range.
 Suppose a subnet's address range is 10.0.0.0/16, and addresses 10.0.0.4 through 10.0.0.9 are already assigned to other resources. In this scenario, you can assign any address between 10.0.0.10 and 10.0.255.254.
 
 - **Dynamic IP addresses**: Dynamic addresses are assigned after a public IP address is associated to an Azure resource and is started for the first time. Dynamic addresses can change if a resource such as a virtual machine is stopped (deallocated) and then restarted through Azure. The address remains the same if a virtual machine is rebooted or stopped from within the guest OS. When a public IP address resource is removed from a resource, the dynamic address is released. Azure assigns the next available unassigned or unreserved IP address in the subnet's address range. Dynamic assignment is the default allocation method. Suppose addresses 10.0.0.4 through 10.0.0.9 are already assigned to other resources. In this case, Azure assigns the address 10.0.0.10 to a new resource.
@@ -62,18 +69,18 @@ Suppose a subnet's address range is 10.0.0.0/16, and addresses 10.0.0.4 through 
 
 ## Network Security Groups (NSG)
 
-Network security groups (NSGs) are a simple way to filter network traffic to and from Azure resources in an Azure virtual network. Each network security group contains security rules that allow or deny inbound network traffic to, or outbound network traffic from, several types of Azure resources. You can assign network security groups to a subnet and create a protected screened subnet (also referred to as a demilitarized zone or DMZ). A DMZ acts as a buffer between resources within your virtual network and the internet.
+Network security groups (NSGs) are a simple way to filter network traffic `to` and `from` Azure resources in an Azure virtual network. Each network security group contains security rules that allow or deny inbound network traffic to, or outbound network traffic from, several types of Azure resources. You can assign network security groups to a subnet and create a protected screened subnet (also referred to as a `demilitarized zone or DMZ`). A DMZ acts as a buffer between resources within your virtual network and the internet.
 
 ### Steps to Create a Network Security Group
 
 * Azure creates default rules in a Security Group. Which allow `inbound` trafic only from your `Virtual Network and Load Balancer`, and `outbound` traffic to the `Internet and Virtual Network`. You can add more security rules to a network security group and select from a large variety of communication services, including HTTPS, RDP, FTP, and DNS, by specifying conditions for any of the following settings:
     - **Service** : The service specifies the destination protocol and port range for this rule. You can choose a predefined service, like RDP or SSH, or provide a custom port range
-    - **Priority** : The priority of the rule. The lower the number, the higher the priority. The priority must be unique for each rule in the collection.
-    - **Source (Any, IP addresses, Service tag)** : Controls `Inbound` traffic. Can be an IP address, a range of IP addresses, an application security group or a service tag. A service tag represents a group of IP address prefixes from a given Azure service.
+    - **Priority** : The priority of the rule. `The lower the number, the higher the priority`. The priority must be unique for each rule in the collection.
+    - **Source (Any, IP addresses, Service tag)** : Controls `Inbound` traffic. Can be an IP address, a range of IP addresses, an application security group or a service tag. `A service tag represents a group of IP address prefixes from a given Azure service`.
     - **Destination (Any, IP addresses, Virtual network)** : Controls `Outbound` traffic. Properties similar to Source.
     - **Port** : The port number or range of port numbers for this rule. You can specify a single port number, a range of port numbers, or a combination of both.
     - **Protocol (Any, TCP, UDP)** : The protocol that this rule applies to. You can specify TCP, UDP, or Any.
-    - **Action (Allow or Deny)** : The action to take when the rule matches. The action can be Allow or Deny. The default action is to deny traffic, and it takes precedence over the allow action.
+    - **Action (Allow or Deny)** : The action to take when the rule matches. The action can be Allow or Deny. The `default action is to deny traffic`, and it takes precedence over the allow action.
     - **Description** : A description for this rule. Restricted to 140 characters.
     - **Name** : The name of the rule. Restricted to 80 characters.
 
@@ -81,11 +88,11 @@ Network security groups (NSGs) are a simple way to filter network traffic to and
 
 * You can't remove the default security rules. You can override a default security rule by creating another security rule that has a higher Priority setting for your network security group. By default, Azure allows virtual machines in the same subnet to send traffic to each other (referred to as intra-subnet traffic). You can prohibit intra-subnet traffic by defining a rule in the network security group to deny all inbound and outbound traffic. This rule prevents all virtual machines in your subnet from communicating with each other.
 
-* For inbound traffic, Azure first checks the NSG rules associated with the subnet to ensure that the traffic is allowed to enter the subnet, After the traffic passes the subnet rules, Azure then checks the NSG rules associated with the network interface(NIC)`(point of connection, like an Network card with with an associated IP adress)` of the target VM or resource. This second check ensures that the traffic is specifically allowed to reach the intended resource. The reverse process occurs for outbound traffic. This process ensures layered security for your resources.
+* For inbound traffic, Azure first checks the NSG rules associated with the subnet to ensure that the traffic is allowed to enter the subnet, After the traffic passes the subnet rules, Azure then checks the NSG rules associated with the network interface(NIC)`(point of connection, like an Network card with an associated IP adress)` of the target VM or resource. This second check ensures that the traffic is specifically allowed to reach the intended resource. The reverse process occurs for outbound traffic. This process ensures layered security for your resources.
 
 ### Scenario: 
 - Create and configure network security groups.
-- Associate network security groups to virtual machines.
+- `Associate` network security groups to virtual machines.
 - Deny and allow access to the virtual machines by using network security groups.
 
 ### Solution:
@@ -157,12 +164,13 @@ Application Security Groups (ASGs) let you organize virtual machines into groups
 Virtual network peering enables you to seamlessly connect two Azure virtual networks. Once peered, the virtual networks appear as one, for connectivity purposes. The traffic between the virtual machines in the peered virtual networks is routed through the Microsoft backbone infrastructure, much like traffic is routed between virtual machines in the same virtual network, through private IP addresses only. Virtual network peering provides a low-latency, high-bandwidth connection between resources in different virtual networks. 
 - In any networks you connect through virtual network peering, VPN, or ExpressRoute, assign different address spaces that don't **`overlap`**. This is same with on-premises networks. If the address spaces overlap, the traffic won't be routed correctly. For example, you can't use 192.168.0.0/16 on your on-premises network and use 192.168.10.0/24 on your Azure virtual network. These ranges both contain the same IP addresses so traffic can't be routed between them.
 - Peering works well across same regions, different regions, subscriptions and even different tenants(Needs network admin permissions from both tenants).
-- When you create a virtual network peering connection with Azure PowerShell or Azure CLI, only one side of the peering gets created. To complete the virtual network peering configuration, you'll need to configure the peering in reverse direction to establish connectivity. When you create the virtual network peering connection through the Azure portal, the configuration for both side is completed at the same time.
+- When you create a virtual network peering connection with Azure PowerShell or Azure CLI, only one side of the peering gets created. To complete the virtual network peering configuration, you'll need to configure the peering in reverse direction to establish connectivity. When you create the virtual network peering connection through the `Azure portal`, the configuration for both side is completed at the same time.
 
 **Gateway transit**: Peering is `non-transitive`. Suppose, for example, that your three virtual networks (A, B, C) are peered like this: A <-> B <-> C. Resources in A can't communicate with resources in C because that traffic can't transit through virtual network B. You can enable and add gateway transit to the B network. The B network now acts as a hub, and resources in A can communicate with resources in C. Gateway transit allows the peered virtual networks to use the `VPN gateway` in the peering virtual network. This feature is useful when you have a central network that you want to connect to multiple `spoke networks`. The spoke networks can use the VPN gateway or a network virtual appliance (NVA) in the central network to establish a connection to `on-premises` resources. The central network acts as a `hub`, while other networks act as `spokes`. This mechanism is known as **`hub-and-spoke topology`**.
 - Other ways to extend the capabilities of your peering for resources and virtual networks outside your peering network, You can implement these mechanisms and create a multi-level hub and spoke architecture. These options can help overcome the limit on the number of virtual network peerings per virtual network.: 
     - **`User-defined routes(UDRs)`** : Virtual network peering enables the next hop in a user-defined route to be the IP address of a virtual machine in the peered virtual network, or a VPN gateway.
     - **`Service Chaining`** : Service chaining is a method of connecting multiple virtual network appliances to create a chain of services. Service chaining is used to direct traffic from one virtual network to a virtual appliance or gateway. A user-defined route defines the peered networks.
+    - **`Transit VNet`** : A transit virtual network is a virtual network that acts as a hub to route traffic between multiple virtual networks. The transit virtual network can be used to route traffic between virtual networks that are peered with the transit virtual network. The transit virtual network can also be used to route traffic between virtual networks that are not peered with each other. The transit virtual network can be used to route traffic between virtual networks that are in the same region or in different regions. The transit virtual network can be used to route traffic between virtual networks that are in the same subscription or in different subscriptions. The transit virtual network can be used to route traffic between virtual networks that are in the same tenant or in different tenants.
 
 - **Scenario**: 
     - There are two offices, New York and Boston, in one region.
@@ -244,6 +252,36 @@ Suppose you have a virtual machine that performs a network function like routing
 1. User-defined routes
 2. BGP routes
 3. System routes
+
+### ExpressRoute
+
+- Azure ExpressRoute is a service that enables you to create private connections between Azure datacenters and infrastructure that's on your premises or in a colocation facility. 
+
+- ExpressRoute connections don't go over the public internet, and they offer more reliability, faster speeds, lower latencies, and higher security than typical connections over the internet. 
+
+- In some cases, using ExpressRoute connections to transfer data between on-premises and Azure can yield significant cost savings. 
+
+- To create an ExpressRoute connection, you need to work with a connectivity provider to establish a connection between your on-premises network and an ExpressRoute location. The connection can be an `Ethernet connection` or a `Multiprotocol Label Switching` (MPLS) connection. The connection provider will then establish a connection between the ExpressRoute location and the Azure datacenter.
+
+- In the Azure portal, you can create an ExpressRoute circuit. An ExpressRoute circuit is a logical connection between your on-premises network and an Azure virtual network. You can create multiple ExpressRoute circuits in the same subscription. Each ExpressRoute circuit can be associated with one or more virtual networks. You can also associate multiple ExpressRoute circuits with the same virtual network. 
+
+When you create an ExpressRoute circuit, you specify the following settings:
+
+    - **Circuit name**: A name for the ExpressRoute circuit
+    - **Provider**: The connectivity provider that you're using to establish the connection
+    - **Peering location**: The location where the ExpressRoute circuit is connected to the Azure network
+    - **Bandwidth**: The bandwidth of the ExpressRoute circuit
+    - **SKU**: The service level agreement (SLA) for the ExpressRoute circuit
+    - **Routing domain**: The routing domain that the ExpressRoute circuit uses
+    - **Authorization key**: The key that's used to authenticate the connection between your on-premises network and the ExpressRoute circuit
+
+- ExpressRoute gateways are used to connect virtual networks to ExpressRoute circuits. You can create an ExpressRoute gateway in the Azure portal. When you create an ExpressRoute gateway, you specify the following settings:
+    - **Name**: A name for the ExpressRoute gateway
+    - **Virtual network**: The virtual network that the ExpressRoute gateway is associated with
+    - **Gateway subnet**: The subnet that the ExpressRoute gateway uses
+    - **Public IP address**: The public IP address that the ExpressRoute gateway uses
+    - **ExpressRoute circuit**: The ExpressRoute circuit that the ExpressRoute gateway connects to
+    - **Authorization key**: The key that's used to authenticate the connection between your on-premises network and the ExpressRoute circuit
 
 ---
 
@@ -364,17 +402,17 @@ Azure DNS is a hosting service for DNS domains that provides name resolution usi
 
 After purchasing a domain name, To host the domain name with Azure DNS, you first need to create a DNS zone for that domain. A DNS zone holds all the DNS entries for your domain. You can create a DNS zone in Azure DNS by using the Azure portal, Azure PowerShell, or the Azure CLI. After you create a DNS zone, you can add DNS records to the zone. DNS records are used to map domain names to IP addresses. 
 
-1. DNS Zone: Start by creating a DNS zone, providing the `Domain name`, `subscription`, `resource group and location`. The DNS zone is the container for all the DNS records for a domain. You can create a DNS zone in Azure DNS by using the Azure portal, Azure PowerShell, or the Azure CLI. After you create a DNS zone, you can add DNS records to the zone.
+1. `DNS Zone`: Start by creating a DNS zone, providing the `Domain name`, `subscription`, `resource group and location`. The DNS zone is the container for all the DNS records for a domain. You can create a DNS zone in Azure DNS by using the Azure portal, Azure PowerShell, or the Azure CLI. After you create a DNS zone, you can add DNS records to the zone.
 
-2. Get the Name Servers: After creating a DNS zone, you need to get the name servers for the zone. The name servers are the servers that host the DNS records for your domain. You need to provide these name servers to your domain registrar to delegate the domain to Azure DNS. You can get the name servers for a DNS zone in Azure DNS by using the Azure portal, Azure PowerShell, or the Azure CLI.
+2. `Get the Name Servers`: After creating a DNS zone, you need to get the name servers for the zone. The name servers are the servers that host the DNS records for your domain. You need to provide these name servers to your domain registrar to delegate the domain to Azure DNS. You can get the name servers for a DNS zone in Azure DNS by using the Azure portal, Azure PowerShell, or the Azure CLI.
 
-3. Update the Domain Registrar: After getting the name servers for a DNS zone, you need to update the domain registrar with the name servers. The domain registrar is the company where you purchased the domain name. You need to provide the name servers to the domain registrar to delegate the domain to Azure DNS. After you update the domain registrar with the name servers, Azure DNS can host the DNS records for your domain.
+3. `Update the Domain Registrar`: After getting the name servers for a DNS zone, you need to update the domain registrar with the name servers. The domain registrar is the company where you purchased the domain name. You need to provide the name servers to the domain registrar to delegate the domain to Azure DNS. After you update the domain registrar with the name servers, Azure DNS can host the DNS records for your domain.
 
-4. Verify delegation of domain name services: The next step is to verify that the delegated domain now points to the Azure DNS zone you created for the domain. This process can take as few as 10 minutes, but might take longer.
+4. `Verify delegation of domain name services`: The next step is to verify that the delegated domain now points to the Azure DNS zone you created for the domain. This process can take as few as 10 minutes, but might take longer.
 
 To verify the success of the domain delegation, query the start of authority (SOA) record. The SOA record is automatically created when the Azure DNS zone is set up. You can verify the SOA record using a tool like `nslookup`.
 
-5. Configure DNS settings through DNS Records: After creating a DNS zone, you can add DNS records to the zone. DNS records are used to map domain names to IP addresses. You can add the following types of DNS records to a DNS zone:
+5. `Configure DNS settings through DNS Records`: After creating a DNS zone, you can add DNS records to the zone. DNS records are used to map domain names to IP addresses. You can add the following types of DNS records to a DNS zone:
     - **A**: Maps a domain name to an IPv4 address.
     - **AAAA**: Maps a domain name to an IPv6 address.
     - **CNAME**: Maps a domain name to another domain name.
