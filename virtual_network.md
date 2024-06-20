@@ -209,7 +209,7 @@ Network traffic in Azure is automatically routed across Azure subnets, virtual n
 * Each packet leaving a subnet is handled based on the associated route table.
 
 * You can create multiple route tables in Azure. Each route table can be associated with one or more subnets. A subnet can only be associated with one route table.
-
+v
 * Packets are matched to routes by using the destination. The destination can be an IP address, a virtual network gateway, a virtual appliance, or the internet.
 
 * When a matching route can't be found, the packet is dropped.
@@ -232,8 +232,11 @@ Suppose you have a virtual machine that performs a network function like routing
 
 ### Service Endpoints
 
-- A virtual network service endpoint provides the identity of your virtual network to the Azure service
-- Today, Azure service traffic from a virtual network uses public IP addresses as source IP addresses. With `service endpoints`, service traffic switches to use    `virtual network private addresses` as the source IP addresses when accessing the Azure service from a virtual network. By adding`Virtual network rules` to the resources, This switch from public IP addresses to `private IP addresses` provides the following benefits:
+- A virtual network service endpoint provides the `identity` of your virtual network to the Azure service, like Azure Storage or Azure SQL Database. 
+- The Azure service uses the identity to restrict access to only the virtual network. Service endpoints are a secure and direct connection between a virtual network and an Azure service. 
+- Service endpoints extend your virtual network private address space to the Azure service, over a direct connection. The connection is secure because it doesn't go over the internet. Service endpoints are powered by the Azure backbone network, a global network that Microsoft uses to connect its datacenters. 
+- Currently, Azure service traffic from a virtual network uses public IP addresses as source IP addresses. With `service endpoints`, service traffic switches to using `virtual network private addresses` as the source IP addresses when accessing the Azure service, from a virtual network. By adding virtual network rules to the resources, this switch from `public IP addresses` to `private IP addresses` provides the following benefits:
+
     - **Security**: By using private IP addresses, you can restrict access to the Azure service to only your virtual network. This restriction is achieved by using network security group rules that allow traffic only from your virtual network.
     - **Optimized routing**: By using private IP addresses, traffic from your virtual network to the Azure service remains on the Microsoft Azure backbone network. This routing is optimized for performance and lower latency. Through `Force-Tunneling`, Routes in your virtual network that force internet traffic to your on-premises or network virtual appliances also typically force Azure service traffic to take the same route as the internet traffic. You can force all traffic from your virtual network to the Azure service to use the Microsoft Azure backbone network.
     - **Simplified network configuration**: By using private IP addresses, you can simplify your network configuration by removing the need for public IP addresses in your virtual network.
