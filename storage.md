@@ -34,6 +34,17 @@
 
 ---
 
+## Azure Storage Account
+
+- An Azure Storage account is a `unique namespace` in Azure that provides `storage services`. The storage account provides a unique namespace for your Azure Storage data that is accessible from anywhere in the world over HTTP or HTTPS. Data in your Azure storage account is durable and highly available, secure, and scalable. You can use your storage account to store and retrieve large amounts of unstructured data, such as documents, media files, backups, and logs.
+
+- When you create a storage account, you have the option to choose the `performance tier` of the account. The performance tier determines the `replication strategy` that is used to store your data. The performance tier also determines the `access tier` that is used to store your data. The performance tier and access tier that you choose for your storage account affect the cost of storing data in your account. The performance tier and access tier that you choose also affect the availability and durability of your data. Types of performance tiers are 
+
+    - `Standard`: General-purpose v-2 storage accounts that provide access to Azure Storage services such as `Blobs`, `Files`, `Queues`, and `Tables`. Standard storage accounts are backed by magnetic drives and are the most cost-effective option.
+    - `Premium`: High-performance storage accounts that provide access to Azure Blob Storage, Azure Files, Azure Queues, and Azure Tables. Premium storage accounts are backed by solid-state drives (SSDs) and are suitable for I/O-intensive applications. `Premium` storage accounts are available only for `Block Blobs` and `Page Blobs`.`Premium files` billing is based on the provisioned size of the file share. The provisioned size is the maximum size that the file share can grow to, even if it is empty. The provisioned size is specified in `GiB` and is billed at the `premium file share rate`. The provisioned size is rounded up to the nearest `GiB`. The minimum provisioned size for a file share is `100 GiB`. The maximum provisioned size for a file share is `100 TiB`.
+    
+Types of access tiers are `Hot`, `Cool`, and `Archive`.
+
 ## Azure Storage services
 
 - **Azure Blob Storage**: Store and manage unstructured data as `Objects` or `Blobs`(Binary Large Objects). Blobs can be text or binary files, such as documents, media files, and application installers. They can also store data for backup, restore, disaster recovery, and archiving. Objects in Blob Storage can be accessed from anywhere in the world via `HTTP or HTTPS`. Users or client applications can access blobs via `URLs`, the Azure Storage REST API, Azure PowerShell, the Azure CLI, or an Azure Storage client library. The storage client libraries are available for multiple languages, including .NET, Java, Node.js, Python, PHP, and Ruby.
@@ -49,7 +60,7 @@
         1. `Hot`: Optimized for storing data that is accessed frequently.
         2. `Cool`: Optimized for storing data that is infrequently accessed and stored for at least `30` days.
         3. `Cold`: Optimized for storing data that is rarely accessed and stored for at least `90` days with flexible latency requirements.
-        3. `Archive`: Optimized for storing data that is rarely accessed and stored for at least `180` days with flexible latency requirements.
+        4. `Archive`: Optimized for storing data that is rarely accessed and stored for at least `180` days with flexible latency requirements. It is the lowest cost tier and usually ofline.
     - `Blob lifecycle management`: In the Azure portal, you create lifecycle management policy rules for your Azure storage account by specifying several settings. For each rule, you create `If - Then` block conditions to transition or expire data based on your specifications
         1. Define rules to automatically transition blobs to a cooler storage tier `if` they have not been accessed for a specified number of days.
         2. Define rules to automatically delete blobs at the end of their lifecycle.
@@ -82,7 +93,7 @@
 
 ---
 
-## Storage Replication
+## Storage Replication/Redundancy
 
 Azure Storage offers several types of replication, to ensure durability and high availability.  Azure Storage replication copies your data to protect from planned and unplanned events. These events range from transient hardware failures, network or power outages, massive natural disasters, and so on. The following are the types of replication available in Azure Storage:
 
@@ -132,7 +143,7 @@ https://<storage-account-name>.table.core.windows.net/<table-name>
 
 With encryption, authentication, authorization, and user access control with credentials, file permissions, and private signatures, Azure Storage helps you secure your data for compliance needs. Azure Storage provides several security features to help you protect your data:
 
-- **Shared Access Signature (SAS)**: A shared access signature (SAS) provides secure delegated access to resources in your storage account. With a SAS, you can grant limited permissions to clients who should not have the account key but should be able to perform certain operations. A SAS is a token that encapsulates a set of permissions for a resource and specifies how the resource may be accessed. 
+- **Shared Access Signature (SAS)**: A shared access signature (SAS) provides secure delegated access to resources in your storage account. With a SAS, you can grant limited permissions to clients who should not have the account key but should be able to perform certain operations. A SAS is a token that encapsulates a set of permissions for a resource and specifies how the resource may be accessed. Access keys provide full control over the resources in your storage account. By using a SAS, you can grant limited access to your storage account to clients who should not have the account `access keys`.
     - You can provide a SAS to clients who should not have the account key but who should be able to access a resource. By distributing a SAS URI to clients, you can grant them access to a resource for a specified period of time. 
     - You can also revoke access by changing the SAS. 
     - A SAS can be scoped to a container, a blob, a table, a queue, or a file share. 
@@ -203,10 +214,6 @@ Azure Storage Explorer allows you to attach to external storage accounts for eas
 - **Important:** Store your access keys securely. We recommend regenerating your access keys regularly. When you regenerate your access keys, you must update any Azure resources and applications that access this storage account to use the new keys. This action doesn't interrupt access to disks from your virtual machines.
 
 ---
-
-
-
-
 
 # References and further reading
 
