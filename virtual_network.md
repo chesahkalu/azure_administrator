@@ -193,7 +193,10 @@ Virtual network peering enables you to seamlessly connect two Azure virtual netw
 
 ## Routing
 
-Network traffic in Azure is automatically routed across Azure subnets, virtual networks, and on-premises networks. System routes control this routing. Azure uses system routes to direct network traffic between virtual machines, on-premises networks, and the internet. They're assigned by default to each subnet in a virtual network. With these system routes, any Azure virtual machine that is deployed into a virtual network can communicate with any other in the network. These virtual machines are also potentially accessible from on-premises through a hybrid network or the internet. Information about the system routes is recorded in a route table. 
+
+### System routes
+
+Network traffic in Azure is automatically routed across Azure subnets, virtual networks, and on-premises networks. `System routes` control this routing. Azure uses system routes to direct network traffic between virtual machines, on-premises networks, and the internet. They're assigned by default to each subnet in a virtual network. With these system routes, any Azure virtual machine that is deployed into a virtual network can communicate with any other in the network. These virtual machines are also potentially accessible from on-premises through a hybrid network or the internet. Information about the system routes is recorded in a route table. 
 
 * Azure uses system routes to control traffic for virtual machines in several scenarios:
     - Traffic between virtual machines in the same subnet
@@ -228,6 +231,7 @@ Suppose you have a virtual machine that performs a network function like routing
 - The subnet can use another UDR and NVA to access the back-end subnet.
 
 ### Service Endpoints
+
 - A virtual network service endpoint provides the identity of your virtual network to the Azure service
 - Today, Azure service traffic from a virtual network uses public IP addresses as source IP addresses. With `service endpoints`, service traffic switches to use    `virtual network private addresses` as the source IP addresses when accessing the Azure service from a virtual network. By adding`Virtual network rules` to the resources, This switch from public IP addresses to `private IP addresses` provides the following benefits:
     - **Security**: By using private IP addresses, you can restrict access to the Azure service to only your virtual network. This restriction is achieved by using network security group rules that allow traffic only from your virtual network.
@@ -261,11 +265,11 @@ Suppose you have a virtual machine that performs a network function like routing
 
 - In some cases, using ExpressRoute connections to transfer data between on-premises and Azure can yield significant cost savings. 
 
-- To create an ExpressRoute connection, you need to work with a connectivity provider to establish a connection between your on-premises network and an ExpressRoute location. The connection can be an `Ethernet connection` or a `Multiprotocol Label Switching` (MPLS) connection. The connection provider will then establish a connection between the ExpressRoute location and the Azure datacenter.
+- To `create an ExpressRoute connection`, you need to work with a connectivity provider to establish a connection between your on-premises network and an ExpressRoute location (an Azure datacenter). The connection can be an `Ethernet connection` or a `Multiprotocol Label Switching` (MPLS) connection. The connection provider will then establish a connection between the ExpressRoute location and the Azure datacenter.
 
-- In the Azure portal, you can create an ExpressRoute circuit. An ExpressRoute circuit is a logical connection between your on-premises network and an Azure virtual network. You can create multiple ExpressRoute circuits in the same subscription. Each ExpressRoute circuit can be associated with one or more virtual networks. You can also associate multiple ExpressRoute circuits with the same virtual network. 
+- `ExpressRoute Global Reach` enables you to connect your various on-premise centers together through Azure. This feature allows you to connect your on-premise centers to each other through Azure, even if they are in different regions. This feature is useful when you have multiple on-premise centers that need to communicate with each other. You can use ExpressRoute Global Reach to connect your on-premise centers to each other through Azure. 
 
-When you create an ExpressRoute circuit, you specify the following settings:
+- In the Azure portal, you can create an ExpressRoute circuit. An ExpressRoute circuit is a logical connection between your on-premises network and an Azure virtual network. You can create multiple ExpressRoute circuits in the same subscription. Each ExpressRoute circuit can be associated with one or more virtual networks. You can also associate multiple ExpressRoute circuits with the same virtual network.When you create an ExpressRoute circuit, you specify the following settings:
 
     - **Circuit name**: A name for the ExpressRoute circuit
     - **Provider**: The connectivity provider that you're using to establish the connection
@@ -275,13 +279,35 @@ When you create an ExpressRoute circuit, you specify the following settings:
     - **Routing domain**: The routing domain that the ExpressRoute circuit uses
     - **Authorization key**: The key that's used to authenticate the connection between your on-premises network and the ExpressRoute circuit
 
-- ExpressRoute gateways are used to connect virtual networks to ExpressRoute circuits. You can create an ExpressRoute gateway in the Azure portal. When you create an ExpressRoute gateway, you specify the following settings:
+- ExpressRoute gateways are used to connect virtual networks to ExpressRoute circuits, establishing a private peering. You can create an ExpressRoute gateway in the Azure portal. When you create an ExpressRoute gateway, you specify the following settings:
     - **Name**: A name for the ExpressRoute gateway
     - **Virtual network**: The virtual network that the ExpressRoute gateway is associated with
     - **Gateway subnet**: The subnet that the ExpressRoute gateway uses
     - **Public IP address**: The public IP address that the ExpressRoute gateway uses
     - **ExpressRoute circuit**: The ExpressRoute circuit that the ExpressRoute gateway connects to
     - **Authorization key**: The key that's used to authenticate the connection between your on-premises network and the ExpressRoute circuit
+
+### Virtual WAN
+
+- Azure Virtual WAN is a networking service that brings many networking, security, and routing functionalities together to provide a single operational interface.
+
+- Virtual WAN allows you to connect your branches to Azure and to each other. It also allows you to connect your branches to the internet and to your on-premises network.
+
+- Virtual WAN provides the following benefits:
+    - **Simplicity**: Virtual WAN provides a single operational interface for all your networking, security, and routing needs.
+    - **Security**: Virtual WAN provides security features such as encryption, firewall, and threat protection.
+    - **Performance**: Virtual WAN provides high-speed connections between your branches and Azure.
+    - **Reliability**: Virtual WAN provides a reliable connection between your branches and Azure.
+
+- Virtual WAN provides the following features:
+    - **Site-to-site connectivity**: Virtual WAN provides site-to-site connectivity between your branches and Azure.
+    - **Point-to-site connectivity**: Virtual WAN provides point-to-site connectivity between your branches and Azure.
+    - **VPN connectivity**: Virtual WAN provides VPN connectivity between your branches and Azure.
+    - **ExpressRoute connectivity**: Virtual WAN provides ExpressRoute connectivity between your branches and Azure.
+    - **Security**: Virtual WAN provides security features such as encryption, firewall, and threat protection.
+    - **Routing**: Virtual WAN provides routing features such as BGP and route tables.
+    - **Monitoring**: Virtual WAN provides monitoring features such as network performance monitoring and network diagnostics.
+
 
 ---
 
