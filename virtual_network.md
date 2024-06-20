@@ -317,7 +317,7 @@ Suppose you have a virtual machine that performs a network function like routing
 ## Load Balancer
 
 Azure Load Balancer delivers high availability and network performance to your applications. Administrators use load balancing to efficiently distribute incoming network traffic across back-end servers and resources. A load balancer is implemented by using load-balancing rules and health probes. Load balancers can be configured to support -
-* `external`: Normally used for internet-facing applications, Example: Internet client client send webpage requests to the public IP address of a web application. The load balancer distributes the requests to the virtual machines in the back-end pool.
+* `external`: Normally used for internet-facing applications, Example: Internet client send webpage requests to the public IP address of a web application. The load balancer distributes the requests to the virtual machines in the back-end pool.
 
 or 
 
@@ -346,11 +346,11 @@ To configure a probe, you specify values for the following settings:
 
 **Load Balancing Rules**: Load-balancing rules define how the incoming network traffic is distributed to the virtual machines in the back-end pool. By default, Azure Load Balancer distributes network traffic equally among multiple virtual machines. The load balancer uses a 5-tuple hash to map traffic to the available servers. The 5-tuple hash includes the:
 
-- source IP address: The IP address of the client that sent the request
-- source port: The port number used by the client
-- destination IP address: The IP address of the load balancer
-- destination port: The port number used by the client to connect to the load balancer
-- protocol type: The protocol used by the client to connect to the load balancer TCP or UDP
+- `source IP address`: The IP address of the client that sent the request
+- `source port`: The port number used by the client
+- `destination IP address`: The IP address of the load balancer
+- `destination port`: The port number used by the client to connect to the load balancer
+- `protocol type`: The protocol used by the client to connect to the load balancer TCP or UDP
 
 **To define a rule in the Azure portal, you configure several settings:**
 
@@ -358,11 +358,19 @@ To configure a probe, you specify values for the following settings:
 - Front-end IP address, *Port, and Protocol (TCP or UDP)
 - Back-end pool and Back-end port
 - Health probe
-- Session persistence: specifies how to handle traffic from a client. By default, successive requests from a client go to any virtual machine in your pool in the `None` default setting. Additionally, you can configure the load balancer to use the `Client IP` setting, which ensures that all requests from a particular client go to the same virtual machine in the pool. This can also be refered to as `Source IP Affinity`. Using 2 or 3 tuple hash, the load balancer can direct traffic to the same virtual machine based on the source `IP address, source port, or destination IP address.`Maintaining session persistence information is important for applications that implement a shopping cart.
+- **Session persistence**: Session persistence specifies how to handle traffic from a client. By default, successive requests from a client go to any virtual machine in your pool when the `None` setting is used. Alternatively, you can configure the load balancer to use the `Client IP` setting, which ensures that all requests from a particular client go to the same virtual machine in the pool. This is also referred to as `Source IP Affinity`.
+    - `None (Default)`: Successive requests from a client can go to any virtual machine in the pool.
+    - `Client IP (Source IP Affinity)`: Ensures all requests from a particular client go to the same virtual machine.
+    - `Tuple Hashing`:Using tuple hashing, the load balancer can direct traffic to the same virtual machine based on various combinations of packet information:
+        - **2-Tuple Hash**: Uses the source IP address and destination IP address.
+        - **3-Tuple Hash**: Uses the source IP address, source port, and destination IP address.
+        - **5-Tuple Hash**: Uses the source IP address, source port, destination IP address, destination port, and protocol.
+
+Maintaining session persistence helps ensure that a client's requests are consistently handled by the same virtual machine, providing a seamless user experience. This can be particularly important for applications requiring stateful sessions like shopping carts or login sessions.
 
 ### Application Gateway
 
-Azure Application Gateway is a load balancer for web traffic. Administrators implement an application gateway to manage traffic to their web apps. Azure Application Gateway offers two primary methods for routing traffic:
+Azure Application Gateway is a load balancer for `web traffic`. Administrators implement an application gateway to manage traffic to their web apps. Azure Application Gateway offers two primary methods for routing traffic:
 
 - **Path-based routing**: sends requests with different URL paths to different pools of back-end servers. Each pool can contain a different set of servers. For example, you can route requests for `/images` to one set of servers and requests for `/video` to another set of servers.
 
