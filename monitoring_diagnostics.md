@@ -83,6 +83,7 @@ Azure Monitor is a platform service that provides a single source that can monit
     - After you create your workspace, you configure your data sources and solutions to store their data in your workspace.
     - Note that not all `regions` support all features of Log Analytics. If you are unable to create a workspace in your desired region, you may need to search and choose a different region that supports the features you need.
     - The default `pricing` tier for a new workspace is pay-as-you-go. Charges incur only after you start collecting data.
+    - Data can be pinned as a chart to a dashboard for easy access, for a maximum of `14 days`
 
 - **Query Editor** is a tool in the Azure portal that allows you to interactively query your log data. You can use the query editor to write and run queries, visualize results, and save queries for later use. 
     - Administrators build Log Analytics queries from data stored in dedicated `tables` in the Log Analytics workspace. Some common dedicated tables include `Event`, `Syslog`, `Heartbeat`, and `Alert`. When you build a Kusto Query Language (KQL) query, you begin by determining which tables in the Azure Monitor Logs repository have the data you're looking for.
