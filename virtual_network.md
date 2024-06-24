@@ -209,7 +209,7 @@ Network traffic in Azure is automatically routed across Azure subnets, virtual n
 * Each packet leaving a subnet is handled based on the associated route table.
 
 * You can create multiple route tables in Azure. Each route table can be associated with one or more subnets. A subnet can only be associated with one route table.
-v
+
 * Packets are matched to routes by using the destination. The destination can be an IP address, a virtual network gateway, a virtual appliance, or the internet.
 
 * When a matching route can't be found, the packet is dropped.
