@@ -170,6 +170,12 @@ Use the Actions and NotActions permissions together to grant and deny the exact 
 
 - A `Read-only Lock` prevents all modifications to a resource. This includes deleting the resource, but also any modifications to the resource's properties.
 
+- To apply a lock to a resource, navigate to the resource in the Azure portal, click on `Locks` under `Settings`, and then click on `+ Add`.
+
+- Choose the type of lock you want to apply, provide a name and a description, and then click `OK`.
+
+- Locks are applied to most Azure resources, and resource level restrictions can be applied to prevent accidental deletion or modification. Locks can then be applied at the `resource group level`, `subscription level`, or `individual resource level`.
+
 ## Conclusion
 
 Role-Based Access Control (RBAC) is a powerful tool for managing user permissions and access on Azure resources. By creating custom role definitions and assigning them to users, you can tailor access to meet specific requirements, ensuring security and compliance in your Azure environment.

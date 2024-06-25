@@ -102,6 +102,20 @@ Automate the tag application process to ensure compliance and minimize manual ef
 
 ---
 
+## Locks
+
+- Azure provides two types of locks to prevent accidental deletion or modification of resources: `Delete Lock` and `Read-only Lock`.
+
+- A `Delete Lock` prevents the deletion of a resource. It can be removed only by a user with the appropriate permissions. This lock is useful when you want to prevent accidental deletion of a resource. It is applied at the resource level, but the object can still be modified.
+
+- A `Read-only Lock` prevents all modifications to a resource. This includes deleting the resource, but also any modifications to the resource's properties.
+
+- To apply a lock to a resource, navigate to the resource in the Azure portal, click on `Locks` under `Settings`, and then click on `+ Add`.
+
+- Choose the type of lock you want to apply, provide a name and a description, and then click `OK`.
+
+- Locks are applied to most Azure resources, and resource level restrictions can be applied to prevent accidental deletion or modification. Locks can then be applied at the `resource group level`, `subscription level`, or `individual resource level`.
+
 ## Wrapping Up
 
 Implementing these strategies will enhance your resource management and governance in Azure. Embrace these practices for an organized, compliant, and efficient cloud environment.
