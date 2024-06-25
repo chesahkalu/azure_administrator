@@ -199,7 +199,7 @@ The composition of an activity log alert includes:
     - Make a voice call to a number
     - Call an Azure function
     - Trigger a logic app
-    - Create an ITSM ticket
+    - Create an ITSM ticket (ITSM is IT Service Management for managing incidents and service requests in an organization)
     - Use a runbook (to restart a VM or scale a VM up or down)
 
 **Alert Processing Rule** is a rule that defines how alerts are processed. The rule specifies the target resource, the condition, and the action to take when the condition is met. Use alert processing rules to override the normal behavior of a fired alert by adding or suppressing an action group. You can use alert processing rules to add action groups or remove (suppress) action groups from your fired alerts. Alert processing rules are different from `alert rules`. Alert rules trigger alerts when a condition is met in your monitored resources. Alert processing rules modify the alerts as they're being fired.
