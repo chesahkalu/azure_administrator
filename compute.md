@@ -85,7 +85,7 @@ Once the virtual machine is created, you can connect to it using various methods
 
 - **SSH (Secure Shell)**: For Linux virtual machines, you can use SSH to connect to the VM. You need the public IP address or DNS name of the VM, and the SSH private key.
 
-- **RDP (Remote Desktop Protocol)**: For Windows virtual machines, you can use RDP to connect to the VM. You need the public IP address or DNS name of the VM, and the username and password you specified during VM creation. The system provides you with a downloadable RDP file to use for the connection.
+- **RDP (Remote Desktop Protocol)**: For Windows virtual machines, you can use RDP to connect to the VM. You need the public IP address or DNS name of the VM, and the username and password you specified during VM creation. The system provides you with a downloadable RDP file to use for the connection. The port used for RDP is `3389`.
 
 - **Azure Bastion**: Azure Bastion is a fully managed PaaS service that provides secure and seamless `RDP and SSH` access to your virtual machines directly through the Azure portal directly over SSL. It eliminates the need for a public IP address on the virtual machine. Azure Bastion lets you connect to the virtual machine directly from the Azure portal. You aren't a client, agent, or another piece of software.
 
@@ -124,7 +124,7 @@ Azure Virtual Machine Scale Sets are an Azure compute resource that you can use 
 
     * **Fault Domain**: A fault domain is a group of virtual machines that share a common power source and network switch. By default, the VMs in an availability set are separated across up to `3` fault domains for Resource Manager deployments (two fault domains for classic deployments). This configuration ensures that the VMs are isolated from each other when it comes to power and networking.
 
-    * **Update Domain**: An update domain is a group of virtual machines that can be rebooted at the same time. When more than one update domain is configured, the virtual machines in one update domain are rebooted while the virtual machines in the other update domains remain running. This configuration ensures that the VMs are isolated from each other when it comes to planned maintenance events. By default, five update domains are assigned to the VMs in an availability set and can be increased to a maximum of `20`.
+    * **Update Domain**: An update domain is a group of virtual machines that can be rebooted at the same time. When more than one update domain is configured, the virtual machines in one update domain are rebooted while the virtual machines in the other update domains remain running. This configuration ensures that the VMs are isolated from each other when it comes to planned maintenance events. By default, `5` update domains are assigned to the VMs in an availability set and can be increased to a maximum of `20`.
 
 - **Availability Zones**: Availability Zones are unique physical locations within an Azure region. Each zone is made up of one or more datacenters equipped with independent power, cooling, and networking. Availability Zones allow you to run mission-critical applications with high availability and low-latency replication. If one zone is compromised, the other zones are unaffected. By using Availability Zones, you can protect your applications and data from datacenter failures. Availability Zones are used for high availability and disaster recovery. `Zone-redundant services` replicate your applications and data across availability zones to protect against single-points-of-failure.
 
@@ -283,7 +283,7 @@ There are four options for backing up Azure VMs:
 1. **Create a Recovery Services vault**: In the Azure portal, create a Recovery Services vault to store backup data. The vault must be created within your Azure subscription, and in the region where you want to store the data. Choose the storage redundancy option; `geo-redundant storage (GRS)` or `locally redundant storage (LRS)`. GRS is the default and best suited if Azure backup is your `primary` backup. 
         - On the `property tab` of the recovery service is where you enable most required settings like redundancy, encryption, backup policy and security settings`(Soft Delete)`.
 
-2. **Define your backup policy optionsn**: In the Recovery Services vault, `click backup on the overview page`, create a backup policy that defines the backup schedule, retention rules, and other settings. The policy specifies when to take the data snapshots, and how long to keep the snapshots. In your backup policy, you can specify to trigger a backup from one to five times per day. Then `add` your intended VM. 
+2. **Define your backup policy options**: In the Recovery Services vault, `click backup on the overview page`, create a backup policy that defines the backup schedule, retention rules, and other settings. The policy specifies when to take the data snapshots, and how long to keep the snapshots. In your backup policy, you can specify to trigger a backup from one to five times per day. Then `add` your intended VM. 
 
 3. **Enable backup for the virtual machine**: The last step is to run the Azure Backup job process and create your backups. The `backup extension` requires the VM agent to be present, if the VM was migrated from on-premise and not naturally created on Azure , you need to install the agent.
 
