@@ -33,6 +33,9 @@ This comprehensive guide walks you through the nuances of policy creation, compl
 
 - Tags are `not inherited` by default, but you can use Azure Policy to enforce and inherit tagging requirements(from `resource groups`, `subscriptions`) and automate tag application. This ensures that all resources are tagged consistently and accurately if they are missing tags, and need to inherit tags from their parent resource group.
 
+- Each resource, resource group, and subscription can have a maximum of `50` tag name-value pairs. If you need to apply more tags than the maximum allowed number, use a JSON string for the tag value.
+
+
 ### Task 1: Tagging Resources for Clarity and Management
 
 Resource tagging facilitates easier management and billing transparency. Follow these steps to implement tagging effectively:
