@@ -234,7 +234,7 @@ Suppose you have a virtual machine that performs a network function like routing
 
 - A virtual network service endpoint provides the `identity` of your virtual network to the Azure service, like Azure Storage or Azure SQL Database. 
 - The Azure service uses the identity to restrict access to only the virtual network. Service endpoints are a secure and direct connection between a virtual network and an Azure service. 
-- Service endpoints extend your virtual network private address space to the Azure service, over a direct connection. The connection is secure because it doesn't go over the internet. Service endpoints are powered by the Azure backbone network, a global network that Microsoft uses to connect its datacenters. 
+- Service endpoints extend your virtual network private address space to the Azure service, over a direct connection. The connection is secure because it doesn't go over the internet. Service endpoints are powered by the Azure `backbone` network, a global network that Microsoft uses to connect its datacenters. 
 - Currently, Azure service traffic from a virtual network uses public IP addresses as source IP addresses. With `service endpoints`, service traffic switches to using `virtual network private addresses` as the source IP addresses when accessing the Azure service, from a virtual network. By adding virtual network rules to the resources, this switch from `public IP addresses` to `private IP addresses` provides the following benefits:
 
     - **Security**: By using private IP addresses, you can restrict access to the Azure service to only your virtual network. This restriction is achieved by using network security group rules that allow traffic only from your virtual network.
