@@ -43,7 +43,7 @@ Some key Terminologies to note are:
 ### Create a tenant
 
 Normally, when you sign up for an Azure subscription, a tenant is created for you. However, you can create additional tenants if needed. Here's how you can create a new tenant:
-1. Sing in to your Azure portal. You need an active subscription to be able to create a new tenant.
+1. Sign in to your Azure portal. You need an active subscription to be able to create a new tenant.
 2. On the Azure Portal Home page, from the left hand menu bar, click and select `Microsoft Entra ID`
 3. On the top menu of the page, click `Manage Tenants` to view your available tenants and then click `create` to add a new tenant.
 4. On the `create a tenant`, select `Microsoft Entra ID` as tenant type, click configuration to configure an organization name and unique domain name.

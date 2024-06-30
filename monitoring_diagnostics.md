@@ -81,7 +81,7 @@ Azure Monitor is a platform service that provides a single source that can monit
 - **Log Analytics Workspace** is a unique environment for storing and analyzing data. It is a container where you can collect data from multiple sources, query that data, and create visualizations. You can have multiple workspaces in a single Azure subscription. 
     - You can use the Azure portal to create and manage your Log Analytics workspace.
     - After you create your workspace, you configure your data sources and solutions to store their data in your workspace.
-    - Note that not all `regions` support all features of Log Analytics. If you are unable to create a workspace in your desired region, you may need to search and choose a different region that supports the features you need.
+    - Note that not all `regions` support all features of Log Analytics. If you are unable to create a workspace in your desired region, you may need to search and choose a different region that supports the features you need. But the `region location` and `subscription` where Log Analytics workspace can be created is independent of the services it is attached to.
     - The default `pricing` tier for a new workspace is pay-as-you-go. Charges incur only after you start collecting data.
     - Data can be pinned as a chart to a dashboard for easy access, for a maximum of `14 days`
 
