@@ -56,11 +56,12 @@ Types of access tiers are `Hot`, `Cool`, and `Archive`.
         4. The minimum length for the name is three characters.
         5. The maximum length for the name is 63 characters.
         6. Configure the access level for the container: `Private`(default), `Blob`(public read access for blobs only), `Container`(public read access for container and blobs).
-    - `Blob access tiers`: Only Blob storage offers `access tiers` and this is particular for both `storage v1 and v2`.......................
+    - `Blob access tiers`: Only Blob storage offers `access tiers`, this is a property of the blob that determines the `speed of access` and `cost of storage`. The access tier can be set at the account level or at the blob level. The access tier can be set to `Hot`, `Cool`, or `Archive`. With the `lifecycle management` policy, you can automatically move blobs between access tiers.
         1. `Hot`: Optimized for storing data that is accessed frequently.
         2. `Cool`: Optimized for storing data that is infrequently accessed and stored for at least `30` days.
         3. `Cold`: Optimized for storing data that is rarely accessed and stored for at least `90` days with flexible latency requirements.
-        4. `Archive`: Optimized for storing data that is rarely accessed and stored for at least `180` days with flexible latency requirements. It is the lowest cost tier and usually ofline.
+        4. `Archive`: Optimized for storing data that is rarely accessed and stored for at least `180` days with flexible latency requirements. It is the lowest cost tier and usually ofline. Retrieving the data from the archive tier can take several hours and is more expensive than retrieving data from the cool tier.
+            - Only storage accounts that are configured for `LRS, GRS, or RA-GRS` support moving blobs to the archive tier. The archive tier isn't supported for `ZRS, GZRS, or RA-GZRS` accounts. 
     - `Blob lifecycle management`: In the Azure portal, you create lifecycle management policy rules for your Azure storage account by specifying several settings. For each rule, you create `If - Then` block conditions to transition or expire data based on your specifications. The rule can be based on the time the blob was last modified or the time the blob was last accessed (read or write). To perform an action based on the access time, `access tracking` must be enabled. This can incur additional storage costs.`
         1. Define rules to automatically transition blobs to a cooler storage tier `if` they have not been accessed for a specified number of days.
         2. Define rules to automatically delete blobs at the end of their lifecycle.
@@ -77,11 +78,13 @@ Types of access tiers are `Hot`, `Cool`, and `Archive`.
             - The jobs can be import or export jobs. An `import` job allows you to import data into Azure Blobs or Azure files whereas the `export` job allows data to be exported from Azure Blobs. For an import job, you ship drives containing your data. When you create an export job, you ship empty drives to an Azure datacenter. In each case, you can ship up to 10 disk drives per job.
     - `Blob Versioning`: Blob versioning is a feature of Azure Blob Storage that allows you to keep older versions of blobs when they are updated or deleted. You can use blob versioning to recover an earlier version of a blob if it is accidentally modified or deleted. `Object replication` can be used to replicate blobs between storage accounts. Before configuring object replication, you must enable `blob versioning for both storage accounts`, and you must enable the `change feed` for the source account. The `change feed` is a log of changes to blobs in a storage account. The change feed is used by object replication to replicate blobs between storage accounts.
 
-- **Azure Files**: Managed file shares in the cloud that are accessible via the `Server Message Block (SMB) protocol` and the `Network File System (NFS) protocol`. Azure file shares can be mounted concurrently by cloud or on-premises deployments of Windows, macOS, and Linux. Azure file shares can also be cached on Windows Servers with Azure File Sync for fast access near where the data is being used.
+- **Azure Files**: Managed file shares in the cloud that are accessible via the `Server Message Block (SMB) protocol` and the `Network File System (NFS) protocol`. Azure file shares can be mounted concurrently by cloud or on-premises deployments of `Windows, macOS, and Linux`. Azure file shares can also be cached on Windows Servers with Azure File Sync for fast access near where the data is being used.
     - `Azure file shares`: Azure Files provides shared access to files across multiple VMs. Any number of Azure virtual machines or roles can mount and access an Azure file share simultaneously. When configuring `SMB` Azure file share:
         1. `Open port 445`. Azure Files uses the SMB protocol. SMB communicates over TCP port 445. Be sure port 445 is open. Also, make sure your firewall isn't blocking TCP port 445 from the client machine.
         2. `Enable secure transfer`. The Secure transfer required setting enhances the security of your storage account by limiting requests to your storage account from secure connections only
         3. `File share snapshot`. You can create a snapshot of a file share to capture its state at that moment in time. Snapshots are read-only versions of the file share that can be accessed by users and applications.
+
+        - `SMB` multichannel: SMB multichannel is a feature of the Server Message Block (SMB) protocol that allows file servers to use multiple network connections simultaneously. SMB multichannel increases the data throughput of an SMB file server. SMB multichannel is enabled by default in Windows Server 2012 and later. SMB multichannel is also supported by Azure Files. When you enable SMB multichannel, Azure Files uses multiple network connections to transfer data between the file share and the client. This increases the data throughput of the file share. `SMB Multichannel is available for premium file shares`.
     
     - `Azure file soft delete`: Azure Files supports soft delete for file shares. When you enable soft delete, you can recover your file share and its contents if they are accidentally deleted. Soft delete is a data protection feature that allows you to recover your data when it is erroneously deleted. When you delete a file share, the file share is moved to a soft-deleted state. You can then recover the file share and its contents within a retention period.
 
@@ -95,6 +98,8 @@ Types of access tiers are `Hot`, `Cool`, and `Archive`.
 - **Azure Queue Storage**: A service for storing large numbers of `messages` that can be accessed from anywhere in the world via authenticated calls using `HTTP or HTTPS`. A single message can be up to `64 KB` in size, and a queue can contain millions of messages, up to the total capacity limit of a storage account.
 
 - **Azure Table Storage**: A service that stores `structured NoSQL data` in the cloud, providing a key/attribute store with a schema-less design. Because Table Storage is schema-less `(non-relational)` it's easy to adapt your data as the needs of your application evolve. Access to Table Storage data is fast and cost-effective for many types of applications, and is typically lower in cost than traditional SQL for similar volumes of data.
+
+- Both `containers` and `queues` support conditions when assigning `RBAC` roles to specific resources with a storage account.
 
 ---
 
