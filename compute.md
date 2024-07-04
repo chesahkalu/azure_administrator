@@ -74,7 +74,8 @@ Azure Virtual Machines (VMs) are on-demand, scalable computing resources provide
     - **Disks**: On the Disks tab, you select the OS disk type and specify your data disks.
     - **Networking**: The Networking tab provides settings to create virtual networks and load balancing.
     - **Management**: On the Management tab, you can enable auto-shutdown and specify backup details.
-    - **Advanced**: On the Advanced tab, you can configure agents, scripts, or virtual machine extensions.
+    - **Advanced**: On the Advanced tab, you can configure agents, scripts, or `virtual machine extensions`- Provide post-deployment configuration and automation tasks.
+    Used to configure the virtual machine after it's created. Extensions can be used to install software, configure settings, and perform other tasks.
     - Other settings are available on the Monitoring and Tags tabs.
 
 - Alternatively, you can browse to the [Azure Quickstart Templates](https://learn.microsoft.com/en-us/samples/browse/?expanded=azure&products=azure-resource-manager) page to find pre-configured templates for virtual machines. You can select a template, customize it, and deploy it directly from the Azure portal.
