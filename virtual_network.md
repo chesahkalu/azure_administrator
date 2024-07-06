@@ -166,7 +166,7 @@ Virtual network peering enables you to seamlessly connect two Azure virtual netw
 - Peering works well across same regions, different regions, subscriptions and even different tenants(Needs network admin permissions from both tenants).
 - When you create a virtual network peering connection with Azure PowerShell or Azure CLI, only one side of the peering gets created. To complete the virtual network peering configuration, you'll need to configure the peering in reverse direction to establish connectivity. When you create the virtual network peering connection through the `Azure portal`, the configuration for both side is completed at the same time.
 
-**Gateway transit**: Peering is `non-transitive`. Suppose, for example, that your three virtual networks (A, B, C) are peered like this: A <-> B <-> C. Resources in A can't communicate with resources in C because that traffic can't transit through virtual network B. You can enable and add gateway transit to the B network. The B network now acts as a hub, and resources in A can communicate with resources in C. Gateway transit allows the peered virtual networks to use the `VPN gateway` in the peering virtual network. This feature is useful when you have a central network that you want to connect to multiple `spoke networks`. The spoke networks can use the VPN gateway or a network virtual appliance (NVA) in the central network to establish a connection to `on-premises` resources. The central network acts as a `hub`, while other networks act as `spokes`. This mechanism is known as **`hub-and-spoke topology`**.
+**Gateway transit**: Peering is `non-transitive`. Suppose, for example, that your three virtual networks (A, B, C) are peered like this: A <-> B <-> C. Resources in A can't communicate with resources in C because that traffic can't transit through virtual network B. You can enable and add `gateway transit` to the B network. The B network now acts as a hub, and resources in A can communicate with resources in C. `Gateway transit` allows the peered virtual networks to use the `VPN gateway` in the peering virtual network. This feature is useful when you have a central network that you want to connect to multiple `spoke networks`. The spoke networks can use the `VPN gateway` or a `network virtual appliance (NVA)` in the central network to establish a connection to `on-premises` resources. The central network acts as a `hub`, while other networks act as `spokes`. This mechanism is known as **`hub-and-spoke topology`**.
 - Other ways to extend the capabilities of your peering for resources and virtual networks outside your peering network, You can implement these mechanisms and create a multi-level hub and spoke architecture. These options can help overcome the limit on the number of virtual network peerings per virtual network.: 
     - **`User-defined routes(UDRs)`** : Virtual network peering enables the next hop in a user-defined route to be the IP address of a virtual machine in the peered virtual network, or a VPN gateway.
     - **`Service Chaining`** : Service chaining is a method of connecting multiple virtual network appliances to create a chain of services. Service chaining is used to direct traffic from one virtual network to a virtual appliance or gateway. A user-defined route defines the peered networks.
@@ -290,6 +290,20 @@ Suppose you have a virtual machine that performs a network function like routing
     - **ExpressRoute circuit**: The ExpressRoute circuit that the ExpressRoute gateway connects to
     - **Authorization key**: The key that's used to authenticate the connection between your on-premises network and the ExpressRoute circuit
 
+### Point-to-Site VPN and Site-to-Site VPN
+
+* A Point-to-Site (P2S) VPN is a secure connection between a client computer and an Azure virtual network. It is typically used to connect individual devices to an Azure network, such as when employees need to securely connect to the corporate network from remote locations. Key Features:
+    - Individual Connection: Ideal for remote users who need to connect to the Azure network from anywhere over the internet.
+    - Client-Based: Users install VPN client software on their devices to establish a connection.
+    - Secure Connection: Uses SSL/TLS for encryption, providing a secure tunnel for data.
+    - Scalability: Suitable for smaller scale deployments with fewer users.
+
+* Site-to-Site (S2S) VPN is a secure connection between an on-premises location and an Azure virtual network. It is typically used to connect an entire network to an Azure network, such as when you need to connect multiple branch offices to an Azure virtual network. Key Features:
+    - Network Connection: Ideal for connecting on-premises networks to Azure virtual networks.
+    - Gateway-Based: Uses a VPN gateway to establish a secure connection between the on-premises network and the Azure virtual network.
+    - Secure Connection: Uses IPsec/IKE for encryption, providing a secure tunnel for data.
+    - Scalability: Suitable for larger scale deployments with multiple users and devices.
+
 ### Virtual WAN
 
 - Azure Virtual WAN is a networking service that brings many networking, security, and routing functionalities together to provide a single operational interface.
@@ -310,7 +324,6 @@ Suppose you have a virtual machine that performs a network function like routing
     - **Security**: Virtual WAN provides security features such as encryption, firewall, and threat protection.
     - **Routing**: Virtual WAN provides routing features such as BGP and route tables.
     - **Monitoring**: Virtual WAN provides monitoring features such as network performance monitoring and network diagnostics.
-
 
 ---
 
