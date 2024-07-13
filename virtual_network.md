@@ -304,6 +304,15 @@ Suppose you have a virtual machine that performs a network function like routing
     - Secure Connection: Uses IPsec/IKE for encryption, providing a secure tunnel for data.
     - Scalability: Suitable for larger scale deployments with multiple users and devices.
 
+Steps to create site-to-site VPN usually starts in the portal:
+1. Create a virtual network.
+2. Create a gateway subnet
+3. Create a VPN gateway.
+4. Create a local network gateway.
+5. Configure on-premises VPN device.
+6. Create a connection.
+
+
 ### Virtual WAN
 
 - Azure Virtual WAN is a networking service that brings many networking, security, and routing functionalities together to provide a single operational interface.
@@ -492,6 +501,8 @@ Azure Network Watcher is a regional service that helps you monitor, diagnose, an
 
 **Network Performance Monitoring**
 - **Connection Monitor**: Monitors connectivity status, latency, and network topology changes between Azure virtual machines, endpoints and network interfaces.
+- **Connection Troubleshoot**: Diagnoses network connectivity issues between two virtual machines or a virtual machine and an endpoint.
+- **Azure Monitor Network Insights**: Provides network performance monitoring and diagnostics for Azure virtual machines. Creates a `network map to visualize` detailed network traffic flow and dependencies.
 
 * **Network Diagnostics**
     - **IP Flow Verify**: Quickly diagnose connectivity issues from or to the internet, and from or to your on-premises environment. 
