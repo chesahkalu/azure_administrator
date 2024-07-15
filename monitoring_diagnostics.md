@@ -219,7 +219,7 @@ The composition of an activity log alert includes:
 
 VM client monitoring can include monitoring the operating system (OS), workloads, and applications that run on the VM. To collect metrics and logs from guest OS and client workloads and applications, you need to install Azure Monitor Agent and set up a `data collection rule (DCR)`.
 
-DCRs define what data to collect and where to send that data. You can use a DCR to send Azure Monitor metrics data, or performance counters, to Azure Monitor Logs or Azure Monitor Metrics. Or, you can send event log data to Azure Monitor Logs. `In other words, Azure Monitor Metrics can store only metrics data, but Azure Monitor Logs can store both metrics and event logs`.
+DCRs define what data to collect and where to send that data. You can use a DCR to send Azure Monitor metrics data, or performance counters, to Azure Monitor Logs or Azure Monitor Metrics. Or, you can send event log data to Azure Monitor Logs. `In other words, Azure Monitor Metrics can store only metrics data, but Azure Monitor Logs can store both metrics and event logs`. 
 
 ### Create a VM and enable recommended alerts
 

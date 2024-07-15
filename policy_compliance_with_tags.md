@@ -65,7 +65,7 @@ There are four basic steps to create and work with policy definitions in Azure P
 
   2. `Create an initiative definition`: Group multiple policy definitions to simplify management and assignment, either `custom` or `built-in` policy definitions. `Eg 1`. You can group policy definitions that enforce tagging, naming conventions, and resource location into a single initiative. `Eg 2`. You can group policy definitions that enforce security settings for a specific service into a single initiative.
 
-  3. `Scope the initiative definition`: Define the scope of the initiative definition to either limit or specify where it's enforced. `Eg 1`. You can scope an initiative definition to a management group, subscription, or resource group. `Eg 2`. You can scope an initiative definition to a specific resource type, location, or tag.
+  3. `Scope the initiative definition``-``Assingment`: Define the scope of the initiative definition to either limit or specify where it's enforced. `Eg 1`. You can scope an initiative definition to a management group, subscription, or resource group. `Eg 2`. You can scope an initiative definition to a specific resource type, location, or tag.
 
   4. `Determine compliance`: After you've assigned the initiative definition, you can view the compliance state of your resources. `Eg 1`. You can view the compliance state of all resources in a subscription. `Eg 2`. You can view the compliance state of all resources in a resource group.
 
