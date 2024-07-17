@@ -66,7 +66,7 @@ Bicep is an alternative DSL (Domain Specific Language) for ARM templates, aiming
 
 1. On the portal search box, type `Deploy a Custom Template`.
 2. On custom deployment page click on `Build your own template in the editor`.
-3. Edit the template as needed by copying the `Template.json` file in your local maching or upload the file by clicking on `Load file`.
+3. Edit the template as needed by copying the `Template.json` file in your local machine or upload the file by clicking on `Load file`.
 4. Click `Save` and then click `Edit Parameters` to provide the values for the parameters.
 5. Edit the parameters as needed by copying the `Parameters.json` file in your local maching or upload the file by clicking on `Load file`.
 6. Click `Save` , adjust other details on `Custom Deployment` page and then click `Review + Create`.
@@ -84,5 +84,4 @@ Generating ARM templates from existing resources is a powerful way to automate t
 - [Azure Resource Manager documentation](https://docs.microsoft.com/en-us/azure/azure-resource-manager/)
 - [Quickstart templates for Azure deployments](https://learn.microsoft.com/en-us/samples/browse/?expanded=azure&products=azure-resource-manager)
 - [GitHub repository of Azure Quickstart Templates](https://github.com/Azure/azure-quickstart-templates)
-
-
+- [Create & deploy template - Azure Resource Manager](https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/template-tutorial-create-first-template?tabs=azure-powershell)

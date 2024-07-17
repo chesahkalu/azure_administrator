@@ -59,6 +59,8 @@ Resource tagging facilitates easier management and billing transparency. Follow 
 
 - Enable `built-in policies`, or build `custom policies` for all resource types. Support real-time policy evaluation and enforcement, and periodic or on-demand compliance evaluation.
 
+- Policy assignment can start from the `tenant level`, `management group level`, `subscription level`, or `resource group level`. Policies are inherited by child resources, and you can exclude specific resources from policy enforcement.
+
 - `A policy definition` expresses what to evaluate and what action to take. It describes the `compliance` conditions for a resource, and the actions to complete when the conditions are met. One or more policy definitions are grouped into an `initiative definition`, to control the scope of your policies and evaluate the compliance of your resources. For example, you can ensure all resources in your subscription are tagged, or that virtual machines are encrypted.
 There are four basic steps to create and work with policy definitions in Azure Policy: 
   1. `Create a policy definition`: Define what to evaluate and what action to take when the conditions are met, either `custom` or `built-in` policy definitions. `Eg 1`. Require a tag and its value on resources. `Eg 2`. You can create a policy definition to prevent VMs in your organization from being deployed, if they're exposed to a public IP address.
@@ -107,7 +109,7 @@ Automate the tag application process to ensure compliance and minimize manual ef
 
 - Azure provides two types of locks to prevent accidental deletion or modification of resources: `Delete Lock` and `Read-only Lock`.
 
-- A `Delete Lock` prevents the deletion of a resource. It can be removed only by a user with the appropriate permissions. This lock is useful when you want to prevent accidental deletion of a resource. It is applied at the resource level, but the object can still be modified.
+- A `Delete Lock` prevents the deletion of a resource. It can be removed only by a user with the appropriate permissions. This lock is useful when you want to prevent accidental deletion of a resource. It is applied at the resource level, `but the object can still be modified`.
 
 - A `Read-only Lock` prevents all modifications to a resource. This includes deleting the resource, but also any modifications to the resource's properties.
 
@@ -115,7 +117,7 @@ Automate the tag application process to ensure compliance and minimize manual ef
 
 - Choose the type of lock you want to apply, provide a name and a description, and then click `OK`.
 
-- Locks are applied to most Azure resources, and resource level restrictions can be applied to prevent accidental deletion or modification. Locks can then be applied at the `resource group level`, `subscription level`, or `individual resource level`.
+- Locks are applied to most Azure resources, and resource level restrictions can be applied to prevent accidental deletion or modification. Locks can then be applied at the `subscription level`, `resource group level`, , or `individual resource level`.
 
 ## Wrapping Up
 

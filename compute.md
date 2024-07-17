@@ -167,6 +167,30 @@ Azure Virtual Machine Scale Sets are an Azure compute resource that you can use 
 
 ---
 
+## Azure Compute Gallery
+
+Azure Compute Gallery is a service that allows you to `create and share custom virtual machine images`, disks, and snapshots. You can use the Azure Compute Gallery to create `reusable images` that can be deployed across multiple environments. The Azure Compute Gallery provides a `centralized repository` for managing and sharing images, making it easier to deploy virtual machines and scale your applications. You can create custom images from `existing` virtual machines, disks, or snapshots and store them in the Azure Compute Gallery. You can also share images with other users in your organization or publish them to the Azure Marketplace for public use.
+
+Parts of Azure Compute Gallery:
+
+1. **Image source**: The source of the image can be a `managed image`, `shared image`, `snapshot`, or `disk`. You can create a custom image from an existing virtual machine, disk, or snapshot and store it in the Azure Compute Gallery:
+
+    - **Images**: An image is a `read-only` template that contains the operating system, applications, and data used to create a virtual machine. You can create custom images from existing virtual machines, disks, or snapshots and store them in the Azure Compute Gallery. Images can be used to create new virtual machines or scale existing virtual machines.
+
+    - **Disks**: A disk is a `VHD` file that contains the operating system, applications, and data used by a virtual machine. You can create custom disks from existing virtual machines, snapshots, or images and store them in the Azure Compute Gallery. Disks can be attached to virtual machines to store data or provide additional storage capacity.
+
+    - **Snapshots**: A snapshot is a `read-only` copy of a disk that captures the state of the disk at a specific point in time. You can create snapshots of disks and store them in the Azure Compute Gallery. Snapshots can be used to create new disks or restore disks to a previous state.
+
+    - **Shared Image Gallery**: A shared image gallery is a service that allows you to `create, share, and manage custom images` across multiple Azure subscriptions. You can create a shared image gallery to store images, disks, and snapshots and share them with other users in your organization. Shared image galleries provide a centralized repository for managing and sharing images, making it easier to deploy virtual machines and scale your applications.
+
+2. **Gallery**: Like the Azure Marketplace, a gallery is a repository for managing and sharing images and VM applications, but you control who has access.
+
+3. **Image Definition**: An image definition is a `template` that defines the `source image` and `customizations` that will be applied to the image. You can create an image definition to specify the source image, disk size, and other settings for the image.
+
+4. **Image Version**: An image version is a `specific version` of an image definition that contains the source image and customizations. You can create multiple versions of an image definition to track changes and updates to the image.
+
+---
+
 ## App Service
 
 Azure App Service is a fully managed platform for building, deploying, and scaling web apps and APIs. It provides a rich set of features for building and hosting web applications, mobile backends, and RESTful APIs. Azure App Service supports multiple programming languages, frameworks, and tools, including .NET, Java, Node.js, PHP, Python, and Ruby. You can deploy web apps and APIs to Azure App Service using various deployment methods, such as Git, GitHub, Azure DevOps, and Docker containers. Azure App Service provides built-in DevOps capabilities for continuous integration and continuous deployment (CI/CD), automatic scaling, and monitoring.
