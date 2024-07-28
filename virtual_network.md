@@ -525,7 +525,7 @@ Azure Network Watcher is a regional service that helps you monitor, diagnose, an
     - **VPN Troubleshoot**: Diagnose and troubleshoot the health of your virtual network gateway or connection with gathered data. View connection statistics, CPU and memory information, IKE security errors, packet drops, and buffers and events.
     - **Security Group View**: Displays all security rules applied to a network interface in a virtual machine.
     - **Effective Security Rules**: Shows all effective security rules for a network interface, including those from associated NSGs.
-    - **Packet Capture**: Captures and inspects packets to and from a virtual machine for diagnosing network issues.
+    - **Packet Capture**: Captures and inspects packets to and from a virtual machine for diagnosing network issues, for a given period of time.
 
 **Topology**
 - **Topology View**: Visualizes the network topology of your Azure resources, providing a `graphical` representation of your network layout. This can be done remotely with out logging into you Virtual Machine.

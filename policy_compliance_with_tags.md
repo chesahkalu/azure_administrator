@@ -35,6 +35,8 @@ This comprehensive guide walks you through the nuances of policy creation, compl
 
 - Each resource, resource group, and subscription can have a maximum of `50` tag name-value pairs. If you need to apply more tags than the maximum allowed number, use a JSON string for the tag value.
 
+- Tags can be applied from the scope of a `resource`, `resource group`, `subscription`, or `management group`. Tags can be used to categorize resources, track costs, and enforce policies. Tags can be used to group resources together, track costs, and enforce policies, by implementing Azure policies to resources based on their tags.
+
 
 ### Task 1: Tagging Resources for Clarity and Management
 
@@ -59,7 +61,7 @@ Resource tagging facilitates easier management and billing transparency. Follow 
 
 - Enable `built-in policies`, or build `custom policies` for all resource types. Support real-time policy evaluation and enforcement, and periodic or on-demand compliance evaluation.
 
-- Policy assignment can start from the `tenant level`, `management group level`, `subscription level`, or `resource group level`. Policies are inherited by child resources, and you can exclude specific resources from policy enforcement.
+- Policy assignment can start from the  `management group level`, `subscription level`, or `resource group level`. Policies are inherited by child resources, and you can exclude specific resources from policy enforcement.
 
 - `A policy definition` expresses what to evaluate and what action to take. It describes the `compliance` conditions for a resource, and the actions to complete when the conditions are met. One or more policy definitions are grouped into an `initiative definition`, to control the scope of your policies and evaluate the compliance of your resources. For example, you can ensure all resources in your subscription are tagged, or that virtual machines are encrypted.
 There are four basic steps to create and work with policy definitions in Azure Policy: 
@@ -117,7 +119,12 @@ Automate the tag application process to ensure compliance and minimize manual ef
 
 - Choose the type of lock you want to apply, provide a name and a description, and then click `OK`.
 
-- Locks are applied to most Azure resources, and resource level restrictions can be applied to prevent accidental deletion or modification. Locks can then be applied at the `subscription level`, `resource group level`, , or `individual resource level`.
+- Locks are applied to most Azure resources, and resource level restrictions can be applied to prevent accidental deletion or modification. Locks can then be applied at the `subscription level`, `resource group level`, or `individual resource level`.
+
+- When you apply a lock at a parent scope, all resources within that scope inherit the lock. Even resources created after the lock is applied inherit the loc. 
+
+- If two locks are applied to a resource, the most restrictive lock takes precedence. For example, if a read-only lock is applied to a resource, and a delete lock is applied to a resource group containing that resource, the `read-only` lock takes precedence.
+
 
 ## Wrapping Up
 
