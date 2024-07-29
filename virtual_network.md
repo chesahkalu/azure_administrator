@@ -48,6 +48,18 @@
 - **Subnets**: A virtual network is your network in the cloud. After creating a virtual network, You can `divide` your virtual network into multiple `subnets`. Each subnet contains a portion of the `private` IP-address space assigned to your virtual network. Subnets enable you to segment the virtual network IP address into one or more sub-networks and allocate a portion of the virtual network's address space to each subnet. You can then deploy Azure resources in a specific subnet and IP-Address assigned to them through `DHCP`. Azure reserves `five` IP addresses, The first four addresses(.0, .1, .2, .3) and the last address(.255) are reserved.
 By default, all subnets in an Azure virtual network can communicate with each other. However, you can use a network security group to deny communication between subnets. Regarding sizing, the smallest supported subnet uses a /29 subnet mask, and the largest supported subnet uses a /2 subnet mask. The smallest subnet has eight IP addresses, and the largest subnet has 1,073,741,824 IP addresses.
 
+- How the Counting Occurs: Counting within a subnet follows a sequential pattern. Let's break down the increments for 10.3.0.0/16:
+
+1. `/16` indicates that the first 16 bits are the network part of the address, leaving the remaining bits for host addresses. `(8bits.8bits.8bits.8bits)`
+2. Firtst IP Address: `10.3.0.0` , Last IP Address: `10.3.255.25`
+3. Azure reserves the `first 4` IP addresses and the `last` IP address in each subnet. The first IP address is the network address 10.3.0.0, the second IP address is reserved for the Azure service `10.3.0.1`, the third IP address is reserved for the Azure DNS `10.3.0.2`, the fourth is reserved for future use `10.3.0.3` and the last IP address is the broadcast address `10.3.255.255`.
+4. Start from 10.3.0.0 and increment by 1.
+5. The next address is `10.3.0.1`.
+6. This continues up to `10.3.0.255`.
+7. After 10.3.0.255, the next address is `10.3.1.0`, then `10.3.1.1` and this continues up to `10.3.1.255`.
+8. After 10.3.1.255, the next address is `10.3.2.0`, then `10.3.2.1` and this continues up to `10.3.2.255`.
+9. This pattern continues until `10.3.255.255`.
+
 - **Static IP addresses**: Static addresses are assigned when a `public IP address` is created. Static addresses aren't released until a public IP address resource is deleted. If the address isn't associated to a resource, you can change the assignment method after the address is created. If the address is associated to a resource, you might not be able to change the assignment method. You select and assign any unassigned or unreserved IP address in the subnet's address range.
 Suppose a subnet's address range is 10.0.0.0/16, and addresses 10.0.0.4 through 10.0.0.9 are already assigned to other resources. In this scenario, you can assign any address between 10.0.0.10 and 10.0.255.254.
 
