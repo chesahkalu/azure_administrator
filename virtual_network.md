@@ -51,13 +51,13 @@ By default, all subnets in an Azure virtual network can communicate with each ot
 - How the Counting Occurs: Counting within a subnet follows a sequential pattern. Let's break down the increments for 10.3.0.0/16:
 
 1. `/16` indicates that the first 16 bits are the network part of the address, leaving the remaining bits for host addresses. `(8bits.8bits.8bits.8bits)`
-2. Firtst IP Address: `10.3.0.0` , Last IP Address: `10.3.255.25`
-3. Azure reserves the `first 4` IP addresses and the `last` IP address in each subnet. The first IP address is the network address 10.3.0.0, the second IP address is reserved for the Azure service `10.3.0.1`, the third IP address is reserved for the Azure DNS `10.3.0.2`, the fourth is reserved for future use `10.3.0.3` and the last IP address is the broadcast address `10.3.255.255`.
+2. Firtst IP Address: `10.3.0.0` , Last IP Address: `10.3.255.255`
+3. Azure reserves the `first 4` IP addresses and the `last` IP address in each subnet. The first IP address is the network address `10.3.0.0`, the second IP address is reserved for the Azure service `10.3.0.1`, the third IP address is reserved for the Azure DNS `10.3.0.2`, the fourth is reserved for future use `10.3.0.3` and the last IP address is the broadcast address `10.3.255.255`.
 4. Start from 10.3.0.0 and increment by 1.
 5. The next address is `10.3.0.1`.
 6. This continues up to `10.3.0.255`.
-7. After 10.3.0.255, the next address is `10.3.1.0`, then `10.3.1.1` and this continues up to `10.3.1.255`.
-8. After 10.3.1.255, the next address is `10.3.2.0`, then `10.3.2.1` and this continues up to `10.3.2.255`.
+7. After `10.3.0.255`, the next address is `10.3.1.0`, then `10.3.1.1` and this continues up to `10.3.1.255`.
+8. After `10.3.1.255`, the next address is `10.3.2.0`, then `10.3.2.1` and this continues up to `10.3.2.255`.
 9. This pattern continues until `10.3.255.255`.
 
 - **Static IP addresses**: Static addresses are assigned when a `public IP address` is created. Static addresses aren't released until a public IP address resource is deleted. If the address isn't associated to a resource, you can change the assignment method after the address is created. If the address is associated to a resource, you might not be able to change the assignment method. You select and assign any unassigned or unreserved IP address in the subnet's address range.
@@ -475,6 +475,9 @@ After purchasing a domain name, To host the domain name with Azure DNS, you firs
 
 1. `DNS Zone`: Start by creating a DNS zone, providing the `Domain name`, `subscription`, `resource group and location`. The DNS zone is the container for all the DNS records for a domain. You can create a DNS zone in Azure DNS by using the Azure portal, Azure PowerShell, or the Azure CLI. After you create a DNS zone, you can add DNS records to the zone.
 
+- The name of the zone must be unique within the resource group, and the zone must not exist already. Otherwise, the operation fails
+- Where multiple zones share the same name, each instance is assigned different name server addresses. Only one set of addresses can be configured with the domain name registrar.
+
 2. `Get the Name Servers`: After creating a DNS zone, you need to get the name servers for the zone. The name servers are the servers that host the DNS records for your domain. You need to provide these name servers to your domain registrar to delegate the domain to Azure DNS. You can get the name servers for a DNS zone in Azure DNS by using the Azure portal, Azure PowerShell, or the Azure CLI.
 
 3. `Update the Domain Registrar`: After getting the name servers for a DNS zone, you need to update the domain registrar with the name servers. The domain registrar is the company where you purchased the domain name. You need to provide the name servers to the domain registrar to delegate the domain to Azure DNS. After you update the domain registrar with the name servers, Azure DNS can host the DNS records for your domain.
@@ -483,16 +486,19 @@ After purchasing a domain name, To host the domain name with Azure DNS, you firs
 
 To verify the success of the domain delegation, query the start of authority (SOA) record. The SOA record is automatically created when the Azure DNS zone is set up. You can verify the SOA record using a tool like `nslookup`.
 
-5. `Configure DNS settings through DNS Records`: After creating a DNS zone, you can add DNS records to the zone. DNS records are used to map domain names to IP addresses. You can add the following types of DNS records to a DNS zone:
+5. `Configure DNS settings through DNS Records`: After creating a DNS zone, you can add DNS records to the zone. DNS records are used to map domain names to IP addresses.
+Azure DNS manages all DNS records using record sets. `A record set (also known as a resource record set)` is the collection of DNS records in a zone that have the same name(apex name/zone name eg. `kalu.com`) and are of the same type. Most record sets contain a single record.  You can add the following types of DNS records to a DNS zone:
     - **A**: Maps a domain name to an IPv4 address.
     - **AAAA**: Maps a domain name to an IPv6 address.
     - **CNAME**: Maps a domain name to another domain name.
     - **MX**: Maps a domain name to a mail server.
-    - **NS**: Maps a domain name to a name server.
+    - **NS**: Maps a domain name to a name server. Gets created automatically at the apex of each zone (name = '@'), and gets deleted automatically when the zone gets deleted.
     - **PTR**: Maps an IP address to a domain name.
-    - **SOA**: Specifies the start of authority for a DNS zone.
+    - **SOA**: Specifies the start of authority for a DNS zone. SOA records are used to store information about the zone, such as the primary name server for the zone and the email address of the person responsible for the zone. Gets created automatically at the apex of each zone (name = '@'), and gets deleted automatically when the zone gets deleted. 
     - **SRV**: Maps a domain name to a service.
     - **TXT**: Maps a domain name to text information.
+- A record set can contain multiple records of the same type. For example, suppose you have already created an A record 'www' in the zone 'kalu.com', pointing to the IP address '134.170.185.46'. To create the second record you would add that record to the existing record set, rather than create an additional record set. You can add, remove, or update records in a record set. 
+- The SOA and CNAME record types are exceptions. The DNS standards don't permit multiple records with the same name for these types, therefore these record sets can only contain a single record.
 
 **Apex Domain**: An apex domain is a domain that doesn't contain a subdomain. For example, `contoso.com` is an apex domain. An apex domain is also known as a root domain. An apex domain can't be a CNAME record. A CNAME record is a type of DNS record that maps a domain name to another domain name. An apex domain can have other types of DNS records, such as A records and MX records.
 
