@@ -31,11 +31,11 @@ This comprehensive guide walks you through the nuances of policy creation, compl
 
 - They do this by providing metadata that can be used to categorize resources, track costs, and enforce policies. Tags can be used to group resources together, track costs, and enforce policies, by implementing Azure policies to resources based on their tags.
 
-- Tags are `not inherited` by default, but you can use Azure Policy to enforce and inherit tagging requirements(from `resource groups`, `subscriptions`) and automate tag application. This ensures that all resources are tagged consistently and accurately if they are missing tags, and need to inherit tags from their parent resource group.
+- Tags are `not inherited` by default, but you can use Azure Policy to enforce and inherit tagging requirements(from `resource groups`, `subscriptions` and automate tag application. This ensures that all resources are tagged consistently and accurately if they are missing tags, and need to inherit tags from their parent resource group.
 
 - Each resource, resource group, and subscription can have a maximum of `50` tag name-value pairs. If you need to apply more tags than the maximum allowed number, use a JSON string for the tag value.
 
-- Tags can be applied from the scope of a `resource`, `resource group`, `subscription`, or `management group`. Tags can be used to categorize resources, track costs, and enforce policies. Tags can be used to group resources together, track costs, and enforce policies, by implementing Azure policies to resources based on their tags.
+- Tags can be applied from the scope of a `resource`, `resource group`, `subscription`, but not to management group. Tags can be used to categorize resources, track costs, and enforce policies. Tags can be used to group resources together, track costs, and enforce policies, by implementing Azure policies to resources based on their tags.
 
 
 ### Task 1: Tagging Resources for Clarity and Management
@@ -121,7 +121,7 @@ Automate the tag application process to ensure compliance and minimize manual ef
 
 - Locks are applied to most Azure resources, and resource level restrictions can be applied to prevent accidental deletion or modification. Locks can then be applied at the `subscription level`, `resource group level`, or `individual resource level`.
 
-- When you apply a lock at a parent scope, all resources within that scope inherit the lock. Even resources created after the lock is applied inherit the loc. 
+- When you apply a lock at a parent scope, all resources within that scope inherit the lock. Even resources created after the lock is applied inherit the lock. 
 
 - If two locks are applied to a resource, the most restrictive lock takes precedence. For example, if a read-only lock is applied to a resource, and a delete lock is applied to a resource group containing that resource, the `read-only` lock takes precedence.
 
