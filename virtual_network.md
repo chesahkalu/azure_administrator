@@ -518,14 +518,15 @@ An alias record allows you to link the zone apex (wideworldimports.com) to a loa
 Azure Network Watcher is a regional service that helps you monitor, diagnose, and gain insights into your network infrastructure in Azure. By using features such as IP flow verification, next hop analysis, and connection troubleshooting, you can ensure that your virtual network is functioning optimally. Some of the key features of Azure Network Watcher include:
 
 **Network Performance Monitoring**
-- **Connection Monitor**: Monitors connectivity status, latency, and network topology changes between Azure virtual machines, endpoints and network interfaces.
+- **Connection Monitor**: Monitors connectivity status, latency, RTT( Round Trip Time), hop count between two virtual machines and network topology changes between Azure virtual machines, endpoints and network interfaces.
 - **Connection Troubleshoot**: Diagnoses network connectivity issues between two virtual machines or a virtual machine and an endpoint.
 - **Azure Monitor Network Insights**: Provides network performance monitoring and diagnostics for Azure virtual machines. Creates a `network map to visualize` detailed network traffic flow and dependencies.
+- **Traffic Analysis**: Analyzes and visualizes traffic flow in your Azure virtual network. Traffic Analytics provides insights into traffic flow patterns, helping you identify potential security threats and performance issues.
 
 * **Network Diagnostics**
     - **IP Flow Verify**: Quickly diagnose connectivity issues from or to the internet, and from or to your on-premises environment. 
-        - This feature helps you identify if a security rule is blocking traffic to or from your virtual machine or the internet.
-        - At some point, your virtual machine might be unable to communicate with other resources because of a security rule. You can use the IP flow verify feature to troubleshoot your NSG rules.If test runs fail, but the IP flow verify feature doesn't indicate the issue is related to your NSG rules, you need to explore other areas, such as firewall restrictions.
+        - This feature helps you identify if a `security rule is blocking traffic` to or from your virtual machine or the internet.
+        - At some point, your virtual machine might be unable to communicate with other resources because of a security rule. You can use the IP flow verify feature to `troubleshoot your NSG rules`. If test runs fail, but the IP flow verify feature doesn't indicate the issue is related to your NSG rules, you need to explore other areas, such as firewall restrictions.
         - You configure the IP flow verify feature with the following properties in the Azure portal:
             - Virtual machine and network interface
             - Local (source) port number
@@ -553,7 +554,7 @@ Azure Network Watcher is a regional service that helps you monitor, diagnose, an
     ! [Topology View](resources/Screenshot-2024-06-16-at-4.10.28-PM.png)
     
 **Network Logs**
-- **NSG Flow Logs**: Captures and reviews network traffic flow through network security groups for traffic analysis and security audits.
+- **NSG Flow Logs**: Captures and reviews network traffic flow through `network security groups` for `traffic analysis` and `security audits`.
 
 **Diagnostic Tools**
 - **Network Watcher Extension**: Uses diagnostic tools directly from a virtual machine to gather detailed information about network traffic and issues.
