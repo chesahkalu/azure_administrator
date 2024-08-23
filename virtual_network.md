@@ -521,7 +521,10 @@ Azure Network Watcher is a regional service that helps you monitor, diagnose, an
 - **Connection Monitor**: Monitors connectivity status, latency, RTT( Round Trip Time), hop count between two virtual machines and network topology changes between Azure virtual machines, endpoints and network interfaces.
 - **Connection Troubleshoot**: Diagnoses network connectivity issues between two virtual machines or a virtual machine and an endpoint.
 - **Azure Monitor Network Insights**: Provides network performance monitoring and diagnostics for Azure virtual machines. Creates a `network map to visualize` detailed network traffic flow and dependencies.
-- **Traffic Analysis**: Analyzes and visualizes traffic flow in your Azure virtual network. Traffic Analytics provides insights into traffic flow patterns, helping you identify potential security threats and performance issues.
+- **Traffic Analytics**: Analyzes and visualizes traffic flow in your Azure virtual network. Traffic Analytics provides insights into traffic flow patterns, helping you identify potential security threats and performance issues. It requires:
+    - **Network Watcher**: To collect network traffic data.
+    - **Network Security Group (NSG) Flow Logs**: To collect data on network traffic.
+    - **Log Analytics workspace**: To store and analyze the data.
 
 * **Network Diagnostics**
     - **IP Flow Verify**: Quickly diagnose connectivity issues from or to the internet, and from or to your on-premises environment. 
