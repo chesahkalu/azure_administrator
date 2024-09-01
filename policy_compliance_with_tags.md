@@ -61,7 +61,7 @@ Resource tagging facilitates easier management and billing transparency. Follow 
 
 - Enable `built-in policies`, or build `custom policies` for all resource types. Support real-time policy evaluation and enforcement, and periodic or on-demand compliance evaluation.
 
-- Policy assignment can start from the  `management group level`, `subscription level`, or `resource group level`. Policies are inherited by child resources, and you can exclude specific resources from policy enforcement.
+- Policy assignment can start from the  `tenant group` , `management group level`, `subscription level`, `resource group level` or `resource`. Policies are inherited by child resources, and you can exclude specific resources from policy enforcement.
 
 - `A policy definition` expresses what to evaluate and what action to take. It describes the `compliance` conditions for a resource, and the actions to complete when the conditions are met. One or more policy definitions are grouped into an `initiative definition`, to control the scope of your policies and evaluate the compliance of your resources. For example, you can ensure all resources in your subscription are tagged, or that virtual machines are encrypted.
 There are four basic steps to create and work with policy definitions in Azure Policy: 

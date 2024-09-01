@@ -244,7 +244,7 @@ Suppose you have a virtual machine that performs a network function like routing
 
 ### Service Endpoints
 
-- A virtual network service endpoint provides the `identity` of your virtual network to the Azure service, like Azure Storage or Azure SQL Database. 
+- A virtual network service endpoint provides the `identity` of your virtual network to the Azure service, like `Azure Storage` or `Azure SQL Database`. 
 - The Azure service uses the identity to restrict access to only the virtual network. Service endpoints are a secure and direct connection between a virtual network and an Azure service. 
 - Service endpoints extend your virtual network private address space to the Azure service, over a direct connection. The connection is secure because it doesn't go over the internet. Service endpoints are powered by the Azure `backbone` network, a global network that Microsoft uses to connect its datacenters. 
 - Currently, Azure service traffic from a virtual network uses public IP addresses as source IP addresses. With `service endpoints`, service traffic switches to using `virtual network private addresses` as the source IP addresses when accessing the Azure service, from a virtual network. By adding virtual network rules to the resources, this switch from `public IP addresses` to `private IP addresses` provides the following benefits:
@@ -528,7 +528,7 @@ Azure Network Watcher is a regional service that helps you monitor, diagnose, an
 
 * **Network Diagnostics**
     - **IP Flow Verify**: Quickly diagnose connectivity issues from or to the internet, and from or to your on-premises environment. 
-        - This feature helps you identify if a `security rule is blocking traffic` to or from your virtual machine or the internet.
+        - This feature helps you identify if a `NSG rule is blocking traffic` to or from your virtual machine or the internet.
         - At some point, your virtual machine might be unable to communicate with other resources because of a security rule. You can use the IP flow verify feature to `troubleshoot your NSG rules`. If test runs fail, but the IP flow verify feature doesn't indicate the issue is related to your NSG rules, you need to explore other areas, such as firewall restrictions.
         - You configure the IP flow verify feature with the following properties in the Azure portal:
             - Virtual machine and network interface
@@ -567,7 +567,7 @@ Azure Network Watcher is a regional service that helps you monitor, diagnose, an
 
 1. **Enable Network Watcher**: Enable Network Watcher for your Azure region via the Azure portal, PowerShell, or CLI.
 2. **Connection Monitor**: Set up connection monitoring to ensure network performance and connectivity.
-3. **IP Flow Verify**: Diagnose packet flow and NSG rules to resolve connectivity issues.
+3. **IP Flow Verify**: Diagnose `packet flow` and `NSG` rules to resolve connectivity issues.
 4. **Next Hop**: Understand packet routing paths to diagnose routing issues.
 5. **Packet Capture**: Collect and analyze network traffic to diagnose specific issues.
 6. **View Topology**: Visualize your network architecture using the topology tool.
