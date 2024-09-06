@@ -571,6 +571,10 @@ Azure Network Watcher is a regional service that helps you monitor, diagnose, an
 4. **Next Hop**: Understand packet routing paths to diagnose routing issues.
 5. **Packet Capture**: Collect and analyze network traffic to diagnose specific issues.
 6. **View Topology**: Visualize your network architecture using the topology tool.
+7. **Azure Monitor Network Insights**: Uses dashboard to display detailed metrics and a visual representation of the network topology
+8. **Traffic Analytics**: Analyze network traffic patterns and identify potential `security` threats.
+9. 
+
 
 **Example Use Cases**
 

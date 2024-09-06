@@ -39,7 +39,7 @@ Azure Monitor is a platform service that provides a single source that can monit
 
 - Various monitoring sources provide Azure Monitor with the metrics and logs data to analyze. These sources can include your `Azure subscription` and `tenant`,  your `Azure resources`, data from your `applications`, data about the `Operating system`, `your Azure service instances`, and more.
 
-- Data stores in Azure Monitor hold your metrics and logs.  `Azure Monitor Metrics` and`Azure Monitor Logs` are the two base types of data used by the service.
+- Data stores in Azure Monitor hold your metrics and logs.  `Azure Monitor Metrics` and `Azure Monitor Logs` are the two base types of data used by the service.
     - **`Metrics`** are numerical values that describe some aspect of a system at a particular point in time. Metrics are lightweight and capable of supporting near real-time scenarios.
         - For many Azure resources, the metrics data collected by Azure Monitor is displayed on the `Overview page` for the resource in the Azure portal.
         - You can use Azure Monitor metrics explorer to view the metrics for your Azure services and resources.
@@ -343,6 +343,17 @@ To create a Metrics Explorer graph that shows host VM maximum percentage CPU and
     - `Performance tab`. The prebuilt VM insights Performance workbook shows charts and graphs with performance-related data for the current VM.
     - `Map tab`. The prebuilt VM insights Map workbook shows a map of the processes and dependencies running on the VM.
 
+### Application Insights Profiler
+
+- Application Insights Profiler is a feature of VM Insights that helps you understand the performance of your applications running on your VM. 
+
+- Used by `AppService` you can capture and view performance traces for your application in all these dynamic situations, automatically at-scale, without negatively affecting your end users."
+
+- Application Insights Profiler collects and analyzes performance data from your applications and provides insights into the performance and health of your applications. Application Insights Profiler helps you understand the performance of your applications by providing insights into the following areas:
+    - Application performance
+    - Application dependencies
+    - Application performance trends
+    - Application performance anomalies
 
 ### VM Log 
 
