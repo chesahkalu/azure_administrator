@@ -58,10 +58,11 @@ Azure Monitor is a platform service that provides a single source that can monit
 
 - `Azure Monitor Alerts` provide a way to get notified when issues occur. You can create alerts programmatically or through the Azure portal.
 
-- `Azure Monitor Workbooks` provide a way to visualize your data in a variety of ways, including tables, charts, and more.
+- `Azure Monitor Workbooks` provide a way to `visualize` your data in a variety of ways, including tables, charts, and more.
+
 - `Activity Log` is a platform log that provides insight into subscription-level events that have occurred in Azure. This log is automatically created for each Azure subscription and cannot be disabled. 
     - Activity logs can help you determine the "what, who, and when" for any write operation (PUT, POST, DELETE) performed on resources in your subscription.
-    - Activity logs are kept for 90 days.
+    - Activity logs are kept for `90 days`.
     - In the Azure portal, you can filter your Azure Monitor activity logs so you can view specific information. The filters enable you to review only the activity log data that meets your criteria.
 
 ---
@@ -378,5 +379,6 @@ To create a Metrics Explorer graph that shows host VM maximum percentage CPU and
 ## References and Further Reading
 
 - [Azure Monitor Documentation](https://learn.microsoft.com/en-us/azure/azure-monitor/)
+- [Instructional Lab on Implement Monitoring](https://github.com/MicrosoftLearning/AZ-104-MicrosoftAzureAdministrator/blob/master/Instructions/Labs/LAB_11-Implement_Monitoring.md)
 - [Interactive Labs on Implementing Azure Monitor](https://learn.microsoft.com/en-us/training/modules/configure-azure-monitor/8-simulation-monitor)
 - [Analyze monitoring data with Kusto Query Language](https://learn.microsoft.com/en-us/training/paths/analyze-monitoring-data-with-kql/)
