@@ -105,6 +105,10 @@ Use the Actions and NotActions permissions together to grant and deny the exact 
 
 ---
 
+## Role Scopes
+
+- The scope of a role assignment is the set of resources that the role applies to. The scope can be on a `managemen group`, `subscription`, a `resource group`, or a single `resource`. When you assign a role to a security principal, you specify the scope of the role assignment.
+
 ## Assigning Roles to Users
 
 1. Create a JSON file with the role definition that allows a user to create support requests. The role should allow the user to can view resource groups in a specific subscription, but not the resources in the resource groups. The [role_definition.json](/resources/role_definition.json) should look like this :
@@ -175,6 +179,8 @@ Use the Actions and NotActions permissions together to grant and deny the exact 
 - Choose the type of lock you want to apply, provide a name and a description, and then click `OK`.
 
 - Locks are applied to most Azure resources, and resource level restrictions can be applied to prevent accidental deletion or modification. Locks can then be applied at the `resource group level`, `subscription level`, or `individual resource level`.
+
+---
 
 ## Conclusion
 

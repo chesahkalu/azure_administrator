@@ -566,14 +566,15 @@ Azure Network Watcher is a regional service that helps you monitor, diagnose, an
 **How to Use Network Watcher:**
 
 1. **Enable Network Watcher**: Enable Network Watcher for your Azure region via the Azure portal, PowerShell, or CLI.
-2. **Connection Monitor**: Set up connection monitoring to ensure network performance and connectivity.
+2. **Connection Monitor**: Set up connection monitoring to ensure network `performance` and `connectivity`.
 3. **IP Flow Verify**: Diagnose `packet flow` and `NSG` rules to resolve connectivity issues.
 4. **Next Hop**: Understand packet routing paths to diagnose routing issues.
-5. **Packet Capture**: Collect and analyze network traffic to diagnose specific issues.
+5. **Packet Capture**: Collect, analyze and inspect all `network traffic` to diagnose specific issues.
 6. **View Topology**: Visualize your network architecture using the topology tool.
-7. **Azure Monitor Network Insights**: Uses dashboard to display detailed metrics and a visual representation of the network topology
-8. **Traffic Analytics**: Analyze network traffic patterns and identify potential `security` threats.
-9. 
+7. **Azure Monitor Network Insights**: Uses `dashboard` to `display` detailed metrics and a `visual` representation of the network topology
+8. **Traffic Analytics**: Analyze network traffic patterns and identify potential `security` threats, mostly in working with `NSG flow logs`.
+9. **NSG Flow Logs**: Review `network security group` flow logs for `compliance` and `security` analysis.
+10. **Connection Troubleshoot**: Diagnose connectivity issues between `virtual machines` or between a virtual machine and an `endpoint`. 
 
 
 **Example Use Cases**
